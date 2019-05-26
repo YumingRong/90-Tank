@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 3259469533601874974}
   - component: {fileID: 3259469533601874963}
   - component: {fileID: 3259469533601874960}
-  - component: {fileID: 4391182341170301128}
   - component: {fileID: 4391182341396181592}
-  - component: {fileID: 1173090276423670773}
-  - component: {fileID: 2856448855080149974}
+  - component: {fileID: 4391182341170301128}
   m_Layer: 8
   m_Name: Tank
   m_TagString: Untagged
@@ -133,26 +131,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.45}
   m_EdgeRadius: 0
---- !u!114 &4391182341170301128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3259469533601874975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a7682cbebf8e0e45a13c8ae7b222ca8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerNumber: -1
-  speed: 0.5
-  m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
-    type: 3}
-  m_ShootingAudio: {fileID: 0}
-  m_FireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
-  m_ChargeTime: 1
-  fireTransform: {fileID: 6579656205218685154}
 --- !u!95 &4391182341396181592
 Animator:
   serializedVersion: 3
@@ -172,7 +150,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1173090276423670773
+--- !u!114 &4391182341170301128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,39 +159,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3259469533601874975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ea610965d0c86408b597ff2c9a2897, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a7682cbebf8e0e45a13c8ae7b222ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerNumber: 1
+  m_PlayerNumber: -1
   speed: 0.5
   m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
     type: 3}
-  m_ShootingAudio: {fileID: 0}
-  m_FireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
   m_ChargeTime: 1
-  fireTransform: {fileID: 6579656205218685154}
-  m_MovementAudio: {fileID: 0}
-  m_EngineIdling: {fileID: 0}
-  m_EngineDriving: {fileID: 0}
---- !u!114 &2856448855080149974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3259469533601874975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 470f5b676e28cfd4bbec9e1f81708bef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerNumber: 1
-  speed: 0.5
-  m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
-    type: 3}
-  m_ShootingAudio: {fileID: 0}
-  m_FireClip: {fileID: 0}
-  m_ChargeTime: 1.5
   fireTransform: {fileID: 6579656205218685154}
 --- !u!1 &7696711985921442588
 GameObject:

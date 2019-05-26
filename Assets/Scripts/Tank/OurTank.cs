@@ -4,10 +4,6 @@ using UnityEngine;
 
 public partial class  OurTank: Tank
 {
-    public AudioSource m_MovementAudio;
-    public AudioClip m_EngineIdling;
-    public AudioClip m_EngineDriving;
-
     private float smallestGrid = 0.0625f;
     private string m_VerticalAxisName;
     private string m_HorizontalAxisName;
@@ -20,6 +16,8 @@ public partial class  OurTank: Tank
     // Start is called before the first frame update
     void Start()
     {
+        moveDirection = Vector2.up;
+        m_ChargeTime = 1.0f;
         m_VerticalAxisName = "Vertical" + m_PlayerNumber;
         m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
 
@@ -30,7 +28,6 @@ public partial class  OurTank: Tank
         m_FireButton = "Fire" + m_PlayerNumber;
 
         rigidbody2d = GetComponent<Rigidbody2D>();
-        moveDirection = Vector2.up;
     }
 
 

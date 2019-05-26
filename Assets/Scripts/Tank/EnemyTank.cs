@@ -8,6 +8,7 @@ public class EnemyTank : Tank
     void Start()
     {
         moveDirection = Vector2.down;
+        m_ChargeTime = 1.5f;
     }
 
     // Update is called once per frame
