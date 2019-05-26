@@ -9,7 +9,6 @@ public partial class  OurTank: Tank
     private string m_HorizontalAxisName;
 
     // ==== ANIMATION =====
-    Animator animator;
     private string m_FireButton;                // The input axis that is used for launching shells.
 
 
@@ -20,14 +19,10 @@ public partial class  OurTank: Tank
         m_ChargeTime = 1.0f;
         m_VerticalAxisName = "Vertical" + m_PlayerNumber;
         m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
-
-        animator = GetComponent<Animator>();
         animator.speed = 0;
 
         // The fire axis is based on the player number.
         m_FireButton = "Fire" + m_PlayerNumber;
-
-        rigidbody2d = GetComponent<Rigidbody2D>();
     }
 
 

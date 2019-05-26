@@ -16,7 +16,6 @@ MonoBehaviour:
   speed: 0.5
   m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
     type: 3}
-  m_ChargeTime: 1
   fireTransform: {fileID: 4264863363598637845}
 --- !u!1001 &6944679093289810935
 PrefabInstance:
@@ -109,6 +108,11 @@ PrefabInstance:
     - target: {fileID: 3259469533601874974, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4391182341170301128, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_PlayerNumber
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4391182341396181592, guid: 28922b00ef462ee4598bd3e50fb0120f,

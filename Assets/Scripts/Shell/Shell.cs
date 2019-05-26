@@ -7,8 +7,8 @@ using UnityEngine.Tilemaps;
 public class Shell: MonoBehaviour
 {
 
-    public int shooter;
-    public int damage;
+    [HideInInspector] public int shooter;
+    [HideInInspector] public int damage;
     public Tile emptyTile;
     public Transform TopLeft;
     public Transform TopRight;
@@ -30,9 +30,6 @@ public class Shell: MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        animator.SetTrigger("explode");
-        Rigidbody2D rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
-        rigidbody2D.velocity = new Vector3(0f, 0f, 0f);
         if (other.name == "Tilemap")
         {
             Tilemap map = other.GetComponent<Tilemap>();
@@ -69,8 +66,13 @@ public class Shell: MonoBehaviour
             // Deal this damage to the tank.
             if (targetTank != null)
             {
+                print("Hit tank");
+                print("shooter:" + shooter);
+                print("tank:" + targetTank.m_PlayerNumber);
                 if (targetTank.m_PlayerNumber != shooter)
+                {
                     targetTank.TakeDamage(damage);
+                }
                 else
                     return;
 
@@ -86,6 +88,8 @@ public class Shell: MonoBehaviour
 
     private IEnumerator Explode(float seconds)
     {
+        animator.SetTrigger("explode");
+        GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
         yield return new WaitForSeconds(seconds);
         gameObject.SetActive(false);
     }

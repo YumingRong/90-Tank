@@ -7,8 +7,9 @@ public class EnemyTank : Tank
     // Start is called before the first frame update
     void Start()
     {
+        m_PlayerNumber = -1;
         moveDirection = Vector2.down;
-        m_ChargeTime = 1.5f;
+        m_ChargeTime = 2f;
     }
 
     // Update is called once per frame

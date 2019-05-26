@@ -18,7 +18,6 @@ public partial class Tank : MonoBehaviour
 
         // Set the shell's velocity to the launch force in the fire position's forward direction.
         shellInstance.velocity = m_ShellSpeed * moveDirection;
-
         Shell shell = shellInstance.GetComponent<Shell>();
         shell.shooter = m_PlayerNumber;
         shell.damage = m_ShootDamage;

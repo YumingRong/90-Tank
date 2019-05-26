@@ -3,14 +3,14 @@ using UnityEngine;
 
 public partial class Tank : MonoBehaviour
 {
-    public int m_PlayerNumber = 1;
-    public float speed = 0.5f;
+    public int m_PlayerNumber;
+    [HideInInspector] public float speed = 0.5f;
 
     protected Vector2 moveDirection;
     protected Rigidbody2D rigidbody2d;
+    protected Animator animator;
 
     int m_StartingHealth = 1;               // The amount of health each tank starts with.
-    Animator animator;
 
 
     private void Awake()
