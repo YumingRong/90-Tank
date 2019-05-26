@@ -40,8 +40,8 @@ public partial class  OurTank: Tank
             RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
             distance = hit.distance;
         }
-        //Debug.Log("Shoot distance:" + distance);
-        m_ChargeTime = Mathf.Lerp(0.5f, 1.2f, distance / 7);
+        m_ChargeTime = Mathf.Lerp(0.5f, 1.3f, distance / 7);
+        Debug.Log("Shoot interval:" + m_ChargeTime);
 
         if (Input.GetButtonDown(m_FireButton))
         {

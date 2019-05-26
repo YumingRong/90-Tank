@@ -18,7 +18,7 @@ public class EnemyTank : Tank
         m_CurrentChargeTime += Time.deltaTime;
         if (m_CurrentChargeTime >= m_ChargeTime)
         {
-            //Fire();
+            Fire();
             m_CurrentChargeTime = 0f;
         }
     }

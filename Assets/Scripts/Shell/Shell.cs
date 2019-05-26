@@ -22,7 +22,7 @@ public class Shell: MonoBehaviour
 
     void Update()
     {
-        //destroy the projectile when it reach a distance of 1000.0f from the origin
+        //destroy the projectile when it reach a distance of 5.0f from the origin
         if (transform.position.magnitude > 5.0f)
             Destroy(gameObject);
     }
@@ -89,6 +89,7 @@ public class Shell: MonoBehaviour
         animator.SetTrigger("explode");
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
         yield return new WaitForSeconds(seconds);
-        gameObject.SetActive(false);
+        ObjectPool.GetInstance().RecycleObj(gameObject);
+        //gameObject.SetActive(false);
     }
 }
