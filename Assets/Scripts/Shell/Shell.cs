@@ -66,8 +66,6 @@ public class Shell: MonoBehaviour
             // Deal this damage to the tank.
             if (targetTank != null)
             {
-                print("Hit tank");
-                print("shooter:" + shooter);
                 print("tank:" + targetTank.m_PlayerNumber);
                 if (targetTank.m_PlayerNumber != shooter)
                 {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class  OurTank: Tank
 {
-    private float smallestGrid = 0.0625f;
+    private float smallestGrid = 0.125f;
     private string m_VerticalAxisName;
     private string m_HorizontalAxisName;
 
@@ -16,19 +16,33 @@ public partial class  OurTank: Tank
     void Start()
     {
         moveDirection = Vector2.up;
+        animator.speed = 0;
+
         m_ChargeTime = 1.0f;
         m_VerticalAxisName = "Vertical" + m_PlayerNumber;
         m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
-        animator.speed = 0;
-
-        // The fire axis is based on the player number.
         m_FireButton = "Fire" + m_PlayerNumber;
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        float distance;
+        RaycastHit2D hit1 = Physics2D.Raycast(fireTransform.position, -moveDirection, 0.1f, LayerMask.GetMask("Tank"));
+        if (hit1.collider.gameObject != gameObject)
+        {
+            distance = 0;
+        }
+        else
+        {
+            RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
+            distance = hit.distance;
+        }
+        //Debug.Log("Shoot distance:" + distance);
+        m_ChargeTime = Mathf.Lerp(0.5f, 1.2f, distance / 7);
+
         if (Input.GetButtonDown(m_FireButton))
         {
             if (m_CurrentChargeTime <= 0)

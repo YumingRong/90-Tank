@@ -99,6 +99,11 @@ PrefabInstance:
       propertyPath: m_UsedByComposite
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3259469533601874974, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
       propertyPath: m_Sprite
