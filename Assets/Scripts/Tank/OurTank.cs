@@ -41,7 +41,7 @@ public partial class  OurTank: Tank
             distance = hit.distance;
         }
         m_ChargeTime = Mathf.Lerp(0.5f, 1.3f, distance / 7);
-        Debug.Log("Shoot interval:" + m_ChargeTime);
+
 
         if (Input.GetButtonDown(m_FireButton))
         {

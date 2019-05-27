@@ -17,6 +17,8 @@ public partial class Tank : MonoBehaviour
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        shellPool = ObjectPool.GetInstance();
+        ObjectPool.GetInstance().Awake("Shell");
     }
 
     private void OnEnable()

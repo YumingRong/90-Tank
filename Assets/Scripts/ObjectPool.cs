@@ -16,6 +16,13 @@ public class ObjectPool
         return instance;
     }
 
+    public void Awake(string objName)
+    {
+        if (prefab == null)
+            prefab = Resources.Load<GameObject>("Prefabs/" + objName);
+        Debug.Log(prefab);
+    }
+
     public ObjectPool()
     {
         pool = new Stack<GameObject>();
@@ -24,8 +31,6 @@ public class ObjectPool
     public GameObject GetObject(Vector3 position, Quaternion quaternion)
     {
         GameObject result;
-        if(prefab == null)
-            prefab = Resources.Load<GameObject>("Prefabs//Shell");
         if (pool.Count>0)
         {
             result = pool.Pop();

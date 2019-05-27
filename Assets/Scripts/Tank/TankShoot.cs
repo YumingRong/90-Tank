@@ -10,17 +10,16 @@ public partial class Tank : MonoBehaviour
     protected int m_ShootDamage = 1;
     protected float m_CurrentChargeTime = 0;
 
-    protected ObjectPool shellPool = ObjectPool.GetInstance();
+    protected ObjectPool shellPool;
 
     protected void Fire()
     {
-        // Create an instance of the shell and store a reference to it's rigidbody.
         GameObject shellInstance = shellPool.GetObject(fireTransform.position, fireTransform.rotation);
-        //Rigidbody2D shellInstance =
-        //    Instantiate(m_Shell, fireTransform.position, fireTransform.rotation) as Rigidbody2D;
-
-        // Set the shell's velocity to the launch force in the fire position's forward direction.
         Shell shell = shellInstance.GetComponent<Shell>();
+        //Animator ani = shell.GetComponent<Animator>();
+        //animator.ResetTrigger("explode");
+        //ani.SetTrigger("reset");
+        //print("shell animator state:" + ani.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         shell.GetComponent<Rigidbody2D>().velocity = m_ShellSpeed * moveDirection;
         shell.shooter = m_PlayerNumber;
         shell.damage = m_ShootDamage;

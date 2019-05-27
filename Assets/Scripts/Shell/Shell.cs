@@ -18,6 +18,7 @@ public class Shell: MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        animator.keepAnimatorControllerStateOnDisable = true;
     }
 
     void Update()
@@ -80,16 +81,17 @@ public class Shell: MonoBehaviour
 
         Debug.Log("Shell explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         // Explode the shell.
-        StartCoroutine(Explode(3f/10f));
+        StartCoroutine(Explode());
     }
 
 
-    private IEnumerator Explode(float seconds)
+    private IEnumerator Explode()
     {
         animator.SetTrigger("explode");
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(0.3f);
+        animator.ResetTrigger("explode");
+        animator.SetTrigger("reset");
         ObjectPool.GetInstance().RecycleObj(gameObject);
-        //gameObject.SetActive(false);
     }
 }
