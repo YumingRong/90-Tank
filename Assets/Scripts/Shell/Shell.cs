@@ -73,7 +73,9 @@ public class Shell: MonoBehaviour
                     targetTank.TakeDamage(damage);
                 }
                 else
+                {
                     return;
+                }
 
             }
         }
@@ -87,11 +89,12 @@ public class Shell: MonoBehaviour
 
     private IEnumerator Explode()
     {
-        animator.SetTrigger("explode");
+        animator.SetBool("exploding", true);
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
         yield return new WaitForSeconds(0.3f);
-        animator.ResetTrigger("explode");
-        animator.SetTrigger("reset");
+        animator.SetBool("exploding", false);
+        transform.position = new Vector3(100, 100); //because shell is in exploding animation for double time, I have to do this nonsense job!
+        yield return new WaitForSeconds(0.3f);
         ObjectPool.GetInstance().RecycleObj(gameObject);
     }
 }

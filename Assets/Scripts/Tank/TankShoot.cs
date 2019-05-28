@@ -17,8 +17,7 @@ public partial class Tank : MonoBehaviour
         GameObject shellInstance = shellPool.GetObject(fireTransform.position, fireTransform.rotation);
         Shell shell = shellInstance.GetComponent<Shell>();
         //Animator ani = shell.GetComponent<Animator>();
-        //animator.ResetTrigger("explode");
-        //ani.SetTrigger("reset");
+        //animator.SetBool("exploding", true);
         //print("shell animator state:" + ani.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         shell.GetComponent<Rigidbody2D>().velocity = m_ShellSpeed * moveDirection;
         shell.shooter = m_PlayerNumber;
