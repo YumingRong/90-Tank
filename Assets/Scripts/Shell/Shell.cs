@@ -89,12 +89,10 @@ public class Shell: MonoBehaviour
 
     private IEnumerator Explode()
     {
-        animator.SetBool("exploding", true);
+        animator.SetTrigger("explode");
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
         yield return new WaitForSeconds(0.3f);
-        animator.SetBool("exploding", false);
-        transform.position = new Vector3(100, 100); //because shell is in exploding animation for double time, I have to do this nonsense job!
-        yield return new WaitForSeconds(0.3f);
+        animator.SetTrigger("reset");
         ObjectPool.GetInstance().RecycleObj(gameObject);
     }
 }
