@@ -9,8 +9,13 @@ public partial class Tank : MonoBehaviour
     protected Vector2 moveDirection;
     protected Rigidbody2D rigidbody2d;
     protected Animator animator;
-
+    protected bool isInvincible;
     int m_StartingHealth = 1;               // The amount of health each tank starts with.
+
+    private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
+
+    private int currentHealth;
+    float invincibleTimer;
 
 
     private void Awake()
@@ -28,8 +33,15 @@ public partial class Tank : MonoBehaviour
         // When the tank is enabled, reset the tank's health and whether or not it's dead.
         currentHealth = m_StartingHealth;
         m_Dead = false;
+        isInvincible = true;
+        invincibleTimer = 1f;
     }
 
+    private void Update()
+    {
+        invincibleTimer -= Time.deltaTime;
+        isInvincible = invincibleTimer > 0;
+    }
 
     private void OnDisable()
     {
@@ -37,15 +49,11 @@ public partial class Tank : MonoBehaviour
     }
 
 
-    private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
-
-    private int currentHealth;
-    float invincibleTimer;
-    bool isInvincible;
-
 
     public void TakeDamage(int amount)
     {
+        if (isInvincible)
+            return;
         // Reduce current health by the amount of damage done.
         currentHealth -= amount;
         // If the current health is at or below zero and it has not yet been registered, call OnDeath.

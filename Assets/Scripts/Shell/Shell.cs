@@ -81,7 +81,6 @@ public class Shell: MonoBehaviour
         }
 
 
-        Debug.Log("Shell explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         // Explode the shell.
         StartCoroutine(Explode());
     }
@@ -90,9 +89,10 @@ public class Shell: MonoBehaviour
     private IEnumerator Explode()
     {
         animator.SetTrigger("explode");
+        Debug.Log("Shell explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
         yield return new WaitForSeconds(0.3f);
-        animator.SetTrigger("reset");
+        //animator.SetTrigger("reset");
         ObjectPool.GetInstance().RecycleObj(gameObject);
     }
 }
