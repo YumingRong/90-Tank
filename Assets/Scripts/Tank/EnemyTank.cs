@@ -7,14 +7,15 @@ public class EnemyTank : Tank
     private float directionChangeInteval;
     private float directionChangeTimer;
     System.Random rnd = new System.Random();
+
+    private int[] healthArray = { 1, 2, 2, 3 };
+    private float[] speedArray = { 0.5f, 0.5f, 1f, 0.5f };
     public int type
     {
         set
         {
-            if (value == 4)
-            {
-                
-            }
+            health = healthArray[value];
+            speed = speedArray[value];
         }
     }
 

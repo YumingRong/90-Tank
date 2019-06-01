@@ -11,7 +11,7 @@ public partial class Tank : MonoBehaviour
     protected Animator animator;
     protected float smallestGrid = 0.125f;
 
-    protected int m_StartingHealth = 1;               // The amount of health each tank starts with.
+    protected int health = 1;               // The amount of health each tank starts with.
 
 
     private void Awake()
