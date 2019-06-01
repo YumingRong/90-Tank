@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +11,15 @@ public class EnemyTank : Tank
 
     private int[] healthArray = { 1, 2, 2, 3 };
     private float[] speedArray = { 0.5f, 0.5f, 1f, 0.5f };
-    public int type
+    private int[] scoreArray = { 100, 200, 300, 400 };
+
+    public int Type
     {
         set
         {
             health = healthArray[value];
             speed = speedArray[value];
+            score = scoreArray[value];
         }
     }
 
@@ -28,6 +32,20 @@ public class EnemyTank : Tank
         directionChangeTimer = 0;
         directionChangeInteval = rnd.Next(3,5);
     }
+
+    private IEnumerator Born(int type)
+    {
+        Type = type;
+        animator.SetInteger("type", type);
+        animator.SetInteger("health", health);
+        float speed0 = speed;
+        speed = 0;
+        isInvincible = true;
+        yield return new WaitForSeconds(1f);
+        isInvincible = false;
+        speed = speed0;
+    }
+
 
     // Update is called once per frame
     void Update()

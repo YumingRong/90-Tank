@@ -5,6 +5,8 @@ public partial class Tank : MonoBehaviour
 {
     public int m_PlayerNumber;
     [HideInInspector] public float speed = 0.5f;
+    [HideInInspector] public int score;
+    [HideInInspector] public bool isInvincible;
 
     protected Vector2 moveDirection;
     protected Rigidbody2D rigidbody2d;
@@ -12,6 +14,8 @@ public partial class Tank : MonoBehaviour
     protected float smallestGrid = 0.125f;
 
     protected int health = 1;               // The amount of health each tank starts with.
+    private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
+    float invincibleTimer;
 
 
     private void Awake()
@@ -24,34 +28,26 @@ public partial class Tank : MonoBehaviour
 
     private void OnEnable()
     {
-        rigidbody2d.isKinematic = false;
+        rigidbody2d.isKinematic = true;
 
         // When the tank is enabled, reset the tank's health and whether or not it's dead.
-        currentHealth = m_StartingHealth;
         m_Dead = false;
     }
-
 
     private void OnDisable()
     {
         rigidbody2d.isKinematic = true;
     }
 
-
-    private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
-
-    private int currentHealth;
-    float invincibleTimer;
-    bool isInvincible;
-
-
     public void TakeDamage(int amount)
     {
+        if (isInvincible)
+            return;
         // Reduce current health by the amount of damage done.
-        currentHealth -= amount;
+        health -= amount;
+        animator.SetInteger("health", health);
         // If the current health is at or below zero and it has not yet been registered, call OnDeath.
-
-        if (currentHealth <= 0 && !m_Dead)
+        if (health <= 0 && !m_Dead)
         {
             StartCoroutine(OnDeath());
         }

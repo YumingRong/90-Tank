@@ -16,6 +16,7 @@ public partial class  OurTank: Tank
     {
         moveDirection = Vector2.up;
         animator.speed = 0;
+        score = 0;
 
         m_ChargeTime = 1.0f;
         m_VerticalAxisName = "Vertical" + m_PlayerNumber;
