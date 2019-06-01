@@ -4,7 +4,6 @@ using UnityEngine;
 
 public partial class  OurTank: Tank
 {
-    private float smallestGrid = 0.125f;
     private string m_VerticalAxisName;
     private string m_HorizontalAxisName;
 

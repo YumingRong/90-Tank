@@ -15,19 +15,18 @@ public class Shell: MonoBehaviour
 
     Animator animator;
 
-    private void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         animator.keepAnimatorControllerStateOnDisable = true;
     }
 
-    void Update()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        //destroy the projectile when it reach a distance of 5.0f from the origin
-        if (transform.position.magnitude > 5.0f)
-            Destroy(gameObject);
-    }
+         if (collision.name == "WorldLimiter")
+            ObjectPool.GetInstance().RecycleObj(gameObject);
 
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -55,15 +54,15 @@ public class Shell: MonoBehaviour
                 {
                     map.SetTile(roundPosition, emptyTile);
                 }
+
+                // Explode the shell.
+                StartCoroutine(Explode());
+
             }
         }   
         else
         {
-            // ... and find their rigidbody.
-            //Rigidbody2D targetRigidbody = other.GetComponent<Rigidbody2D>();
-            Rigidbody2D targetRigidbody = other.attachedRigidbody;
-            // Find the TankHealth script associated with the rigidbody.
-            Tank targetTank = targetRigidbody.GetComponent<Tank>();
+            Tank targetTank = other.GetComponent<Tank>();
             // Deal this damage to the tank.
             if (targetTank != null)
             {
@@ -71,19 +70,11 @@ public class Shell: MonoBehaviour
                 if (targetTank.m_PlayerNumber != shooter)
                 {
                     targetTank.TakeDamage(damage);
+                    // Explode the shell.
+                    StartCoroutine(Explode());
                 }
-                else
-                {
-                    return;
-                }
-
             }
         }
-
-
-        Debug.Log("Shell explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
-        // Explode the shell.
-        StartCoroutine(Explode());
     }
 
 
@@ -91,8 +82,8 @@ public class Shell: MonoBehaviour
     {
         animator.SetTrigger("explode");
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
+        Debug.Log("Shell explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         yield return new WaitForSeconds(0.3f);
-        animator.SetTrigger("reset");
         ObjectPool.GetInstance().RecycleObj(gameObject);
     }
 }
