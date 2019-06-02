@@ -28,7 +28,7 @@ public partial class Tank : MonoBehaviour
 
     private void OnEnable()
     {
-        rigidbody2d.isKinematic = true;
+        rigidbody2d.isKinematic = false;
 
         // When the tank is enabled, reset the tank's health and whether or not it's dead.
         m_Dead = false;

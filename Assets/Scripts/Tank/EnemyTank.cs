@@ -17,9 +17,9 @@ public class EnemyTank : Tank
     {
         set
         {
-            health = healthArray[value];
-            speed = speedArray[value];
-            score = scoreArray[value];
+            health = healthArray[value - 1];
+            speed = speedArray[value - 1];
+            score = scoreArray[value - 1];
         }
     }
 
@@ -33,11 +33,15 @@ public class EnemyTank : Tank
         directionChangeInteval = rnd.Next(3,5);
     }
 
-    private IEnumerator Born(int type)
+    public IEnumerator Born(int type, int position)
     {
         Type = type;
         animator.SetInteger("type", type);
         animator.SetInteger("health", health);
+
+        Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
+        transform.position = enemySpawnPoint[position-1];
+        Debug.Log("enmeny position:" + transform.position);
         float speed0 = speed;
         speed = 0;
         isInvincible = true;

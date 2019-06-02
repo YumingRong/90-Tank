@@ -20,7 +20,6 @@ public class ObjectPool
     {
         if (prefab == null)
             prefab = Resources.Load<GameObject>("Prefabs/" + objName);
-        Debug.Log(prefab);
     }
 
     public ObjectPool()
