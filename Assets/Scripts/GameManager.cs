@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public OurTank player1;
+    public OurTank ourTank;
     public EnemyTank enemyTank; 
     int[] EnemyTanks = { 4, 5, 2, 3 };
-    Vector2 ourSpawnPoint1 = new Vector2(-0.75f, -3f);
-    Vector2 ourSpawnPoint2 = new Vector2(0.75f, -3f);
 
     // Start is called before the first frame update
     void Start()
     {
-        player1.transform.position = ourSpawnPoint1;
+        SpawnOurTank(1);
         SpawnEnemyTank(1, 1);
         SpawnEnemyTank(2, 2);
         SpawnEnemyTank(3, 3);
@@ -30,5 +28,11 @@ public class GameManager : MonoBehaviour
     {
         EnemyTank tank = Instantiate(enemyTank);
         StartCoroutine( tank.Born(type, position));
+    }
+
+    void SpawnOurTank(int player)
+    {
+        OurTank tank = Instantiate(ourTank);
+        StartCoroutine(tank.Born(player));
     }
 }

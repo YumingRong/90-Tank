@@ -55,7 +55,6 @@ public partial class Tank : MonoBehaviour
 
     private IEnumerator OnDeath()
     {
-        animator.SetTrigger("explode");
         // Set the flag so that this function is only called once.
         m_Dead = true;
         //// Move the instantiated explosion prefab to the tank's position and turn it on.

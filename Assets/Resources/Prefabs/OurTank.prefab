@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
   speed: 0.5
+  score: 0
+  isInvincible: 0
   m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
     type: 3}
   fireTransform: {fileID: 4264863363598637845}
@@ -29,15 +31,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: OurTank
       objectReference: {fileID: 0}
+    - target: {fileID: 3259469533601874974, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8dc207c29590e004d90ac6908af57ff5,
+        type: 3}
+    - target: {fileID: 3259469533601874974, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.40625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.40625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_UsedByComposite
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3259469533601874961, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.02
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3259469533601874961, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.989
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 3259469533601874961, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
@@ -84,47 +117,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.40625
-      objectReference: {fileID: 0}
-    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.40625
-      objectReference: {fileID: 0}
-    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_UsedByComposite
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3259469533601874974, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8dc207c29590e004d90ac6908af57ff5,
-        type: 3}
-    - target: {fileID: 3259469533601874974, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4391182341170301128, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_PlayerNumber
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4391182341396181592, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 8fa79e67c82b00a45930955a43c94a72, type: 2}
+    - target: {fileID: 4391182341170301128, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_PlayerNumber
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2856448855080149974, guid: 28922b00ef462ee4598bd3e50fb0120f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 28922b00ef462ee4598bd3e50fb0120f, type: 3}

@@ -10,6 +10,18 @@ public partial class  OurTank: Tank
     // ==== ANIMATION =====
     private string m_FireButton;                // The input axis that is used for launching shells.
 
+    public IEnumerator Born(int player)
+    {
+        Vector2[] ourSpawnPoint = { new Vector2(-0.75f, -3f), new Vector2(0.75f, -3f) };
+        transform.position = ourSpawnPoint[player - 1];
+        m_PlayerNumber = player;
+        health = 1;
+        isInvincible = true;
+        animator.SetInteger("player", player);
+        yield return new WaitForSeconds(1f);
+        isInvincible = false;
+    }
+
 
     // Start is called before the first frame update
     void Start()
