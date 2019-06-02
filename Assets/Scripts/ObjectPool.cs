@@ -43,6 +43,7 @@ public class ObjectPool
             result.transform.position = position;
             result.transform.rotation = quaternion;
             result.name = prefab.name;
+
         }
         return result;
     }

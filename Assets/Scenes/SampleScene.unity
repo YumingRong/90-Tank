@@ -288,7 +288,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.5, y: 6.5}
+  m_Size: {x: 7, y: 7}
   m_EdgeRadius: 0
 --- !u!4 &553157979
 Transform:
@@ -8004,7 +8004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1183087de5ff01e4cbbc0f7948f8c402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ourTank: {fileID: 0}
+  ourTank: {fileID: -251887832037140296, guid: 26a21fe6a032cfb48bff4301d773810c, type: 3}
   enemyTank: {fileID: 1423868741856083713, guid: 3c86b80e9332b7d4b9e94ff2dc505cb2,
     type: 3}
 --- !u!4 &1158149886

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-public class Shell: MonoBehaviour
+public class Shell : MonoBehaviour
 {
 
     [HideInInspector] public int shooter;
@@ -21,9 +21,9 @@ public class Shell: MonoBehaviour
         animator.keepAnimatorControllerStateOnDisable = true;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void Update()
     {
-         if (collision.name == "WorldLimiter")
+        if (transform.position.magnitude > 7f)
             ObjectPool.GetInstance().RecycleObj(gameObject);
 
     }
@@ -37,9 +37,9 @@ public class Shell: MonoBehaviour
             {
                 Grid grid = map.GetComponentInParent<Grid>();
                 Vector3 cellSize = grid.cellSize;
-                Vector3Int roundPosition = Vector3Int.FloorToInt(new Vector3 (TopLeft.position.x /cellSize.x, TopLeft.position.y/cellSize.y, 0));
+                Vector3Int roundPosition = Vector3Int.FloorToInt(new Vector3(TopLeft.position.x / cellSize.x, TopLeft.position.y / cellSize.y, 0));
                 TileBase tile = map.GetTile(roundPosition);
-                print("shell hit" + tile.name);
+                print("shell hit " + tile.name);
 
                 if (tile.name == "brickwall")
                 {
@@ -48,7 +48,6 @@ public class Shell: MonoBehaviour
 
                 roundPosition = Vector3Int.FloorToInt(new Vector3(TopRight.position.x / cellSize.x, TopRight.position.y / cellSize.y, 0));
                 tile = map.GetTile(roundPosition);
-                print(roundPosition);
 
                 if (tile.name == "brickwall")
                 {
@@ -59,14 +58,14 @@ public class Shell: MonoBehaviour
                 StartCoroutine(Explode());
 
             }
-        }   
+        }
         else
         {
             Tank targetTank = other.GetComponent<Tank>();
             // Deal this damage to the tank.
             if (targetTank != null)
             {
-                print("tank:" + targetTank.m_PlayerNumber);
+                print("shell hit tank:" + targetTank.m_PlayerNumber);
                 if (targetTank.m_PlayerNumber != shooter)
                 {
                     targetTank.TakeDamage(damage);
@@ -82,7 +81,8 @@ public class Shell: MonoBehaviour
     {
         animator.SetTrigger("explode");
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
-        Debug.Log("Shell explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"))
+            Debug.Log("Shell explode");
         yield return new WaitForSeconds(0.3f);
         ObjectPool.GetInstance().RecycleObj(gameObject);
     }

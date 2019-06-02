@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EnemyTank : Tank
 {
@@ -41,7 +42,6 @@ public class EnemyTank : Tank
 
         Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
         transform.position = enemySpawnPoint[position-1];
-        Debug.Log("enmeny position:" + transform.position);
         float speed0 = speed;
         speed = 0;
         isInvincible = true;
@@ -67,12 +67,6 @@ public class EnemyTank : Tank
             SelectDirection();
             directionChangeInteval = rnd.Next(5);
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("tank hit wall");
-        SelectDirection();
     }
 
     private void OnTriggerExit2D(Collider2D collision)

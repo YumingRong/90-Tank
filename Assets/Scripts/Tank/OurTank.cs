@@ -6,8 +6,6 @@ public partial class  OurTank: Tank
 {
     private string m_VerticalAxisName;
     private string m_HorizontalAxisName;
-
-    // ==== ANIMATION =====
     private string m_FireButton;                // The input axis that is used for launching shells.
 
     public IEnumerator Born(int player)
@@ -17,7 +15,7 @@ public partial class  OurTank: Tank
         m_PlayerNumber = player;
         health = 1;
         isInvincible = true;
-        animator.SetInteger("player", player);
+        animator.SetInteger("health", health);
         yield return new WaitForSeconds(1f);
         isInvincible = false;
     }
@@ -27,7 +25,6 @@ public partial class  OurTank: Tank
     void Start()
     {
         moveDirection = Vector2.up;
-        animator.speed = 0;
         score = 0;
 
         m_ChargeTime = 1.0f;
