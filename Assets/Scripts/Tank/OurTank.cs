@@ -4,9 +4,12 @@ using UnityEngine;
 
 public partial class  OurTank: Tank
 {
+    public GameObject shield;
+
     private string m_VerticalAxisName;
     private string m_HorizontalAxisName;
     private string m_FireButton;                // The input axis that is used for launching shells.
+    private Animator shieldAnimator;
 
     public IEnumerator Born(int player)
     {
@@ -18,6 +21,7 @@ public partial class  OurTank: Tank
         animator.SetInteger("health", health);
         yield return new WaitForSeconds(1f);
         isInvincible = false;
+        shieldAnimator.SetTrigger("reset");
     }
 
 
@@ -31,7 +35,7 @@ public partial class  OurTank: Tank
         m_VerticalAxisName = "Vertical" + m_PlayerNumber;
         m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
         m_FireButton = "Fire" + m_PlayerNumber;
-
+        shieldAnimator = shield.GetComponent<Animator>();
     }
 
 

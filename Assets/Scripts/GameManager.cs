@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SpawnOurTank(1);
-        //SpawnEnemyTank(1, 1);
-        //SpawnEnemyTank(2, 2);
-        //SpawnEnemyTank(3, 3);
+        SpawnEnemyTank(1, 1);
+        SpawnEnemyTank(2, 2);
+        SpawnEnemyTank(3, 3);
 
     }
 

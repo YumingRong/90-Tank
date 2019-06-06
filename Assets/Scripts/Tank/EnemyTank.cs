@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,7 +7,6 @@ public class EnemyTank : Tank
 {
     private float directionChangeInteval;
     private float directionChangeTimer;
-    System.Random rnd = new System.Random();
 
     private int[] healthArray = { 1, 2, 2, 3 };
     private float[] speedArray = { 0.5f, 0.5f, 1f, 0.5f };
@@ -31,7 +29,7 @@ public class EnemyTank : Tank
         moveDirection = Vector2.down;
         m_ChargeTime = 2f;
         directionChangeTimer = 0;
-        directionChangeInteval = rnd.Next(3,5);
+        directionChangeInteval = Random.Range(3,5);
     }
 
     public IEnumerator Born(int type, int position)
@@ -65,7 +63,7 @@ public class EnemyTank : Tank
         if (directionChangeTimer > directionChangeInteval)
         {
             SelectDirection();
-            directionChangeInteval = rnd.Next(5);
+            directionChangeInteval = Random.Range(1,5);
         }
     }
 
@@ -84,22 +82,21 @@ public class EnemyTank : Tank
         if (transform.position.x < 0)
         {
             Vector2[] directChoice = { Vector2.up, Vector2.right, Vector2.right, Vector2.down, Vector2.down, Vector2.down, Vector2.left };
-            direction = directChoice[rnd.Next(6)];
+            moveDirection = directChoice[Random.Range(0,6)];
         }
         else
         {
             Vector2[] directChoice = { Vector2.up, Vector2.left, Vector2.left, Vector2.down, Vector2.down, Vector2.down, Vector2.right };
-            direction = directChoice[rnd.Next(6)];
+            moveDirection = directChoice[Random.Range(0,6)];
         }
-        if (direction == Vector2.up)
+        if (moveDirection == Vector2.up)
             rigidbody2d.rotation = 0f;
-        else if (direction == Vector2.down)
+        else if (moveDirection == Vector2.down)
             rigidbody2d.rotation = 180f;
-        else if (direction == Vector2.left)
+        else if (moveDirection == Vector2.left)
             rigidbody2d.rotation = 90f;
-        else if (direction == Vector2.right)
+        else if (moveDirection == Vector2.right)
             rigidbody2d.rotation = -90f;
-        moveDirection = direction;
 
         Vector2 position = rigidbody2d.position;
         position.x = Mathf.RoundToInt(position.x / smallestGrid) * smallestGrid;
@@ -109,4 +106,31 @@ public class EnemyTank : Tank
         directionChangeTimer = 0;
 
     }
+
+    float Choose(float[] probs)
+    {
+
+        float total = 0;
+
+        foreach (float elem in probs)
+        {
+            total += elem;
+        }
+
+        float randomPoint = Random.value * total;
+
+        for (int i = 0; i < probs.Length; i++)
+        {
+            if (randomPoint < probs[i])
+            {
+                return i;
+            }
+            else
+            {
+                randomPoint -= probs[i];
+            }
+        }
+        return probs.Length - 1;
+    }
+
 }

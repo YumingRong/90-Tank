@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerNumber: -1
   speed: 0.5
+  score: 0
+  isInvincible: 0
   m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
     type: 3}
   fireTransform: {fileID: 4490732407728905354}
@@ -28,6 +30,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyTank
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579656205218685154, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: 3259469533601874961, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
@@ -125,10 +132,20 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d0fed6d765f132148b8a4ff47398759d, type: 2}
-    - target: {fileID: 6579656205218685154, guid: 28922b00ef462ee4598bd3e50fb0120f,
+    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.24
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1173090276423670773, guid: 28922b00ef462ee4598bd3e50fb0120f, type: 3}
