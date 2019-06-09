@@ -11,7 +11,7 @@ public partial class Tank : MonoBehaviour
     protected Vector2 moveDirection;
     protected Rigidbody2D rigidbody2d;
     protected Animator animator;
-    protected float smallestGrid = 0.125f;
+    protected float smallestGrid = 0.25f;
 
     protected int health = 1;               // The amount of health each tank starts with.
     private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?

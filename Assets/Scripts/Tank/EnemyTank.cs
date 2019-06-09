@@ -76,12 +76,9 @@ public class EnemyTank : Tank
             position += collision.otherCollider.transform.position;
             position /= 0.25f;
             TileBase tile = map.GetTile(Vector3Int.FloorToInt(position));
-            print("Tank hit " + tile.name);
             if (tile.name == "steelwall" || tile.name == "river")
             {
-                print("Original direction " + moveDirection);
                 SelectDirection(true);
-                print("new direction " + moveDirection);
             }
         }
     }
