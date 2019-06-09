@@ -29,22 +29,18 @@ public class Shell : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //print("Shell hit " + other.name);
         Tank targetTank = other.GetComponent<Tank>();
-        // Deal this damage to the tank.
+        print("Shell hit " + other.name);
         if (targetTank != null)
         {
             if (targetTank.m_PlayerNumber != shooter)
             {
                 targetTank.TakeDamage();
-                // Explode the shell.
                 StartCoroutine(Explode());
             }
             else
                 return;
         }
-
-
         else if (other.name == "Tilemap")
         {
             Tilemap map = other.GetComponent<Tilemap>();
@@ -81,7 +77,7 @@ public class Shell : MonoBehaviour
                 StartCoroutine(Explode());
             }
         }
-        else
+        else if (other.name == "Headquarter")
         {
             StartCoroutine(Explode());
         }
