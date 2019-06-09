@@ -72,9 +72,9 @@ public class EnemyTank : Tank
         if (collision.collider.name == "Tilemap")
         {
             Tilemap map = collision.collider.GetComponent<Tilemap>();
-            Vector3 position = moveDirection * 0.25f;
+            Vector3 position = moveDirection * smallestGrid;
             position += collision.otherCollider.transform.position;
-            position /= 0.25f;
+            position /= smallestGrid;
             TileBase tile = map.GetTile(Vector3Int.FloorToInt(position));
             if (tile.name == "steelwall" || tile.name == "river")
             {
@@ -139,7 +139,7 @@ public class EnemyTank : Tank
 
     }
 
-    int Choose(float[] probs)
+    private int Choose(float[] probs)
     {
 
         float total = 0;
