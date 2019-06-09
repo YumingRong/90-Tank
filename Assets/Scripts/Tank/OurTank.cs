@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class  OurTank: Tank
+public partial class OurTank : Tank
 {
     public GameObject shield;
 
@@ -55,7 +55,6 @@ public partial class  OurTank: Tank
         }
         m_ChargeTime = Mathf.Lerp(0.5f, 1.3f, distance / 7);
 
-
         if (Input.GetButtonDown(m_FireButton))
         {
             if (m_CurrentChargeTime <= 0)
@@ -75,10 +74,9 @@ public partial class  OurTank: Tank
         float horizontal = Input.GetAxis(m_HorizontalAxisName);
 
         // Adjust the position of the tank based on the player's input.
-        Vector2 move = new Vector2(horizontal, vertical);
         Vector2 position = rigidbody2d.position;
 
-        if (Mathf.Approximately(move.x, 0.0f) && Mathf.Approximately(move.y, 0.0f))
+        if (Mathf.Approximately(horizontal, 0.0f) && Mathf.Approximately(vertical, 0.0f))
         {
             animator.speed = 0;
             position.x = Mathf.RoundToInt(position.x / smallestGrid) * smallestGrid;
@@ -87,29 +85,44 @@ public partial class  OurTank: Tank
         }
         else
         {
-            if (Mathf.Abs(move.x) > Mathf.Abs(move.y))
+            if (Mathf.Abs(horizontal) > Mathf.Abs(vertical))
             {
-                moveDirection.Set(move.x, 0);
-                if (move.x < 0)
+                moveDirection.Set(horizontal, 0);
+                if (horizontal < 0)
+                {
                     rigidbody2d.rotation = 90f;
+                    moveDirection = Vector2.left;
+                }
                 else
+                {
                     rigidbody2d.rotation = -90f;
+                    moveDirection = Vector2.right;
+                }
             }
             else
             {
-                moveDirection.Set(0, move.y);
-                if (move.y > 0)
-                    rigidbody2d.rotation = 0;
+                moveDirection.Set(0, vertical);
+                if (vertical > 0)
+                {
+                    rigidbody2d.rotation = 0f;
+                    moveDirection = Vector2.up;
+                }
+
                 else
+                {
                     rigidbody2d.rotation = 180f;
+                    moveDirection = Vector2.down;
+                }
             }
-            moveDirection.Normalize();
+            animator.speed = (moveDirection * speed).magnitude;
 
-            animator.speed = (move * speed).magnitude;
-
-            position += move * speed * Time.deltaTime;
+            position += moveDirection * speed * Time.deltaTime;
             rigidbody2d.MovePosition(position);
-        }
-    }
+            }
 
-}
+            //    float gridsize = smallestGrid * 2;
+            //if (transform.position.x % gridsize < smallestGrid / 4 && transform.position.y % gridsize < smallestGrid / 4)
+
+        }
+
+    }

@@ -45,7 +45,7 @@ public class EnemyTank : Tank
 
         Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
         transform.position = enemySpawnPoint[position];
-        speed = 0;
+        //speed = 0;
         isInvincible = true;
         invincibleTime = 1f;
         yield return new WaitForSeconds(1f);
@@ -64,8 +64,10 @@ public class EnemyTank : Tank
             m_CurrentChargeTime = 0f;
         }
         rigidbody2d.position += moveDirection * speed * Time.deltaTime;
+        //print("Delta position " + speed * Time.deltaTime);
         directionChangeTimer += Time.deltaTime;
-        if (directionChangeTimer > directionChangeInteval)
+        float gridsize = smallestGrid * 2;
+        if (directionChangeTimer > directionChangeInteval && (transform.position.x % gridsize)< smallestGrid /4 && (transform.position.y % gridsize) < smallestGrid/4)
         {
             SelectDirection(false);
             directionChangeInteval = Random.Range(1, 3);
