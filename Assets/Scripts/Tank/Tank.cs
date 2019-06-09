@@ -15,8 +15,8 @@ public partial class Tank : MonoBehaviour
 
     protected int health = 1;               // The amount of health each tank starts with.
     private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
-    float invincibleTimer;
-
+    protected float invincibleTimer;
+    protected float invincibleTime;
 
     private void Awake()
     {

@@ -19,7 +19,8 @@ public partial class  OurTank: Tank
         health = 1;
         isInvincible = true;
         animator.SetInteger("health", health);
-        yield return new WaitForSeconds(1f);
+        invincibleTime = 2f;
+        yield return new WaitForSeconds(2f);
         isInvincible = false;
         shieldAnimator.SetTrigger("reset");
     }

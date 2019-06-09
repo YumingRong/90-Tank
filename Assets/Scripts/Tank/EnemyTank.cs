@@ -16,11 +16,17 @@ public class EnemyTank : Tank
     {
         set
         {
-            health = healthArray[value - 1];
-            speed = speedArray[value - 1];
-            score = scoreArray[value - 1];
+            health = healthArray[value];
+            speed = speedArray[value];
+            score = scoreArray[value];
+            type = value;
+        }
+        get
+        {
+            return type;
         }
     }
+    private int type;
 
     // Start is called before the first frame update
     void Start()
@@ -39,13 +45,13 @@ public class EnemyTank : Tank
         animator.SetInteger("health", health);
 
         Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
-        transform.position = enemySpawnPoint[position - 1];
-        float speed0 = speed;
+        transform.position = enemySpawnPoint[position];
         speed = 0;
         isInvincible = true;
+        invincibleTime = 1f;
         yield return new WaitForSeconds(1f);
         isInvincible = false;
-        speed = speed0;
+        speed = speedArray[type];
     }
 
 
@@ -64,6 +70,10 @@ public class EnemyTank : Tank
         {
             SelectDirection(false);
             directionChangeInteval = Random.Range(1, 3);
+        }
+        if (invincibleTimer > invincibleTime)
+        {
+            isInvincible = false;
         }
     }
 
