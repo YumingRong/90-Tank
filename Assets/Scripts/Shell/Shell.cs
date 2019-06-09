@@ -39,7 +39,6 @@ public class Shell : MonoBehaviour
                 Vector3 cellSize = grid.cellSize;
                 Vector3Int roundPosition = Vector3Int.FloorToInt(new Vector3(TopLeft.position.x / cellSize.x, TopLeft.position.y / cellSize.y, 0));
                 TileBase tile = map.GetTile(roundPosition);
-                print("shell hit " + tile.name);
 
                 if (tile.name == "brickwall")
                 {

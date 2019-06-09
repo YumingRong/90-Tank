@@ -27,7 +27,7 @@ public class EnemyTank : Tank
     {
         m_PlayerNumber = -1;
         moveDirection = Vector2.down;
-        m_ChargeTime = 2f;
+        m_ChargeTime = 1.8f;
         directionChangeTimer = 0;
         directionChangeInteval = Random.Range(3, 5);
     }
@@ -62,21 +62,32 @@ public class EnemyTank : Tank
         directionChangeTimer += Time.deltaTime;
         if (directionChangeTimer > directionChangeInteval)
         {
-            SelectDirection();
+            SelectDirection(false);
             directionChangeInteval = Random.Range(1, 3);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.name == "WorldLimiter")
+        if (collision.collider.name == "Tilemap")
         {
-            Debug.Log("tank hit ex bound");
-            SelectDirection();
+            Tilemap map = collision.collider.GetComponent<Tilemap>();
+            Vector3 position = moveDirection * 0.25f;
+            position += collision.otherCollider.transform.position;
+            position /= 0.25f;
+            TileBase tile = map.GetTile(Vector3Int.FloorToInt(position));
+            print("Tank hit " + tile.name);
+            if (tile.name == "steelwall" || tile.name == "river")
+            {
+                print("Original direction " + moveDirection);
+                SelectDirection(true);
+                print("new direction " + moveDirection);
+            }
         }
     }
 
-    private void SelectDirection()
+
+    private void SelectDirection(bool mustChange)
     {
         float[] directChance = { 0.1f, 0.45f, 0.2f, 0.2f };
         if (transform.position.y <= -3f)
@@ -97,6 +108,19 @@ public class EnemyTank : Tank
             if (transform.position.x >= -3f)
                 directChance[3] = 0f;
         }
+
+        if (mustChange)
+        {
+            if (moveDirection == Vector2.up)
+                directChance[0] = 0f;
+            else if (moveDirection == Vector2.down)
+                directChance[1] = 0f;
+            else if (moveDirection == Vector2.left)
+                directChance[2] = 0f;
+            else
+                directChance[3] = 0f;
+        }
+
         Vector2[] directChoice = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
         moveDirection = directChoice[Choose(directChance)];
 
