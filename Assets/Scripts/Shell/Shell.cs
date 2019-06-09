@@ -8,7 +8,6 @@ public class Shell : MonoBehaviour
 {
 
     [HideInInspector] public int shooter;
-    [HideInInspector] public int damage;
     public Tile emptyTile;
     public Transform TopLeft;
     public Transform TopRight;
@@ -31,17 +30,19 @@ public class Shell : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         //print("Shell hit " + other.name);
-            Tank targetTank = other.GetComponent<Tank>();
-            // Deal this damage to the tank.
-            if (targetTank != null)
+        Tank targetTank = other.GetComponent<Tank>();
+        // Deal this damage to the tank.
+        if (targetTank != null)
+        {
+            if (targetTank.m_PlayerNumber != shooter)
             {
-                if (targetTank.m_PlayerNumber != shooter)
-                {
-                    targetTank.TakeDamage(damage);
-                    // Explode the shell.
-                    StartCoroutine(Explode());
-                }
+                targetTank.TakeDamage();
+                // Explode the shell.
+                StartCoroutine(Explode());
             }
+            else
+                return;
+        }
 
 
         else if (other.name == "Tilemap")
@@ -80,7 +81,11 @@ public class Shell : MonoBehaviour
                 StartCoroutine(Explode());
             }
         }
-        
+        else
+        {
+            StartCoroutine(Explode());
+        }
+
     }
 
 

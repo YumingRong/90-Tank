@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void GameOver()
+    {
+
+    }
+
 
     public void SpawnEnemyTank()
     {

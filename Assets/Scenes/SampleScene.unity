@@ -217,7 +217,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8007,6 +8007,7 @@ MonoBehaviour:
   ourTank: {fileID: -251887832037140296, guid: 26a21fe6a032cfb48bff4301d773810c, type: 3}
   enemyTank: {fileID: 1423868741856083713, guid: 3c86b80e9332b7d4b9e94ff2dc505cb2,
     type: 3}
+  liveEnemy: 0
 --- !u!4 &1158149886
 Transform:
   m_ObjectHideFlags: 0
@@ -8032,6 +8033,7 @@ GameObject:
   - component: {fileID: 1278532627}
   - component: {fileID: 1278532626}
   - component: {fileID: 1278532628}
+  - component: {fileID: 1278532629}
   m_Layer: 8
   m_Name: Headquarter
   m_TagString: Untagged
@@ -8127,3 +8129,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.48}
   m_EdgeRadius: 0
+--- !u!114 &1278532629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278532625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ac8587887e75d4083d2fae47aee015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  good: {fileID: 21300000, guid: 348689f3ae1049543944763479b82653, type: 3}
+  wreck: {fileID: 21300000, guid: feb9cb58d1bb36b4da169c1997522b5c, type: 3}

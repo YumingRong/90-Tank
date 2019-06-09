@@ -16,7 +16,7 @@ public class EnemyTank : Tank
     {
         set
         {
-            health = healthArray[value];
+            Health = healthArray[value];
             speed = speedArray[value];
             score = scoreArray[value];
             type = value;

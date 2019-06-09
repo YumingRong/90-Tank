@@ -13,13 +13,13 @@ public partial class Tank : MonoBehaviour
     protected Animator animator;
     protected float smallestGrid = 0.25f;
 
-    protected int health               // The amount of health each tank
+    protected int Health               // The amount of health each tank
     {
         set
         {
             m_health = value;
-            animator.SetInteger("health", health);
-            print("Tank health " + health);
+            animator.SetInteger("health", value);
+            print("Tank health " + value);
         }
         get
         {
@@ -54,15 +54,17 @@ public partial class Tank : MonoBehaviour
         rigidbody2d.isKinematic = true;
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage()
     {
+        print("Tank health before damage " + Health);
+
+
         if (isInvincible)
             return;
         // Reduce current health by the amount of damage done.
-        print("Tank health before damage " + health);
-        health -= amount;
+        Health--;
         // If the current health is at or below zero and it has not yet been registered, call OnDeath.
-        if (health <= 0 && !m_Dead)
+        if (Health <= 0 && !m_Dead)
         {
             StartCoroutine(OnDeath());
         }

@@ -16,7 +16,7 @@ public partial class  OurTank: Tank
         Vector2[] ourSpawnPoint = { new Vector2(-0.75f, -3f), new Vector2(0.75f, -3f) };
         transform.position = ourSpawnPoint[player - 1];
         m_PlayerNumber = player;
-        health = 1;
+        Health = 1;
         isInvincible = true;
         invincibleTime = 2f;
         yield return new WaitForSeconds(2f);

@@ -18,7 +18,6 @@ public partial class Tank : MonoBehaviour
         Shell shell = shellInstance.GetComponent<Shell>();
         shell.GetComponent<Rigidbody2D>().velocity = m_ShellSpeed * moveDirection;
         shell.shooter = m_PlayerNumber;
-        shell.damage = m_ShootDamage;
 
     }
 }
