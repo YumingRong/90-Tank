@@ -35,14 +35,13 @@ public class EnemyTank : Tank
         moveDirection = Vector2.down;
         m_ChargeTime = 1.8f;
         directionChangeTimer = 0;
-        directionChangeInteval = Random.Range(3, 5);
+        directionChangeInteval = Random.Range(2, 5);
     }
 
     public IEnumerator Born(int type, int position)
     {
         Type = type;
-        animator.SetInteger("type", type);
-        animator.SetInteger("health", health);
+        animator.SetInteger("type", type + 1);
 
         Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
         transform.position = enemySpawnPoint[position];
@@ -51,7 +50,7 @@ public class EnemyTank : Tank
         invincibleTime = 1f;
         yield return new WaitForSeconds(1f);
         isInvincible = false;
-        speed = speedArray[type];
+        //speed = speedArray[type];
     }
 
 
@@ -70,10 +69,6 @@ public class EnemyTank : Tank
         {
             SelectDirection(false);
             directionChangeInteval = Random.Range(1, 3);
-        }
-        if (invincibleTimer > invincibleTime)
-        {
-            isInvincible = false;
         }
     }
 

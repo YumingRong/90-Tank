@@ -18,7 +18,6 @@ public partial class  OurTank: Tank
         m_PlayerNumber = player;
         health = 1;
         isInvincible = true;
-        animator.SetInteger("health", health);
         invincibleTime = 2f;
         yield return new WaitForSeconds(2f);
         isInvincible = false;

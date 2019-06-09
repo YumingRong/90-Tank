@@ -30,7 +30,21 @@ public class Shell : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "Tilemap")
+        //print("Shell hit " + other.name);
+            Tank targetTank = other.GetComponent<Tank>();
+            // Deal this damage to the tank.
+            if (targetTank != null)
+            {
+                if (targetTank.m_PlayerNumber != shooter)
+                {
+                    targetTank.TakeDamage(damage);
+                    // Explode the shell.
+                    StartCoroutine(Explode());
+                }
+            }
+
+
+        else if (other.name == "Tilemap")
         {
             Tilemap map = other.GetComponent<Tilemap>();
             if (map != null)
@@ -58,21 +72,15 @@ public class Shell : MonoBehaviour
 
             }
         }
-        else
+        else if (other.name == "Shell")
         {
-            Tank targetTank = other.GetComponent<Tank>();
-            // Deal this damage to the tank.
-            if (targetTank != null)
+            Shell shell = other.GetComponent<Shell>();
+            if (shell.shooter != shooter)
             {
-                print("shell hit tank:" + targetTank.m_PlayerNumber);
-                if (targetTank.m_PlayerNumber != shooter)
-                {
-                    targetTank.TakeDamage(damage);
-                    // Explode the shell.
-                    StartCoroutine(Explode());
-                }
+                StartCoroutine(Explode());
             }
         }
+        
     }
 
 
@@ -80,8 +88,6 @@ public class Shell : MonoBehaviour
     {
         animator.SetTrigger("explode");
         GetComponent<Rigidbody2D>().velocity = new Vector3(0f, 0f, 0f);
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"))
-            Debug.Log("Shell explode");
         yield return new WaitForSeconds(0.3f);
         ObjectPool.GetInstance().RecycleObj(gameObject);
     }

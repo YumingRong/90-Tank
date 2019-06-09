@@ -13,10 +13,24 @@ public partial class Tank : MonoBehaviour
     protected Animator animator;
     protected float smallestGrid = 0.25f;
 
-    protected int health = 1;               // The amount of health each tank starts with.
+    protected int health               // The amount of health each tank
+    {
+        set
+        {
+            m_health = value;
+            animator.SetInteger("health", health);
+            print("Tank health " + health);
+        }
+        get
+        {
+            return m_health;
+        }
+    }
+    private int m_health;
     private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
     protected float invincibleTimer;
     protected float invincibleTime;
+    private GameManager gameManager;
 
     private void Awake()
     {
@@ -24,6 +38,7 @@ public partial class Tank : MonoBehaviour
         animator = GetComponent<Animator>();
         shellPool = ObjectPool.GetInstance();
         ObjectPool.GetInstance().Awake("Shell");
+        gameManager = GameManager.GetInstance();
     }
 
     private void OnEnable()
@@ -44,8 +59,8 @@ public partial class Tank : MonoBehaviour
         if (isInvincible)
             return;
         // Reduce current health by the amount of damage done.
+        print("Tank health before damage " + health);
         health -= amount;
-        animator.SetInteger("health", health);
         // If the current health is at or below zero and it has not yet been registered, call OnDeath.
         if (health <= 0 && !m_Dead)
         {
@@ -63,7 +78,7 @@ public partial class Tank : MonoBehaviour
 
         //// Play the particle system of the tank exploding.
         //m_ExplosionParticles.Play();
-        Debug.Log("Tank explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
+        //Debug.Log("Tank explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         yield return new WaitForSeconds(7f/10f);
         //// Play the tank explosion sound effect.
         //m_ExplosionAudio.Play();
@@ -73,7 +88,9 @@ public partial class Tank : MonoBehaviour
             gameObject.SetActive(false);
         else
         {
+            gameManager.liveEnemy--;
             Destroy(gameObject);
+            gameManager.SpawnEnemyTank();
         }
     }
 
