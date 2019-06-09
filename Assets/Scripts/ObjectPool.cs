@@ -22,7 +22,7 @@ public class ObjectPool
         prefabs = new Dictionary<string, GameObject>();
     }
 
-    public GameObject GetObject(string objName, Vector3 position, Quaternion quaternion)
+    public GameObject GetObject(string objName)
     {
         GameObject result = null;
 
@@ -31,8 +31,6 @@ public class ObjectPool
             if (pool[objName].Count > 0)
             {
                 result = pool[objName].Pop();
-                result.transform.position = position;
-                result.transform.rotation = quaternion;
                 result.SetActive(true);
                 return result;
             }
@@ -49,8 +47,6 @@ public class ObjectPool
             prefabs.Add(objName, prefab);
         }
         result = Object.Instantiate(prefab);
-        result.transform.position = position;
-        result.transform.rotation = quaternion;
         //改名（去除clone）
         result.name = objName;
         return result;

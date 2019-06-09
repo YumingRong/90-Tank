@@ -56,10 +56,11 @@ public class GameManager : MonoBehaviour
 
     public void SpawnEnemyTank()
     {
-        while (liveEnemy < 1 && enemyBorn < 20)
+        while (liveEnemy < 3 && enemyBorn < 20)
         {
             //print("Tank No " + enemyBorn + " type "  + enemyQueue[enemyBorn] +" born at " + enemyBorn % 3);
-            EnemyTank tank = Instantiate(enemyTank);
+            GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
+            EnemyTank tank = tankInstance.GetComponent<EnemyTank>();
             StartCoroutine(tank.Born(enemyQueue[enemyBorn], enemyBorn % 3));
             liveEnemy++;
             enemyBorn++;

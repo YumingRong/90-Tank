@@ -59,7 +59,6 @@ public partial class Tank : MonoBehaviour
 
         if (isInvincible)
             return;
-        // Reduce current health by the amount of damage done.
         Health--;
         // If the current health is at or below zero and it has not yet been registered, call OnDeath.
         if (Health <= 0 && !m_Dead)
@@ -72,16 +71,7 @@ public partial class Tank : MonoBehaviour
     {
         // Set the flag so that this function is only called once.
         m_Dead = true;
-        //// Move the instantiated explosion prefab to the tank's position and turn it on.
-        //m_ExplosionParticles.transform.position = transform.position;
-        //m_ExplosionParticles.gameObject.SetActive(true);
-
-        //// Play the particle system of the tank exploding.
-        //m_ExplosionParticles.Play();
-        //Debug.Log("Tank explode:" + animator.GetCurrentAnimatorStateInfo(0).IsName("Base.Explode"));
         yield return new WaitForSeconds(7f/10f);
-        //// Play the tank explosion sound effect.
-        //m_ExplosionAudio.Play();
 
         // Turn the tank off.
         if (m_PlayerNumber > 0)
@@ -89,7 +79,7 @@ public partial class Tank : MonoBehaviour
         else
         {
             gameManager.liveEnemy--;
-            Destroy(gameObject);
+            ObjectPool.GetInstance().RecycleObj(gameObject);
             gameManager.SpawnEnemyTank();
         }
     }
