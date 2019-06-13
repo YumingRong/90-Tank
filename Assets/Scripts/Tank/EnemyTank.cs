@@ -8,9 +8,9 @@ public class EnemyTank : Tank
     private float directionChangeInteval;
     private float directionChangeTimer;
 
-    private int[] healthArray = { 1, 2, 2, 3 };
-    private float[] speedArray = { 0.5f, 0.5f, 1f, 0.5f };
-    private int[] scoreArray = { 100, 200, 300, 400 };
+    private readonly int[] healthArray = { 1, 2, 2, 3 };
+    private readonly float[] speedArray = { 0.5f, 0.5f, 1f, 0.5f };
+    private readonly int[] scoreArray = { 100, 200, 300, 400 };
 
     public int Type
     {
@@ -45,12 +45,12 @@ public class EnemyTank : Tank
 
         Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
         transform.position = enemySpawnPoint[position];
-        //speed = 0;
+        speed = 0;
         isInvincible = true;
         invincibleTime = 1f;
         yield return new WaitForSeconds(1f);
         isInvincible = false;
-        //speed = speedArray[type];
+        speed = speedArray[type];
     }
 
 
@@ -58,7 +58,7 @@ public class EnemyTank : Tank
     void Update()
     {
         m_CurrentChargeTime += Time.deltaTime;
-        if (m_CurrentChargeTime >= m_ChargeTime)
+        if (m_CurrentChargeTime >= m_ChargeTime && !m_Dead)
         {
             Fire();
             m_CurrentChargeTime = 0f;

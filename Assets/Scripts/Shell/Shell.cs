@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class Shell : MonoBehaviour
 {
-
     [HideInInspector] public int shooter;
     public Tile emptyTile;
     public Transform TopLeft;
@@ -30,12 +29,21 @@ public class Shell : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Tank targetTank = other.GetComponent<Tank>();
-        print("Shell hit " + other.name);
+        //print("Shell hit " + other.name);
         if (targetTank != null)
         {
             if (targetTank.m_PlayerNumber != shooter)
             {
-                targetTank.TakeDamage();
+                if (targetTank.m_PlayerNumber < 0)
+                {
+                    EnemyTank enemy = other.GetComponent<EnemyTank>();
+                    enemy.TakeDamage();
+                }
+                else
+                {
+                    OurTank ourTank = other.GetComponent<OurTank>();
+                    ourTank.TakeDamage();
+                }
                 StartCoroutine(Explode());
             }
             else

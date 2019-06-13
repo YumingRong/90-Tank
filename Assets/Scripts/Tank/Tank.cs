@@ -13,13 +13,12 @@ public partial class Tank : MonoBehaviour
     protected Animator animator;
     protected float smallestGrid = 0.25f;
 
-    protected int Health               // The amount of health each tank
+    public int Health               // The amount of health each tank
     {
         set
         {
             m_health = value;
             animator.SetInteger("health", value);
-            print("Tank health " + value);
         }
         get
         {
@@ -27,7 +26,7 @@ public partial class Tank : MonoBehaviour
         }
     }
     private int m_health;
-    private bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
+    protected bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
     protected float invincibleTimer;
     protected float invincibleTime;
     private GameManager gameManager;
@@ -54,9 +53,6 @@ public partial class Tank : MonoBehaviour
 
     public void TakeDamage()
     {
-        print("Tank health before damage " + Health);
-
-
         if (isInvincible)
             return;
         Health--;
