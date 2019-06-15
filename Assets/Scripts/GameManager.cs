@@ -1,16 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public OurTank ourTank;
     public EnemyTank enemyTank;
+    public Canvas canvas;
     int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[20];
     int enemyBorn = 0;
     [HideInInspector] public int liveEnemy;
     private static GameManager instance;
+    private OurTank player1, player2;
+    public GameObject startupPanel;
+    public GameObject gameoverPanel;
+
 
     public static GameManager GetInstance()
     {
@@ -37,9 +43,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canvas.enabled = true;
+        gameoverPanel.SetActive(false);
+        startupPanel.SetActive(true);
+        
         FormQueue();
         SpawnEnemyTank();
-        SpawnOurTank(1);
+        player1 = SpawnOurTank(1);
+        canvas.enabled = false;
+        //Image image = canvas.GetComponent<Image>();
+        
     }
 
     // Update is called once per frame
@@ -50,7 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-
+        canvas.enabled = true;
+        player1.m_Dead = true;
     }
 
 
@@ -68,10 +82,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void SpawnOurTank(int player)
+    OurTank SpawnOurTank(int player)
     {
         OurTank tank = Instantiate(ourTank);
         StartCoroutine(tank.Born(player));
+        return tank;
     }
 
     void FormQueue()

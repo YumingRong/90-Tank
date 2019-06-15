@@ -26,7 +26,7 @@ public partial class Tank : MonoBehaviour
         }
     }
     private int m_health;
-    protected bool m_Dead;                                // Has the tank been reduced beyond zero health yet?
+    [HideInInspector] public bool m_Dead;          // Has the tank been reduced beyond zero health yet?
     protected float invincibleTimer;
     protected float invincibleTime;
     private GameManager gameManager;

@@ -16,6 +16,7 @@ public partial class OurTank : Tank
         Vector2[] ourSpawnPoint = { new Vector2(-0.75f, -3f), new Vector2(0.75f, -3f) };
         transform.position = ourSpawnPoint[player - 1];
         m_PlayerNumber = player;
+        m_Dead = false; 
         Health = 1;
         isInvincible = true;
         invincibleTime = 2f;
@@ -42,6 +43,8 @@ public partial class OurTank : Tank
     // Update is called once per frame
     void Update()
     {
+        if (m_Dead)
+            return;
         float distance;
         RaycastHit2D hit1 = Physics2D.Raycast(fireTransform.position, -moveDirection, 0.1f, LayerMask.GetMask("Tank"));
         if (hit1.collider.gameObject != gameObject)
@@ -69,6 +72,8 @@ public partial class OurTank : Tank
 
     void FixedUpdate()
     {
+        if (m_Dead)
+            return;
         // Store the player's input and make sure the audio for the engine is playing.
         float vertical = Input.GetAxis(m_VerticalAxisName);
         float horizontal = Input.GetAxis(m_HorizontalAxisName);
