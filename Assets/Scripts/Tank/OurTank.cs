@@ -71,17 +71,11 @@ public partial class OurTank : Tank
             }
         }
         m_CurrentChargeTime -= Time.deltaTime;
-    }
 
-
-    void FixedUpdate()
-    {
-        if (m_Dead)
-            return;
         // Store the player's input and make sure the audio for the engine is playing.
-        float vertical = Input.GetAxis(m_VerticalAxisName);
+        float vertical = Input.GetAxisRaw(m_VerticalAxisName);
         float horizontal = Input.GetAxis(m_HorizontalAxisName);
-
+        print("vertical " + vertical + "； horizontal " + horizontal);
         // Adjust the position of the tank based on the player's input.
         Vector2 position = rigidbody2d.position;
 
@@ -127,11 +121,11 @@ public partial class OurTank : Tank
 
             position += moveDirection * speed * Time.deltaTime;
             rigidbody2d.MovePosition(position);
-            }
-
-            //    float gridsize = smallestGrid * 2;
-            //if (transform.position.x % gridsize < smallestGrid / 4 && transform.position.y % gridsize < smallestGrid / 4)
-
         }
 
+        //    float gridsize = smallestGrid * 2;
+        //if (transform.position.x % gridsize < smallestGrid / 4 && transform.position.y % gridsize < smallestGrid / 4)
     }
+}
+
+

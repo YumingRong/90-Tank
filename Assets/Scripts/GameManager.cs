@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour
     public GameObject gameoverPanel;
 
     public Canvas canvas;
+    [HideInInspector] public int liveEnemy;
     int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[20];
     int enemyBorn = 0;
-    [HideInInspector] public int liveEnemy;
     private static GameManager instance;
 
 
