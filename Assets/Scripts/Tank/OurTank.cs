@@ -11,12 +11,17 @@ public partial class OurTank : Tank
     private string m_FireButton;                // The input axis that is used for launching shells.
     private Animator shieldAnimator;
 
-    public IEnumerator Born(int player)
+
+    public IEnumerator Born()
     {
+        if (gameObject.name == "player1")
+            m_PlayerNumber = 1;
+        else
+            m_PlayerNumber = 2;
         Vector2[] ourSpawnPoint = { new Vector2(-0.75f, -3f), new Vector2(0.75f, -3f) };
-        transform.position = ourSpawnPoint[player - 1];
-        m_PlayerNumber = player;
-        m_Dead = false; 
+        transform.position = ourSpawnPoint[m_PlayerNumber - 1];
+        m_Dead = false;
+        print("Tank " + gameObject.name + " Health " + Health);
         Health = 1;
         isInvincible = true;
         invincibleTime = 2f;

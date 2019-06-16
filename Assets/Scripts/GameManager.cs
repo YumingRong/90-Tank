@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public OurTank ourTank;
     public EnemyTank enemyTank;
+    public OurTank player1, player2;
+    public GameObject gameoverPanel;
+
     public Canvas canvas;
     int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[20];
     int enemyBorn = 0;
     [HideInInspector] public int liveEnemy;
     private static GameManager instance;
-    private OurTank player1, player2;
-    public GameObject startupPanel;
-    public GameObject gameoverPanel;
 
 
     public static GameManager GetInstance()
@@ -46,13 +45,17 @@ public class GameManager : MonoBehaviour
         canvas.enabled = true;
         gameoverPanel.SetActive(false);
 
-        int player = GameObject.Find("Choice").GetComponent<StartUp>().selection;
-        
+        //int player = GameObject.Find("Choice").GetComponent<StartUp>().selection;
+        int player = 2;
         FormQueue();
         SpawnEnemyTank();
-        player1 = SpawnOurTank(1);
+        SpawnOurTank(1);
         if (player == 2)
-            player2 = SpawnOurTank(2);
+            SpawnOurTank(2);
+        else
+        {
+            player2.gameObject.SetActive(false);
+        }
         canvas.enabled = false;
         GameObject.DontDestroyOnLoad(gameObject);
     }
@@ -72,6 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnEnemyTank()
     {
+        print("spawn enemy tank");
         while (liveEnemy < 1 && enemyBorn < 20)
         {
             //print("Tank No " + enemyBorn + " type "  + enemyQueue[enemyBorn] +" born at " + enemyBorn % 3);
@@ -84,11 +88,13 @@ public class GameManager : MonoBehaviour
 
     }
 
-    OurTank SpawnOurTank(int player)
+    void SpawnOurTank(int player)
     {
-        OurTank tank = Instantiate(ourTank);
-        StartCoroutine(tank.Born(player));
-        return tank;
+        print("spawn our tank");
+        if (player == 1)
+            StartCoroutine(player1.Born());
+        else
+            StartCoroutine(player2.Born());
     }
 
     void FormQueue()

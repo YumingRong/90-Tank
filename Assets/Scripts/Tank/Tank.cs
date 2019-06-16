@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class Tank : MonoBehaviour
 {
-    public int m_PlayerNumber;
+    [HideInInspector] public int m_PlayerNumber;
     [HideInInspector] public float speed = 0.5f;
     [HideInInspector] public int score;
     [HideInInspector] public bool isInvincible;
@@ -35,6 +35,7 @@ public partial class Tank : MonoBehaviour
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        print("Tank " + gameObject.name + " animator " + (animator != null));
         gameManager = GameManager.GetInstance();
     }
 
