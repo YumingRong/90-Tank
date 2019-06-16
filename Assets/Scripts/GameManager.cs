@@ -46,12 +46,14 @@ public class GameManager : MonoBehaviour
         canvas.enabled = true;
         gameoverPanel.SetActive(false);
 
+        int player = GameObject.Find("Choice").GetComponent<StartUp>().selection;
         
         FormQueue();
         SpawnEnemyTank();
         player1 = SpawnOurTank(1);
+        if (player == 2)
+            player2 = SpawnOurTank(2);
         canvas.enabled = false;
-        //Image image = canvas.GetComponent<Image>();
         GameObject.DontDestroyOnLoad(gameObject);
     }
 
