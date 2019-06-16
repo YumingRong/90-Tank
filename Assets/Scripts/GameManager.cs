@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     public OurTank player1, player2;
     public GameObject gameoverPanel;
 
-    public Canvas canvas;
+
+    private int[] playerLife = { 3, 3 };
     [HideInInspector] public int liveEnemy;
     int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[20];
@@ -42,7 +43,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canvas.enabled = true;
         gameoverPanel.SetActive(false);
 
         //int player = GameObject.Find("Choice").GetComponent<StartUp>().selection;
@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
         {
             player2.gameObject.SetActive(false);
         }
-        canvas.enabled = false;
         GameObject.DontDestroyOnLoad(gameObject);
     }
 
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        canvas.enabled = true;
+        gameoverPanel.SetActive(true);
         player1.m_Dead = true;
         player2.m_Dead = true;
     }
@@ -76,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnEnemyTank()
     {
-        while (liveEnemy < 1 && enemyBorn < 20)
+        while (liveEnemy < 4 && enemyBorn < 20)
         {
             //print("Tank No " + enemyBorn + " type "  + enemyQueue[enemyBorn] +" born at " + enemyBorn % 3);
             GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
@@ -123,5 +122,18 @@ public class GameManager : MonoBehaviour
     void OnDestroy()
     {
         instance = null;
+    }
+
+    public void OurTankDie(int player)
+    {
+        playerLife[player - 1]--;
+        if (playerLife[0] == 0 && playerLife[1] == 0)
+        {
+            GameOver();
+        }
+        else if (playerLife[player - 1] > 0)
+        {
+            SpawnOurTank(player);
+        }
     }
 }

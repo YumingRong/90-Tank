@@ -27,6 +27,7 @@ public partial class OurTank : Tank
         Health = 1;
         isInvincible = true;
         invincibleTime = 2f;
+        gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         isInvincible = false;
         shieldAnimator.SetTrigger("reset");
@@ -75,7 +76,7 @@ public partial class OurTank : Tank
         // Store the player's input and make sure the audio for the engine is playing.
         float vertical = Input.GetAxisRaw(m_VerticalAxisName);
         float horizontal = Input.GetAxis(m_HorizontalAxisName);
-        print("vertical " + vertical + "； horizontal " + horizontal);
+        //print("vertical " + vertical + "； horizontal " + horizontal);
         // Adjust the position of the tank based on the player's input.
         Vector2 position = rigidbody2d.position;
 

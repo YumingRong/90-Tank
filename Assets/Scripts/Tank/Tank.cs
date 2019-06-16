@@ -71,7 +71,10 @@ public partial class Tank : MonoBehaviour
 
         // Turn the tank off.
         if (m_PlayerNumber > 0)
+        {
             gameObject.SetActive(false);
+            gameManager.OurTankDie(m_PlayerNumber);
+        }
         else
         {
             gameManager.liveEnemy--;
