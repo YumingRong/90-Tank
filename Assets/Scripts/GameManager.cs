@@ -70,12 +70,12 @@ public class GameManager : MonoBehaviour
     {
         canvas.enabled = true;
         player1.m_Dead = true;
+        player2.m_Dead = true;
     }
 
 
     public void SpawnEnemyTank()
     {
-        print("spawn enemy tank");
         while (liveEnemy < 1 && enemyBorn < 20)
         {
             //print("Tank No " + enemyBorn + " type "  + enemyQueue[enemyBorn] +" born at " + enemyBorn % 3);
@@ -90,7 +90,6 @@ public class GameManager : MonoBehaviour
 
     void SpawnOurTank(int player)
     {
-        print("spawn our tank");
         if (player == 1)
             StartCoroutine(player1.Born());
         else

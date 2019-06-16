@@ -35,7 +35,6 @@ public partial class Tank : MonoBehaviour
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        print("Tank " + gameObject.name + " animator " + (animator != null));
         gameManager = GameManager.GetInstance();
     }
 
