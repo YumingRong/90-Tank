@@ -45,14 +45,14 @@ public class GameManager : MonoBehaviour
     {
         canvas.enabled = true;
         gameoverPanel.SetActive(false);
-        startupPanel.SetActive(true);
+
         
         FormQueue();
         SpawnEnemyTank();
         player1 = SpawnOurTank(1);
         canvas.enabled = false;
         //Image image = canvas.GetComponent<Image>();
-        
+        GameObject.DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
