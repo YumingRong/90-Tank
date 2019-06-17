@@ -174,4 +174,33 @@ public class EnemyTank : Tank
         return probs.Length - 1;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name == "Shell" && !isInvincible)
+        {
+            Shell shell = collision.GetComponent<Shell>();
+            if (shell.shooter > 0)
+            {
+                Health--;
+                // If the current health is at or below zero and it has not yet been registered, call OnDeath.
+                if (Health <= 0 && !m_Dead)
+                {
+                    StartCoroutine(OnDeath());
+                }
+            }
+        }
+    }
+
+    protected IEnumerator OnDeath()
+    {
+        // Set the flag so that this function is only called once.
+        m_Dead = true;
+        yield return new WaitForSeconds(7f / 10f);
+
+        gameManager.liveEnemy--;
+        ObjectPool.GetInstance().RecycleObj(gameObject);
+        gameManager.SpawnEnemyTank();
+    }
+
+
 }

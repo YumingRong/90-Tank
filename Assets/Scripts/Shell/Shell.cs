@@ -28,26 +28,19 @@ public class Shell : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Tank targetTank = other.GetComponent<Tank>();
         //print("Shell hit " + other.name);
-        if (targetTank != null)
+        if (other.name == "EnemyTank" || other.name == "player1" || other.name == "player2")
         {
-            if (targetTank.m_PlayerNumber != shooter)
+            Tank targetTank = other.GetComponent<Tank>();
+            if (targetTank != null)
             {
-                if (targetTank.m_PlayerNumber < 0)
+                if (targetTank.m_PlayerNumber != shooter)
                 {
-                    EnemyTank enemy = other.GetComponent<EnemyTank>();
-                    enemy.TakeDamage();
+                    StartCoroutine(Explode());
                 }
                 else
-                {
-                    OurTank ourTank = other.GetComponent<OurTank>();
-                    ourTank.TakeDamage();
-                }
-                StartCoroutine(Explode());
+                    return;
             }
-            else
-                return;
         }
         else if (other.name == "Tilemap")
         {

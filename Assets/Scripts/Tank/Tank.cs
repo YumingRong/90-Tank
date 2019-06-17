@@ -29,7 +29,7 @@ public partial class Tank : MonoBehaviour
     [HideInInspector] public bool m_Dead;          // Has the tank been reduced beyond zero health yet?
     protected float invincibleTimer;
     protected float invincibleTime;
-    private GameManager gameManager;
+    protected GameManager gameManager;
 
     private void Awake()
     {
@@ -50,37 +50,4 @@ public partial class Tank : MonoBehaviour
     {
         rigidbody2d.isKinematic = true;
     }
-
-    public void TakeDamage()
-    {
-        if (isInvincible)
-            return;
-        Health--;
-        // If the current health is at or below zero and it has not yet been registered, call OnDeath.
-        if (Health <= 0 && !m_Dead)
-        {
-            StartCoroutine(OnDeath());
-        }
-    }
-
-    private IEnumerator OnDeath()
-    {
-        // Set the flag so that this function is only called once.
-        m_Dead = true;
-        yield return new WaitForSeconds(7f/10f);
-
-        // Turn the tank off.
-        if (m_PlayerNumber > 0)
-        {
-            gameObject.SetActive(false);
-            gameManager.OurTankDie(m_PlayerNumber);
-        }
-        else
-        {
-            gameManager.liveEnemy--;
-            ObjectPool.GetInstance().RecycleObj(gameObject);
-            gameManager.SpawnEnemyTank();
-        }
-    }
-
 }
