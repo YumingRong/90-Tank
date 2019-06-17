@@ -32,15 +32,8 @@ public class Shell : MonoBehaviour
         if (other.name == "EnemyTank" || other.name == "player1" || other.name == "player2")
         {
             Tank targetTank = other.GetComponent<Tank>();
-            if (targetTank != null)
-            {
-                if (targetTank.m_PlayerNumber != shooter)
-                {
-                    StartCoroutine(Explode());
-                }
-                else
-                    return;
-            }
+            if (targetTank != null && targetTank.m_PlayerNumber == shooter)
+                return;
         }
         else if (other.name == "Tilemap")
         {
@@ -64,24 +57,9 @@ public class Shell : MonoBehaviour
                 {
                     map.SetTile(roundPosition, emptyTile);
                 }
-
-                // Explode the shell.
-                StartCoroutine(Explode());
-
             }
         }
-        else if (other.name == "Shell")
-        {
-            Shell shell = other.GetComponent<Shell>();
-            if (shell.shooter != shooter)
-            {
-                StartCoroutine(Explode());
-            }
-        }
-        else if (other.name == "Headquarter")
-        {
-            StartCoroutine(Explode());
-        }
+        StartCoroutine(Explode());
 
     }
 
