@@ -83,9 +83,6 @@ public partial class OurTank : Tank
         if (Mathf.Approximately(horizontal, 0.0f) && Mathf.Approximately(vertical, 0.0f))
         {
             animator.speed = 0;
-            position.x = Mathf.RoundToInt(position.x / smallestGrid) * smallestGrid;
-            position.y = Mathf.RoundToInt(position.y / smallestGrid) * smallestGrid;
-            rigidbody2d.position = position;
         }
         else
         {
@@ -102,6 +99,8 @@ public partial class OurTank : Tank
                     rigidbody2d.rotation = -90f;
                     moveDirection = Vector2.right;
                 }
+                position.y = Mathf.RoundToInt(position.y / smallestGrid) * smallestGrid;
+
             }
             else
             {
@@ -117,15 +116,13 @@ public partial class OurTank : Tank
                     rigidbody2d.rotation = 180f;
                     moveDirection = Vector2.down;
                 }
+                position.x = Mathf.RoundToInt(position.x / smallestGrid) * smallestGrid;
             }
             animator.speed = (moveDirection * speed).magnitude;
 
             position += moveDirection * speed * Time.deltaTime;
             rigidbody2d.MovePosition(position);
         }
-
-        //    float gridsize = smallestGrid * 2;
-        //if (transform.position.x % gridsize < smallestGrid / 4 && transform.position.y % gridsize < smallestGrid / 4)
     }
 }
 

@@ -88,6 +88,8 @@ public class EnemyTank : Tank
                 SelectDirection(true);
             }
         }
+        if (collision.collider.name == "EnemyTank")
+            SelectDirection(true);
     }
 
 
