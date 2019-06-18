@@ -175,7 +175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooter: 0
-  damage: 0
   emptyTile: {fileID: 11400000, guid: 98d6e985469321c4a83665b12a154d61, type: 2}
   TopLeft: {fileID: 486706485075247323}
   TopRight: {fileID: 3887004792390478702}

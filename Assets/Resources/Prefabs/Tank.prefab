@@ -97,7 +97,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3259469533601874975}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -171,6 +171,7 @@ MonoBehaviour:
   speed: 0.5
   score: 0
   isInvincible: 0
+  m_Dead: 0
   m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
     type: 3}
   fireTransform: {fileID: 6579656205218685154}

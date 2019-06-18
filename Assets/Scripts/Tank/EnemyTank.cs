@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class EnemyTank : Tank
 {
+    public Transform frontLeft, frontRight;
     private float directionChangeInteval;
     private float directionChangeTimer;
 
@@ -79,13 +80,18 @@ public class EnemyTank : Tank
         if (collision.collider.name == "Tilemap")
         {
             Tilemap map = collision.collider.GetComponent<Tilemap>();
-            Vector3 position = moveDirection * smallestGrid;
-            position += collision.otherCollider.transform.position;
-            position /= smallestGrid;
-            TileBase tile = map.GetTile(Vector3Int.FloorToInt(position));
+            TileBase tile = map.GetTile(Vector3Int.FloorToInt(frontLeft.position / smallestGrid));
             if (tile.name == "steelwall" || tile.name == "river")
             {
                 SelectDirection(true);
+            }
+            else
+            {
+                tile = map.GetTile(Vector3Int.FloorToInt(frontRight.position / smallestGrid));
+                if (tile.name == "steelwall" || tile.name == "river")
+                {
+                    SelectDirection(true);
+                }
             }
         }
         if (collision.collider.name == "EnemyTank")
