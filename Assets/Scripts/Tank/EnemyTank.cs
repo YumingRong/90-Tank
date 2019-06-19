@@ -80,7 +80,9 @@ public class EnemyTank : Tank
         if (collision.collider.name == "Tilemap")
         {
             Tilemap map = collision.collider.GetComponent<Tilemap>();
+            print("frontLeft.position" + Vector3Int.FloorToInt(frontLeft.position / smallestGrid));
             TileBase tile = map.GetTile(Vector3Int.FloorToInt(frontLeft.position / smallestGrid));
+            print("Tile " + tile.name);
             if (tile.name == "steelwall" || tile.name == "river")
             {
                 SelectDirection(true);
