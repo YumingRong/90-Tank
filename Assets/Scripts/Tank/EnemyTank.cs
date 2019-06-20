@@ -41,11 +41,31 @@ public class EnemyTank : Tank
 
     public IEnumerator Born(int type, int position)
     {
+        Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
+        Vector2 spawnPoint = enemySpawnPoint[position];
+        gameObject.SetActive(false);
+
+        bool noCollide;
+        do
+        {
+            yield return new WaitForSeconds(0.5f);
+            noCollide = true;
+            Tank[] tanks = FindObjectsOfType<Tank>();
+            foreach (Tank tank in tanks)
+            {
+                if (Vector2.Distance(spawnPoint, tank.transform.position) < 1f)
+                {
+                    noCollide = false;
+                    //print("Spawn collision. Distance " + Vector2.Distance(spawnPoint, tank.transform.position));
+                    //print("Spawn position " + spawnPoint);
+                }
+            }
+        } while (!noCollide);
+
+        gameObject.SetActive(true);
         Type = type;
         animator.SetInteger("type", type + 1);
-
-        Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
-        transform.position = enemySpawnPoint[position];
+        transform.position = spawnPoint;
         speed = 0;
         isInvincible = true;
         invincibleTime = 1f;
