@@ -21,8 +21,8 @@ public class Shell : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.magnitude > 7f)
-            ObjectPool.GetInstance().RecycleObj(gameObject);
+        //if (transform.position.magnitude > 7f)
+        //    ObjectPool.GetInstance().RecycleObj(gameObject);
 
     }
 

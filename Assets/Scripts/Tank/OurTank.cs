@@ -51,16 +51,8 @@ public partial class OurTank : Tank
         if (m_Dead)
             return;
         float distance;
-        RaycastHit2D hit1 = Physics2D.Raycast(fireTransform.position, -moveDirection, 0.1f, LayerMask.GetMask("Tank"));
-        if (hit1.collider.gameObject != gameObject)
-        {
-            distance = 0;
-        }
-        else
-        {
-            RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
-            distance = hit.distance;
-        }
+        RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
+        distance = hit.distance;
         m_ChargeTime = Mathf.Lerp(0.5f, 1.3f, distance / 7);
 
         if (Input.GetButtonDown(m_FireButton))
