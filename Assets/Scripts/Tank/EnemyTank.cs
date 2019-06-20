@@ -102,11 +102,15 @@ public class EnemyTank : Tank
     private void SelectDirection(bool mustChange)
     {
         float[] directChance = { 0.1f, 0.45f, 0.2f, 0.2f };
-        if (transform.position.y <= -3f)
-            directChance[1] = 0;
-        else if (transform.position.y >= 3f)
-            directChance[0] = 0;
-        if (transform.position.x < 0)
+
+        if (Mathf.Approximately(transform.position.x, 0))
+        {
+            directChance[0] = 0.1f;
+            directChance[1] = 0.45f;
+            directChance[2] = 0.2f;
+            directChance[3] = 0.2f;
+        }
+        else if (transform.position.x < 0)
         {
             directChance[2] = 0.15f;
             directChance[3] = 0.3f;
@@ -120,6 +124,10 @@ public class EnemyTank : Tank
             if (transform.position.x >= -3f)
                 directChance[3] = 0f;
         }
+        if (transform.position.y <= -3f)
+            directChance[1] = 0;
+        else if (transform.position.y >= 3f)
+            directChance[0] = 0;
 
         if (mustChange)
         {
