@@ -45,22 +45,21 @@ public class EnemyTank : Tank
         Vector2 spawnPoint = enemySpawnPoint[position];
         gameObject.SetActive(false);
 
-        bool noCollide;
-        do
+        bool collide;
+        while(true)
         {
-            yield return new WaitForSeconds(0.5f);
-            noCollide = true;
+            collide = false;
             Tank[] tanks = FindObjectsOfType<Tank>();
             foreach (Tank tank in tanks)
             {
-                if (Vector2.Distance(spawnPoint, tank.transform.position) < 1f)
-                {
-                    noCollide = false;
-                    //print("Spawn collision. Distance " + Vector2.Distance(spawnPoint, tank.transform.position));
-                    //print("Spawn position " + spawnPoint);
-                }
+                if (Vector2.Distance(spawnPoint, tank.transform.position) < 0.5f)
+                    collide = true;
             }
-        } while (!noCollide);
+            if (collide)
+                yield return new WaitForSeconds(1f);
+            else
+                break;
+        }
 
         gameObject.SetActive(true);
         Type = type;
@@ -91,7 +90,7 @@ public class EnemyTank : Tank
         if (directionChangeTimer > directionChangeInteval && (transform.position.x % gridsize)< smallestGrid /4 && (transform.position.y % gridsize) < smallestGrid/4)
         {
             SelectDirection(false);
-            directionChangeInteval = Random.Range(1, 3);
+            directionChangeInteval = Random.Range(1, 2);
         }
     }
 
