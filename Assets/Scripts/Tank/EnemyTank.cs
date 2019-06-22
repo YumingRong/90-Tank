@@ -11,7 +11,6 @@ public class EnemyTank : Tank
 
     private readonly int[] healthArray = { 1, 2, 2, 3 };
     private readonly float[] speedArray = { 0.5f, 0.5f, 1f, 0.5f };
-    private readonly int[] scoreArray = { 100, 200, 300, 400 };
 
     public int Type
     {
@@ -19,7 +18,6 @@ public class EnemyTank : Tank
         {
             Health = healthArray[value];
             speed = speedArray[value];
-            score = scoreArray[value];
             type = value;
         }
         get
@@ -230,7 +228,7 @@ public class EnemyTank : Tank
         m_Dead = true;
         yield return new WaitForSeconds(7f / 10f);
 
-        gameManager.kill[shooter, type]++;
+        gameManager.kill[shooter-1, type]++;
         gameManager.liveEnemy--;
         ObjectPool.GetInstance().RecycleObj(gameObject);
         gameManager.SpawnEnemyTank();

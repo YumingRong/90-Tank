@@ -5,7 +5,6 @@ public partial class Tank : MonoBehaviour
 {
     [HideInInspector] public int m_PlayerNumber;
     [HideInInspector] public float speed = 0.5f;
-    [HideInInspector] public int score;
     [HideInInspector] public bool isInvincible;
 
     protected Vector2 moveDirection;

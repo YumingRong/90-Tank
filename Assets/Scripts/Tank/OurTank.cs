@@ -38,8 +38,6 @@ public partial class OurTank : Tank
     void Start()
     {
         moveDirection = Vector2.up;
-        score = 0;
-
         m_ChargeTime = 1.0f;
         shieldAnimator = shield.GetComponent<Animator>();
     }

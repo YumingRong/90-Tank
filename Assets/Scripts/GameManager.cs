@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public EnemyTank enemyTank;
     public OurTank player1, player2;
-    public GameObject gameoverPanel;
+    public GameObject gameoverPanel, scorePanel;
     [HideInInspector] public int[,] kill;
 
 
     private int[] playerLife = { 3, 3 };
     [HideInInspector] public int liveEnemy;
-    int[] enemyTanks = { 5, 5, 5, 5 };
-    int[] enemyQueue = new int[20];
+    int[] enemyTanks = { 1,0,0,0 };
+    int[] enemyQueue = new int[1];
+    int totalEnemy = 1;
     int enemyBorn = 0;
     private static GameManager instance;
 
@@ -37,14 +39,13 @@ public class GameManager : MonoBehaviour
             Debug.LogError("singleton:" + this.ToString() + " exists, remove it");
             GameObject.Destroy(this);
         }
-
     }
 
     // Start is called before the first frame update
     void Start()
     {
         gameoverPanel.SetActive(false);
-
+        scorePanel.SetActive(false);
         //int player = GameObject.Find("Choice").GetComponent<StartUp>().selection;
         int player = 2;
         FormQueue();
@@ -66,17 +67,56 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void GameOver()
+    public IEnumerator GameOver()
     {
         gameoverPanel.SetActive(true);
         player1.m_Dead = true;
         player2.m_Dead = true;
+        yield return new WaitForSeconds(1.5f);
+        gameoverPanel.SetActive(false);
+        scorePanel.SetActive(true);
+        yield return new WaitForSeconds(10f);
+        SceneManager.LoadScene(0);
     }
 
+    public IEnumerator PassStage()
+    {
+        yield return new WaitForSeconds(1f);
+        
+        scorePanel.SetActive(true);
+        ShowScore();
+        yield return new WaitForSeconds(20f);
+        scorePanel.SetActive(false);
+    }
+
+    public void ShowScore()
+    {
+        int[] scoreArray = { 100, 200, 300, 400 }; // score of 4 types of enemy tank
+        Text P1T1 = GameObject.Find("P1T1").GetComponent<Text>();
+        P1T1.text = kill[0, 0].ToString();
+        Text P1S1 = GameObject.Find("P1S1").GetComponent<Text>();
+        P1S1.text = (kill[0, 0] * scoreArray[0]).ToString() + " PTS";
+        Text P1T2 = GameObject.Find("P1T2").GetComponent<Text>();
+        P1T2.text = kill[0, 1].ToString();
+        Text P1S2 = GameObject.Find("P1S2").GetComponent<Text>();
+        P1S2.text = (kill[0, 1] * scoreArray[1]).ToString() + " PTS";
+        Text P1T3 = GameObject.Find("P1T2").GetComponent<Text>();
+        P1T3.text = kill[0, 2].ToString();
+        Text P1S3 = GameObject.Find("P1S2").GetComponent<Text>();
+        P1S3.text = (kill[0, 2] * scoreArray[2]).ToString() + " PTS";
+        Text P1T4 = GameObject.Find("P1T2").GetComponent<Text>();
+        P1T4.text = kill[0, 3].ToString();
+        Text P1S4 = GameObject.Find("P1S2").GetComponent<Text>();
+        P1S4.text = (kill[0, 3] * scoreArray[3]).ToString() + " PTS";
+        Text P1T = GameObject.Find("P1T2").GetComponent<Text>();
+        P1T.text = (kill[0, 0] + kill[0, 1] +kill[0,2]+kill[0,3]).ToString();
+        Text P1S = GameObject.Find("P1S2").GetComponent<Text>();
+        P1S.text = (kill[0, 0] * scoreArray[0] + kill[0, 1] * scoreArray[1] + kill[0, 2] * scoreArray[2] + kill[0, 3] * scoreArray[3]).ToString() + " PTS";
+    }
 
     public void SpawnEnemyTank()
     {
-        while (liveEnemy < 4 && enemyBorn < 20)
+        while (liveEnemy < 4 && enemyBorn < totalEnemy)
         {
             print("Tank No " + enemyBorn + " type " + enemyQueue[enemyBorn] + " born at " + enemyBorn % 3);
             GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
@@ -86,6 +126,11 @@ public class GameManager : MonoBehaviour
             enemyBorn++;
         }
 
+        if (liveEnemy == 0 && enemyBorn == totalEnemy)
+        {
+            print("Win");
+            StartCoroutine(PassStage());
+        }
     }
 
     void SpawnOurTank(int player)
