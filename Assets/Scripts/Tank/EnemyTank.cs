@@ -85,10 +85,10 @@ public class EnemyTank : Tank
         //print("Delta position " + speed * Time.deltaTime);
         directionChangeTimer += Time.deltaTime;
         float gridsize = smallestGrid * 2;
-        if (directionChangeTimer > directionChangeInteval && (transform.position.x % gridsize)< smallestGrid /4 && (transform.position.y % gridsize) < smallestGrid/4)
+        if (directionChangeTimer > directionChangeInteval && (transform.position.x % gridsize)< smallestGrid /4 && (transform.position.y % gridsize) < smallestGrid/4) 
         {
             SelectDirection(false);
-            directionChangeInteval = Random.Range(1, 2);
+            directionChangeInteval = Random.Range(0.5f, 2f);
         }
     }
 

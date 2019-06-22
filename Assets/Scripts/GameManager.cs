@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     private int[] playerLife = { 3, 3 };
     [HideInInspector] public int liveEnemy;
-    int[] enemyTanks = { 1,0,0,0 };
+    int[] enemyTanks = { 1, 0, 0, 0 };
     int[] enemyQueue = new int[1];
     int totalEnemy = 1;
     int enemyBorn = 0;
@@ -81,8 +81,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator PassStage()
     {
-        yield return new WaitForSeconds(1f);
-        
+        yield return new WaitForSeconds(0.5f);
+
         scorePanel.SetActive(true);
         ShowScore();
         yield return new WaitForSeconds(20f);
@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowScore()
     {
+        //print("Kill tank " + kill[0, 0] + "," + kill[0, 1] + "," + kill[0, 2] + "," + kill[0, 3]);
         int[] scoreArray = { 100, 200, 300, 400 }; // score of 4 types of enemy tank
         Text P1T1 = GameObject.Find("P1T1").GetComponent<Text>();
         P1T1.text = kill[0, 0].ToString();
@@ -100,25 +101,45 @@ public class GameManager : MonoBehaviour
         P1T2.text = kill[0, 1].ToString();
         Text P1S2 = GameObject.Find("P1S2").GetComponent<Text>();
         P1S2.text = (kill[0, 1] * scoreArray[1]).ToString() + " PTS";
-        Text P1T3 = GameObject.Find("P1T2").GetComponent<Text>();
+        Text P1T3 = GameObject.Find("P1T3").GetComponent<Text>();
         P1T3.text = kill[0, 2].ToString();
-        Text P1S3 = GameObject.Find("P1S2").GetComponent<Text>();
+        Text P1S3 = GameObject.Find("P1S3").GetComponent<Text>();
         P1S3.text = (kill[0, 2] * scoreArray[2]).ToString() + " PTS";
-        Text P1T4 = GameObject.Find("P1T2").GetComponent<Text>();
+        Text P1T4 = GameObject.Find("P1T4").GetComponent<Text>();
         P1T4.text = kill[0, 3].ToString();
-        Text P1S4 = GameObject.Find("P1S2").GetComponent<Text>();
+        Text P1S4 = GameObject.Find("P1S4").GetComponent<Text>();
         P1S4.text = (kill[0, 3] * scoreArray[3]).ToString() + " PTS";
-        Text P1T = GameObject.Find("P1T2").GetComponent<Text>();
-        P1T.text = (kill[0, 0] + kill[0, 1] +kill[0,2]+kill[0,3]).ToString();
-        Text P1S = GameObject.Find("P1S2").GetComponent<Text>();
+        Text P1T = GameObject.Find("P1T").GetComponent<Text>();
+        P1T.text = (kill[0, 0] + kill[0, 1] + kill[0, 2] + kill[0, 3]).ToString();
+        Text P1S = GameObject.Find("P1S").GetComponent<Text>();
         P1S.text = (kill[0, 0] * scoreArray[0] + kill[0, 1] * scoreArray[1] + kill[0, 2] * scoreArray[2] + kill[0, 3] * scoreArray[3]).ToString() + " PTS";
+        Text P2T1 = GameObject.Find("P2T1").GetComponent<Text>();
+        P2T1.text = kill[1, 0].ToString();
+        Text P2S1 = GameObject.Find("P2S1").GetComponent<Text>();
+        P2S1.text = (kill[1, 0] * scoreArray[0]).ToString() + " PTS";
+        Text P2T2 = GameObject.Find("P2T2").GetComponent<Text>();
+        P2T2.text = kill[1, 1].ToString();
+        Text P2S2 = GameObject.Find("P2S2").GetComponent<Text>();
+        P2S2.text = (kill[1, 1] * scoreArray[1]).ToString() + " PTS";
+        Text P2T3 = GameObject.Find("P2T3").GetComponent<Text>();
+        P2T3.text = kill[1, 2].ToString();
+        Text P2S3 = GameObject.Find("P2S3").GetComponent<Text>();
+        P2S3.text = (kill[1, 2] * scoreArray[2]).ToString() + " PTS";
+        Text P2T4 = GameObject.Find("P2T4").GetComponent<Text>();
+        P2T4.text = kill[1, 3].ToString();
+        Text P2S4 = GameObject.Find("P2S4").GetComponent<Text>();
+        P2S4.text = (kill[1, 3] * scoreArray[3]).ToString() + " PTS";
+        Text P2T = GameObject.Find("P2T").GetComponent<Text>();
+        P2T.text = (kill[1, 0] + kill[1, 1] + kill[1, 2] + kill[1, 3]).ToString();
+        Text P2S = GameObject.Find("P2S").GetComponent<Text>();
+        P2S.text = (kill[1, 0] * scoreArray[0] + kill[1, 1] * scoreArray[1] + kill[1, 2] * scoreArray[2] + kill[1, 3] * scoreArray[3]).ToString() + " PTS";
     }
 
     public void SpawnEnemyTank()
     {
         while (liveEnemy < 4 && enemyBorn < totalEnemy)
         {
-            print("Tank No " + enemyBorn + " type " + enemyQueue[enemyBorn] + " born at " + enemyBorn % 3);
+            //print("Tank No " + enemyBorn + " type " + enemyQueue[enemyBorn] + " born at " + enemyBorn % 3);
             GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
             EnemyTank tank = tankInstance.GetComponent<EnemyTank>();
             StartCoroutine(tank.Born(enemyQueue[enemyBorn], enemyBorn % 3));
@@ -128,7 +149,6 @@ public class GameManager : MonoBehaviour
 
         if (liveEnemy == 0 && enemyBorn == totalEnemy)
         {
-            print("Win");
             StartCoroutine(PassStage());
         }
     }
