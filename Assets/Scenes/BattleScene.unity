@@ -1080,7 +1080,7 @@ GameObject:
   - component: {fileID: 616877668}
   - component: {fileID: 616877667}
   m_Layer: 5
-  m_Name: P2Sscore
+  m_Name: P2S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

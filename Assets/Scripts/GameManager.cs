@@ -6,17 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public EnemyTank enemyTank;
-    public OurTank player1, player2;
-    public GameObject gameoverPanel, scorePanel;
     [HideInInspector] public int[,] kill;
 
 
+    OurTank player1, player2;
+    GameObject gameoverPanel, scorePanel;
     private int[] playerLife = { 3, 3 };
     [HideInInspector] public int liveEnemy;
-    int[] enemyTanks = { 1, 0, 0, 0 };
-    int[] enemyQueue = new int[1];
-    int totalEnemy = 1;
+    int[] enemyTanks = { 5, 5, 5, 5 };
+    int[] enemyQueue = new int[20];
+    int totalEnemy = 20;
     int enemyBorn = 0;
     private static GameManager instance;
 
@@ -39,6 +38,11 @@ public class GameManager : MonoBehaviour
             Debug.LogError("singleton:" + this.ToString() + " exists, remove it");
             GameObject.Destroy(this);
         }
+
+        player1 = GameObject.Find("player1").GetComponent<OurTank>();
+        player2 = GameObject.Find("player2").GetComponent<OurTank>();
+        gameoverPanel = GameObject.Find("PanelGameOver");
+        scorePanel = GameObject.Find("ScorePanel");
     }
 
     // Start is called before the first frame update
@@ -91,7 +95,6 @@ public class GameManager : MonoBehaviour
 
     public void ShowScore()
     {
-        //print("Kill tank " + kill[0, 0] + "," + kill[0, 1] + "," + kill[0, 2] + "," + kill[0, 3]);
         int[] scoreArray = { 100, 200, 300, 400 }; // score of 4 types of enemy tank
         Text P1T1 = GameObject.Find("P1T1").GetComponent<Text>();
         P1T1.text = kill[0, 0].ToString();
