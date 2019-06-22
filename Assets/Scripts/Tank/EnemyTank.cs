@@ -218,18 +218,19 @@ public class EnemyTank : Tank
                 // If the current health is at or below zero and it has not yet been registered, call OnDeath.
                 if (Health <= 0 && !m_Dead)
                 {
-                    StartCoroutine(OnDeath());
+                    StartCoroutine(OnDeath(shell.shooter));
                 }
             }
         }
     }
 
-    protected IEnumerator OnDeath()
+    protected IEnumerator OnDeath(int shooter)
     {
         // Set the flag so that this function is only called once.
         m_Dead = true;
         yield return new WaitForSeconds(7f / 10f);
 
+        gameManager.kill[shooter, type]++;
         gameManager.liveEnemy--;
         ObjectPool.GetInstance().RecycleObj(gameObject);
         gameManager.SpawnEnemyTank();

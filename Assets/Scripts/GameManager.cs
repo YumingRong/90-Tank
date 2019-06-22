@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public EnemyTank enemyTank;
     public OurTank player1, player2;
     public GameObject gameoverPanel;
+    [HideInInspector] public int[,] kill;
 
 
     private int[] playerLife = { 3, 3 };
@@ -16,7 +17,6 @@ public class GameManager : MonoBehaviour
     int[] enemyQueue = new int[20];
     int enemyBorn = 0;
     private static GameManager instance;
-
 
     public static GameManager GetInstance()
     {
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
             player2.gameObject.SetActive(false);
         }
         GameObject.DontDestroyOnLoad(gameObject);
+        kill = new int[2, 4];
     }
 
     // Update is called once per frame
