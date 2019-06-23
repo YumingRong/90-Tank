@@ -229,9 +229,9 @@ public class EnemyTank : Tank
         yield return new WaitForSeconds(7f / 10f);
 
         gameManager.kill[shooter-1, type]++;
-        gameManager.liveEnemy--;
+        BattleManager.GetInstance().liveEnemy--;
         ObjectPool.GetInstance().RecycleObj(gameObject);
-        gameManager.SpawnEnemyTank();
+        BattleManager.GetInstance().SpawnEnemyTank();
     }
 
 

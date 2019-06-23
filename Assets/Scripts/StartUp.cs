@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class StartUp : MonoBehaviour
 {
-    [HideInInspector] public int selection = 1;
     private Toggle onePlayer, twoPlayers;
+    GameManager gm;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.DontDestroyOnLoad(gameObject);
         onePlayer = GameObject.Find("Toggle1Player").GetComponent<Toggle>();
         twoPlayers = GameObject.Find("Toggle2Players").GetComponent<Toggle>();
         onePlayer.Select();
+        gm = GameManager.GetInstance();
     }
 
     // Update is called once per frame
@@ -24,10 +22,9 @@ public class StartUp : MonoBehaviour
     {
         if (Input.GetButtonDown("Submit"))
         {
-            if (onePlayer.isOn)
-                selection = 1;
-            else if (twoPlayers.isOn)
-                selection = 2;
+            gm.playerLife[0] = 3;
+            if (twoPlayers.isOn)
+                gm.playerLife[1] = 3;
             SceneManager.LoadScene("BattleScene");
         }
 

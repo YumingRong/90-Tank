@@ -139,7 +139,7 @@ public partial class OurTank : Tank
         yield return new WaitForSeconds(7f / 10f);
 
         gameObject.SetActive(false);
-        gameManager.OurTankDie(m_PlayerNumber);
+        BattleManager.GetInstance().OurTankDie(m_PlayerNumber);
     }
 
 }
