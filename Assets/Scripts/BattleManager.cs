@@ -77,7 +77,6 @@ public class BattleManager : MonoBehaviour
         if (liveEnemy == 0 && enemyBorn == totalEnemy)
         {
             gm.battleResult = GameManager.BattleResult.WIN;
-            gm.PassStage();
             SceneManager.LoadScene("ScoreScene");
         }
     }

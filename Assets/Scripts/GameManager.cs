@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int player = 2;
-    public int stage = 1;
+    public int player;
+    public int stage;
     [HideInInspector] public int[,] kill = new int[2, 4];
     [HideInInspector] public int[] playerLife = { 3, 3 };
     public enum BattleResult { WIN, LOSE};
     public BattleResult battleResult;
 
-    int MaxStage = 1;
+    int MaxStage = 2;
     private static GameManager instance;
 
     public static GameManager GetInstance()
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("StartupScene");
     }
 
-    public void PassStage()
+    public void NextStage()
     {
         stage++;
         if (stage > MaxStage)

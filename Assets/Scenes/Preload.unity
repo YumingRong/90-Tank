@@ -149,7 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1183087de5ff01e4cbbc0f7948f8c402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  liveEnemy: 0
+  player: 2
+  stage: 2
+  playerLife: 0300000003000000
+  battleResult: 0
 --- !u!4 &1158149886
 Transform:
   m_ObjectHideFlags: 0

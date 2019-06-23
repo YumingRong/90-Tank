@@ -9,13 +9,18 @@ public class MapManager : MonoBehaviour
     public Tilemap map;
     char[,] array = new char[26,26];
 
-    public Tile brickTile, steelTile, emptyTile, riverTile, forestTile, iceTile;
+    public Tile emptyTile, brickTile, steelTile, riverTile, forestTile, iceTile;
+
+    private void Start()
+    {
+        int stage = GameManager.GetInstance().stage;
+        FromCSVToMap(stage);
+    }
+
     private void Update()
     {
-        if (Input.GetButtonDown("Submit"))
-            FromMapToCSV(2);
-        else if (Input.GetButtonDown("Cancel"))
-            FromCSVToMap(2);
+        //if (Input.GetButtonDown("Submit"))
+        //    FromMapToCSV(2);
     }
 
     void FromMapToCSV(int stage)
@@ -31,7 +36,7 @@ public class MapManager : MonoBehaviour
         print("Map saved");
     }
 
-    void FromArrayToCSV(int stage)
+    public void FromArrayToCSV(int stage)
     {
         string fileName = @"J:\My Projects\90Tank\Assets\Maps\" + stage.ToString() + ".csv";
         using (StreamWriter fileWriter = new StreamWriter(fileName, true, System.Text.Encoding.ASCII))

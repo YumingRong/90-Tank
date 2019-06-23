@@ -21,7 +21,7 @@ public partial class OurTank : Tank
         m_VerticalAxisName = "Vertical" + m_PlayerNumber;
         m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
         m_FireButton = "Fire" + m_PlayerNumber;
-        Vector2[] ourSpawnPoint = { new Vector2(-0.75f, -3f), new Vector2(0.75f, -3f) };
+        Vector2[] ourSpawnPoint = { new Vector2(-1f, -3f), new Vector2(1f, -3f) };
         transform.position = ourSpawnPoint[m_PlayerNumber - 1];
         m_Dead = false;
         Health = 1;

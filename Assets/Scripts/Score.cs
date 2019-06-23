@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Score : MonoBehaviour
 {
-
+    GameManager gm;
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.GetInstance();
         ShowScore();
     }
 
@@ -17,6 +19,9 @@ public class Score : MonoBehaviour
         int[,] kill;
         kill = GameManager.GetInstance().kill;
         int[] scoreArray = { 100, 200, 300, 400 }; // score of 4 types of enemy tank
+
+        Text Stage = GameObject.Find("Stage").GetComponent<Text>();
+        Stage.text = gm.stage.ToString();
         Text P1T1 = GameObject.Find("P1T1").GetComponent<Text>();
         P1T1.text = kill[0, 0].ToString();
         Text P1S1 = GameObject.Find("P1S1").GetComponent<Text>();
@@ -62,6 +67,17 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetButtonDown("Submit"))
+        {
+            if (gm.battleResult == GameManager.BattleResult.WIN)
+            {
+                gm.NextStage();
+            }
+            else
+            {
+                gm.playerLife[0] = gm.playerLife[1] = 3;
+            }
+            SceneManager.LoadScene("BattleScene");
+        }
     }
 }
