@@ -110,8 +110,6 @@ public class BattleManager : MonoBehaviour
     public void OurTankDie(int player)
     {
         gm.playerLife[player - 1]--;
-        //print("Player 1 life " + gm.playerLife[0]);
-        //print("Player 2 life " + gm.playerLife[1]);
         if (gm.playerLife[0] == 0 && gm.playerLife[1] == 0)
         {
             StartCoroutine(GameOver());
