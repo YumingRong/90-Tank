@@ -17,6 +17,6 @@ public class Headquarter : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         sprite.sprite = wreck;
-        BattleManager.GetInstance().GameOver();
+        StartCoroutine(BattleManager.GetInstance().GameOver());
     }
 }

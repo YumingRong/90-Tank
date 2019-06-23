@@ -16,6 +16,8 @@ public class Score : MonoBehaviour
     {
         int[,] kill;
         kill = GameManager.GetInstance().kill;
+        print("kill " + kill[0,0]);
+        print("GM kill " + GameManager.GetInstance().kill[0, 0]);
         int[] scoreArray = { 100, 200, 300, 400 }; // score of 4 types of enemy tank
         Text P1T1 = GameObject.Find("P1T1").GetComponent<Text>();
         P1T1.text = kill[0, 0].ToString();

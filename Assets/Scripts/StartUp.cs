@@ -25,6 +25,8 @@ public class StartUp : MonoBehaviour
             gm.playerLife[0] = 3;
             if (twoPlayers.isOn)
                 gm.playerLife[1] = 3;
+            else
+                gm.playerLife[1] = 0;
             SceneManager.LoadScene("BattleScene");
         }
 

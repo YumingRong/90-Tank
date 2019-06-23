@@ -35,14 +35,12 @@ public class BattleManager : MonoBehaviour
         ourTank[0] = GameObject.Find("player1").GetComponent<OurTank>();
         ourTank[1] = GameObject.Find("player2").GetComponent<OurTank>();
         gameoverPanel = GameObject.Find("PanelGameOver");
-        scorePanel = GameObject.Find("ScorePanel");
         gameoverPanel.SetActive(false);
-        scorePanel.SetActive(false);
         FormQueue();
         SpawnEnemyTank();
         for (int i= 0; i<2;i++)
         {
-            if (gm.playerLife[0] > 0)
+            if (gm.playerLife[i] > 0)
                 StartCoroutine(ourTank[i].Born());
             else
                 ourTank[i].gameObject.SetActive(false);
@@ -54,6 +52,7 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator GameOver()
     {
+        print("Game over!");
         gameoverPanel.SetActive(true);
         ourTank[0].m_Dead = true;
         ourTank[1].m_Dead = true;
@@ -111,9 +110,11 @@ public class BattleManager : MonoBehaviour
     public void OurTankDie(int player)
     {
         gm.playerLife[player - 1]--;
+        //print("Player 1 life " + gm.playerLife[0]);
+        //print("Player 2 life " + gm.playerLife[1]);
         if (gm.playerLife[0] == 0 && gm.playerLife[1] == 0)
         {
-            GameOver();
+            StartCoroutine(GameOver());
         }
         else if (gm.playerLife[player - 1] > 0)
         {
