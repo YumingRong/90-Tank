@@ -46,7 +46,7 @@ public class BattleManager : MonoBehaviour
                 ourTank[i].gameObject.SetActive(false);
 
         }
-        gm.kill = new int[2, 4];
+        System.Array.Clear(gm.kill, 0, gm.kill.Length);
 
     }
 
