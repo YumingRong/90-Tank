@@ -27,6 +27,7 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         gm = GameManager.GetInstance();
+        ObjectPool.GetInstance().Clear();
     }
 
     // Start is called before the first frame update

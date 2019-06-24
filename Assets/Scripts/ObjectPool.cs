@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool
@@ -30,6 +31,7 @@ public class ObjectPool
         {
             if (pool[objName].Count > 0)
             {
+                Debug.Log(objName + " count " + pool[objName].Count);
                 result = pool[objName].Pop();
                 result.SetActive(true);
                 return result;
@@ -64,6 +66,14 @@ public class ObjectPool
             Stack<GameObject> stack = new Stack<GameObject>();
             pool.Add(obj.name, stack);
             stack.Push(obj);
+        }
+    }
+
+    public void Clear()
+    {
+        foreach (string obj in pool.Keys)
+        {
+            pool[obj].Clear();
         }
     }
 }

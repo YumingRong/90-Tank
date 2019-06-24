@@ -75,7 +75,9 @@ public class Score : MonoBehaviour
             }
             else
             {
-                gm.playerLife[0] = gm.playerLife[1] = 3;
+                gm.playerLife[0] = 3;
+                if(gm.player == 2)
+                    gm.playerLife[1] = 3;
             }
             SceneManager.LoadScene("BattleScene");
         }
