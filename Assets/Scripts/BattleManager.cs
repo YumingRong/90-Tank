@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
     [HideInInspector] public int liveEnemy;
     OurTank[] ourTank = new OurTank[2];
-    GameObject gameoverPanel, scorePanel;
+    Image gameoverImage;
     int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[20];
     int totalEnemy = 20;
@@ -35,8 +36,8 @@ public class BattleManager : MonoBehaviour
     {
         ourTank[0] = GameObject.Find("player1").GetComponent<OurTank>();
         ourTank[1] = GameObject.Find("player2").GetComponent<OurTank>();
-        gameoverPanel = GameObject.Find("PanelGameOver");
-        gameoverPanel.SetActive(false);
+        gameoverImage = GameObject.Find("ImageGameOver").GetComponent<Image>();
+        gameoverImage.enabled = false;
         FormQueue();
         SpawnEnemyTank();
         for (int i= 0; i<2;i++)
@@ -54,7 +55,7 @@ public class BattleManager : MonoBehaviour
     public IEnumerator GameOver()
     {
         print("Game over!");
-        gameoverPanel.SetActive(true);
+        gameoverImage.enabled = true;
         ourTank[0].m_Dead = true;
         ourTank[1].m_Dead = true;
         gm.battleResult = GameManager.BattleResult.LOSE;

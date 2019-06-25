@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class MapManager : MonoBehaviour
     char[,] array = new char[26,26];
 
     public Tile emptyTile, brickTile, steelTile, riverTile, forestTile, iceTile;
-
+    public Image woodImage;
     private void Start()
     {
         int stage = GameManager.GetInstance().stage;
