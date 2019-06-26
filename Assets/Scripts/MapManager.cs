@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
-using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class MapManager : MonoBehaviour
     char[,] array = new char[26,26];
 
     public Tile emptyTile, brickTile, steelTile, riverTile, forestTile, iceTile;
-    public Image woodImage;
+    public GameObject woods;
     private void Start()
     {
         int stage = GameManager.GetInstance().stage;
@@ -71,6 +70,7 @@ public class MapManager : MonoBehaviour
                     sr.Read(b, 0, 52);
                     for (int i = 0; i < 26; i++)
                     {
+                        GameObject wood;
                         char c = b[i * 2];
                         if (c == 'e')
                             tile = emptyTile;
@@ -81,7 +81,12 @@ public class MapManager : MonoBehaviour
                         else if (c == 'i')
                             tile = iceTile;
                         else if (c == 'f')
-                            tile = forestTile;
+                        {
+                            //tile = forestTile;
+                            tile = emptyTile;
+                            wood = Object.Instantiate<GameObject>(woods);
+                            wood.transform.position = new Vector3(0.25f * (i - 12.5f), 0.25f * (j - 12.5f));
+                        }
                         else if (c == 'r')
                             tile = riverTile;
                         grid.x = i - 13;

@@ -31,7 +31,6 @@ public class ObjectPool
         {
             if (pool[objName].Count > 0)
             {
-                Debug.Log(objName + " count " + pool[objName].Count);
                 result = pool[objName].Pop();
                 result.SetActive(true);
                 return result;
