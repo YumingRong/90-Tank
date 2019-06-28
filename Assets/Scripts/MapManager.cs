@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
     public Tilemap map;
     char[,] array = new char[26,26];
 
-    public Tile emptyTile, brickTile, steelTile, riverTile, forestTile, iceTile;
+    public Tile emptyTile, brickTile, steelTile, riverTile, iceTile;
     public GameObject woods;
+    public Button saveButton;
+    public InputField stageInput;
+
+
     private void Start()
     {
         int stage = GameManager.GetInstance().stage;
         FromCSVToMap(stage);
+        if (saveButton != null)
+            saveButton.onClick.AddListener(() => FromMapToCSV(int.Parse(stageInput.text)));
     }
 
     private void Update()
@@ -38,8 +45,8 @@ public class MapManager : MonoBehaviour
 
     public void FromArrayToCSV(int stage)
     {
-        string fileName = @"J:\My Projects\90Tank\Assets\Maps\" + stage.ToString() + ".csv";
-        using (StreamWriter fileWriter = new StreamWriter(fileName, true, System.Text.Encoding.ASCII))
+        string fileName = @"J:\My Projects\90Tank\Assets\Maps\stage" + stage.ToString() + ".csv";
+        using (StreamWriter fileWriter = new StreamWriter(fileName, false, System.Text.Encoding.ASCII))
         {
             for (int j = 0; j < 26; j++)
             {
@@ -55,7 +62,7 @@ public class MapManager : MonoBehaviour
         //surrounding steel wall
         map.BoxFill(new Vector3Int(-14,-14,0), steelTile, -14, -14, 13, 13);
 
-        string fileName = @"J:\My Projects\90Tank\Assets\Maps\" + stage.ToString() + ".csv";
+        string fileName = @"J:\My Projects\90Tank\Assets\Maps\stage" + stage.ToString() + ".csv";
         try
         {
             using (StreamReader fileReader = new StreamReader(fileName, System.Text.Encoding.ASCII))
