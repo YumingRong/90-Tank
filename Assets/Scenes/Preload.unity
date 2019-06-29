@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 2
-  stage: 2
+  stage: 3
   playerLife: 0300000003000000
   battleResult: 0
 --- !u!4 &1158149886

@@ -1,68 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
 using System.IO;
-using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
-public class MapManager : MonoBehaviour
+public class MapLoader : MonoBehaviour
 {
     public Tilemap map;
-    char[,] array = new char[26,26];
-
     public Tile emptyTile, brickTile, steelTile, riverTile, iceTile;
     public GameObject woods;
-    public Button saveButton;
-    public InputField stageInput;
 
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         int stage = GameManager.GetInstance().stage;
-        FromCSVToMap(stage);
-        if (saveButton != null)
-            saveButton.onClick.AddListener(() => FromMapToCSV(int.Parse(stageInput.text)));
+        LoadMap(stage);
+
     }
 
-    private void Update()
-    {
-        //if (Input.GetButtonDown("Submit"))
-        //    FromMapToCSV(2);
-    }
-
-    void FromMapToCSV(int stage)
-    {
-        Vector3Int grid = new Vector3Int(); 
-        for (grid.x = -13; grid.x <13; grid.x++)
-            for (grid.y = -13; grid.y <13; grid.y++)
-            {
-                TileBase tile = map.GetTile(grid);
-                array[grid.x+13, grid.y+13] = tile.name.ToCharArray()[0];
-            }
-        FromArrayToCSV(stage);
-        print("Map saved");
-    }
-
-    public void FromArrayToCSV(int stage)
-    {
-        string fileName = @"J:\My Projects\90Tank\Assets\Maps\stage" + stage.ToString() + ".csv";
-        using (StreamWriter fileWriter = new StreamWriter(fileName, false, System.Text.Encoding.ASCII))
-        {
-            for (int j = 0; j < 26; j++)
-            {
-                for(int i = 0; i< 26;i++)
-                    fileWriter.Write("{0},", array[i,j]);
-                fileWriter.Write("\r\n");
-            }
-        }
-    }
-
-    void FromCSVToMap(int stage)
+    void LoadMap(int stage)
     {
         //surrounding steel wall
-        map.BoxFill(new Vector3Int(-14,-14,0), steelTile, -14, -14, 13, 13);
+        map.BoxFill(new Vector3Int(-14, -14, 0), steelTile, -14, -14, 13, 13);
 
         string fileName = @"J:\My Projects\90Tank\Assets\Maps\stage" + stage.ToString() + ".csv";
+        print("Load map " + fileName);
         try
         {
             using (StreamReader fileReader = new StreamReader(fileName, System.Text.Encoding.ASCII))
@@ -96,6 +56,10 @@ public class MapManager : MonoBehaviour
                         }
                         else if (c == 'r')
                             tile = riverTile;
+                        else
+                        {
+                            print("unknown tile:" + i + "," + j +","+ c);
+                        }
                         grid.x = i - 13;
                         grid.y = j - 13;
                         map.SetTile(grid, tile);

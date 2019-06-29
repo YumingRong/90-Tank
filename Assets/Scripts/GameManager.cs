@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -12,7 +10,7 @@ public class GameManager : MonoBehaviour
     public enum BattleResult { WIN, LOSE};
     [HideInInspector] public BattleResult battleResult;
 
-    int MaxStage = 2;
+    int MaxStage = 3;
     private static GameManager instance;
 
     public static GameManager GetInstance()

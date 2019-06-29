@@ -156,8 +156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 0}
-  m_SizeDelta: {x: 108.7, y: 30}
+  m_AnchoredPosition: {x: -7.9, y: 0}
+  m_SizeDelta: {x: 72.9, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &217004552
 MonoBehaviour:
@@ -311,7 +311,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: 
 --- !u!222 &389479291
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -536,12 +536,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 1370095912}
-  emptyTile: {fileID: 11400000, guid: 98d6e985469321c4a83665b12a154d61, type: 2}
-  brickTile: {fileID: 11400000, guid: c69d266dddbdfc940a79df769e03d1a4, type: 2}
-  steelTile: {fileID: 11400000, guid: c1e964e94e0455e42a031856a2852c62, type: 2}
-  riverTile: {fileID: 11400000, guid: b933876cb27b1c248afa603e336fddab, type: 2}
-  iceTile: {fileID: 11400000, guid: 597410300e36dad439b6de4369dfffb3, type: 2}
-  woods: {fileID: 51982837512515974, guid: 12425da058dc9d849b1792cc1e72b5c1, type: 3}
   saveButton: {fileID: 217004552}
   stageInput: {fileID: 1144927586}
 --- !u!1 &992992444
@@ -574,8 +568,8 @@ MonoBehaviour:
   m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
+  m_HorizontalAxis: Horizontal1
+  m_VerticalAxis: Vertical1
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
@@ -707,8 +701,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 3.888, y: 0}
-  m_SizeDelta: {x: 172.914, y: 895}
+  m_AnchoredPosition: {x: 3.621, y: 0}
+  m_SizeDelta: {x: 99.267, y: 895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1144927584
 GameObject:
@@ -747,8 +741,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10.025004, y: 50}
-  m_SizeDelta: {x: 108.65, y: 30}
+  m_AnchoredPosition: {x: -7.9, y: 50}
+  m_SizeDelta: {x: 72.9, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1144927586
 MonoBehaviour:

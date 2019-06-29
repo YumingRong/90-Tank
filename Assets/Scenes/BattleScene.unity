@@ -8375,7 +8375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1769918134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b481adbee78b0d448ff0d0d42b49537, type: 3}
+  m_Script: {fileID: 11500000, guid: 0af2f3c273629854fa19eb757da6b829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 1016346532}
@@ -8383,7 +8383,6 @@ MonoBehaviour:
   brickTile: {fileID: 11400000, guid: c69d266dddbdfc940a79df769e03d1a4, type: 2}
   steelTile: {fileID: 11400000, guid: c1e964e94e0455e42a031856a2852c62, type: 2}
   riverTile: {fileID: 11400000, guid: b933876cb27b1c248afa603e336fddab, type: 2}
-  forestTile: {fileID: 11400000, guid: 66121f061fd65c042baa1e182a3fd196, type: 2}
   iceTile: {fileID: 11400000, guid: 597410300e36dad439b6de4369dfffb3, type: 2}
   woods: {fileID: 51982837512515974, guid: 12425da058dc9d849b1792cc1e72b5c1, type: 3}
 --- !u!1001 &7646316008485676307

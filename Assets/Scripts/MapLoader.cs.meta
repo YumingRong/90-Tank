@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0af2f3c273629854fa19eb757da6b829
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - map: {instanceID: 0}
+  - emptyTile: {fileID: 11400000, guid: 98d6e985469321c4a83665b12a154d61, type: 2}
+  - brickTile: {fileID: 11400000, guid: c69d266dddbdfc940a79df769e03d1a4, type: 2}
+  - steelTile: {fileID: 11400000, guid: c1e964e94e0455e42a031856a2852c62, type: 2}
+  - riverTile: {instanceID: 0}
+  - iceTile: {instanceID: 0}
+  - woods: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
