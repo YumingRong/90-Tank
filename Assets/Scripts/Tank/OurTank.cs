@@ -10,7 +10,8 @@ public partial class OurTank : Tank
     private string m_HorizontalAxisName;
     private string m_FireButton;                // The input axis that is used for launching shells.
     private Animator shieldAnimator;
-
+    private float fixTime;  
+    private bool isFixed;   //when tank collides other tank, it cannot move
 
     public IEnumerator Born()
     {
@@ -27,6 +28,8 @@ public partial class OurTank : Tank
         Health = 1;
         isInvincible = true;
         invincibleTime = 2f;
+        fixTime = 0;
+        isFixed = false;
         gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         isInvincible = false;
@@ -57,11 +60,12 @@ public partial class OurTank : Tank
                 Fire();
                 RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
                 distance = hit.distance;
-                m_ChargeTime = Mathf.Lerp(0.5f, 1.3f, distance / 7);
+                m_ChargeTime = Mathf.Lerp(0.4f, 1.3f, distance / 7);
                 m_CurrentChargeTime = m_ChargeTime;
             }
         }
         m_CurrentChargeTime -= Time.deltaTime;
+        fixTime -= Time.deltaTime;
 
         // Store the player's input and make sure the audio for the engine is playing.
         float vertical = Input.GetAxisRaw(m_VerticalAxisName);
@@ -110,8 +114,30 @@ public partial class OurTank : Tank
             }
             animator.speed = (moveDirection * speed).magnitude;
 
-            position += moveDirection * speed * Time.deltaTime;
-            rigidbody2d.MovePosition(position);
+            if (!isFixed)
+            {
+                position += moveDirection * speed * Time.deltaTime;
+                rigidbody2d.MovePosition(position);
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.name == "EnemyTank")
+        {
+            print("Enter collision");
+            fixTime = 0.5f;
+            isFixed = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.name == "EnemyTank")
+        {
+            print("Exit collision");
+            isFixed = false;
         }
     }
 
