@@ -10,10 +10,11 @@ public partial class OurTank : Tank
     private string m_HorizontalAxisName;
     private string m_FireButton;                // The input axis that is used for launching shells.
     private Animator shieldAnimator;
-    private float fixTime;  
     private bool isFixed;   //when tank collides other tank, it cannot move
+    private Vector2 position0;      //when tank collides other tank, it restores to the original position
+    public int level;
 
-    public IEnumerator Born()
+    public void Born()
     {
         if (gameObject.name == "player1")
             m_PlayerNumber = 1;
@@ -26,16 +27,19 @@ public partial class OurTank : Tank
         transform.position = ourSpawnPoint[m_PlayerNumber - 1];
         m_Dead = false;
         Health = 1;
-        isInvincible = true;
-        invincibleTime = 2f;
-        fixTime = 0;
+        level = 1;
         isFixed = false;
         gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        isInvincible = false;
+        StartCoroutine(SetInvicible(2f));
         shieldAnimator.SetTrigger("reset");
     }
 
+    public IEnumerator SetInvicible(float time)
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(time);
+        isInvincible = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +69,6 @@ public partial class OurTank : Tank
             }
         }
         m_CurrentChargeTime -= Time.deltaTime;
-        fixTime -= Time.deltaTime;
 
         // Store the player's input and make sure the audio for the engine is playing.
         float vertical = Input.GetAxisRaw(m_VerticalAxisName);
@@ -116,6 +119,7 @@ public partial class OurTank : Tank
 
             if (!isFixed)
             {
+                position0 = position;
                 position += moveDirection * speed * Time.deltaTime;
                 rigidbody2d.MovePosition(position);
             }
@@ -127,7 +131,9 @@ public partial class OurTank : Tank
         if (collision.collider.name == "EnemyTank")
         {
             print("Enter collision");
-            fixTime = 0.5f;
+            print("position1 " + transform.position);
+            print("position0 " + position0);
+            rigidbody2d.position = position0;
         }
     }
 
@@ -156,7 +162,7 @@ public partial class OurTank : Tank
         }
     }
 
-    protected IEnumerator OnDeath()
+    private IEnumerator OnDeath()
     {
         // Set the flag so that this function is only called once.
         m_Dead = true;

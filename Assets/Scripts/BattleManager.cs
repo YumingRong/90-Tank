@@ -14,7 +14,7 @@ public class BattleManager : MonoBehaviour
     int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[totalEnemy];
 
-    int prizePerBattle = 3;
+    int prizePerBattle = 20;
     bool[] prizeQueue = new bool[totalEnemy];
     int enemyBorn = 0;
     GameManager gm;
@@ -47,7 +47,7 @@ public class BattleManager : MonoBehaviour
         for (int i= 0; i<2;i++)
         {
             if (gm.playerLife[i] > 0)
-                StartCoroutine(ourTank[i].Born());
+                ourTank[i].Born();
             else
                 ourTank[i].gameObject.SetActive(false);
 
@@ -115,7 +115,7 @@ public class BattleManager : MonoBehaviour
         }
         else if (gm.playerLife[player - 1] > 0)
         {
-            StartCoroutine(ourTank[player - 1].Born());
+            ourTank[player - 1].Born();
         }
     }
 

@@ -69,7 +69,6 @@ public class EnemyTank : Tank
         transform.position = spawnPoint;
         speed = 0;
         isInvincible = true;
-        invincibleTime = 1f;
         yield return new WaitForSeconds(1f);
         isInvincible = false;
         speed = speedArray[type];

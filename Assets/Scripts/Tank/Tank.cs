@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public partial class Tank : MonoBehaviour
 {
@@ -26,8 +25,6 @@ public partial class Tank : MonoBehaviour
     }
     private int m_health;
     [HideInInspector] public bool m_Dead;          // Has the tank been reduced beyond zero health yet?
-    protected float invincibleTimer;
-    protected float invincibleTime;
     protected GameManager gameManager;
 
     private void Awake()

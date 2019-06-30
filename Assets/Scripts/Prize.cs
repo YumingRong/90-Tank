@@ -22,18 +22,23 @@ public class Prize : MonoBehaviour
             if (type == Type.bomb)
             {
                 EnemyTank[] tanks = FindObjectsOfType<EnemyTank>();
-                foreach (EnemyTank tank in tanks)
+                for (int i = 0; i < tanks.Length; i++)
                 {
-                    StartCoroutine(tank.OnDeath(myTank.m_PlayerNumber));
+                    tanks[i].Health = 0;
+                    StartCoroutine(tanks[i].OnDeath(myTank.m_PlayerNumber));
                 }
             }
             else if(type == Type.life)
             {
                 GameManager.GetInstance().playerLife[myTank.m_PlayerNumber]++;
             }
+            else if(type == Type.helmet)
+            {
+                myTank.SetInvicible(5f);
+            }
             else if(type == Type.star)
             {
-
+                myTank.level++;
             }
             ObjectPool.GetInstance().RecycleObj(gameObject);
         }
