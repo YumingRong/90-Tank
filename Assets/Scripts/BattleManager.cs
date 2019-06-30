@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,9 +10,12 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public int liveEnemy;
     OurTank[] ourTank = new OurTank[2];
     Image gameoverImage;
+    const int totalEnemy = 20;
     int[] enemyTanks = { 5, 5, 5, 5 };
-    int[] enemyQueue = new int[20];
-    int totalEnemy = 20;
+    int[] enemyQueue = new int[totalEnemy];
+
+    int prizePerBattle = 3;
+    bool[] prizeQueue = new bool[totalEnemy];
     int enemyBorn = 0;
     GameManager gm;
     private static BattleManager instance;
@@ -38,7 +42,7 @@ public class BattleManager : MonoBehaviour
         ourTank[1] = GameObject.Find("player2").GetComponent<OurTank>();
         gameoverImage = GameObject.Find("ImageGameOver").GetComponent<Image>();
         gameoverImage.enabled = false;
-        FormQueue();
+        FormEnemyQueue();
         SpawnEnemyTank();
         for (int i= 0; i<2;i++)
         {
@@ -71,7 +75,7 @@ public class BattleManager : MonoBehaviour
             //print("Tank No " + enemyBorn + " type " + enemyQueue[enemyBorn] + " born at " + enemyBorn % 3);
             GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
             EnemyTank tank = tankInstance.GetComponent<EnemyTank>();
-            StartCoroutine(tank.Born(enemyQueue[enemyBorn], enemyBorn % 3));
+            StartCoroutine(tank.Born(enemyQueue[enemyBorn], enemyBorn % 3, prizeQueue[enemyBorn]));
             liveEnemy++;
             enemyBorn++;
         }
@@ -84,7 +88,7 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    void FormQueue()
+    void FormEnemyQueue()
     {
         int cursor = 0;
         for (int i = 0; i < enemyTanks.Length; i++)
@@ -92,21 +96,15 @@ public class BattleManager : MonoBehaviour
             for (int j = 0; j < enemyTanks[i]; j++)
                 enemyQueue[cursor++] = i;
         }
-        Shuffle(enemyQueue);
+        RandomElement.Shuffle(enemyQueue);
 
+        for (int i = 0; i < prizePerBattle; i++)
+            prizeQueue[i] = true;
+        for (int i = prizePerBattle; i < totalEnemy; i++)
+            prizeQueue[i] = false;
+        RandomElement.Shuffle(prizeQueue);
     }
 
-
-    void Shuffle(int[] deck)
-    {
-        for (int i = 0; i < deck.Length; i++)
-        {
-            int temp = deck[i];
-            int randomIndex = Random.Range(0, deck.Length);
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
-        }
-    }
 
     public void OurTankDie(int player)
     {

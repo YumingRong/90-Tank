@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Assets.Scripts;
 
 public class EnemyTank : Tank
 {
     public Transform frontLeft, frontRight;
     private float directionChangeInteval;
     private float directionChangeTimer;
+    private bool hasPrize;
 
     private readonly int[] healthArray = { 1, 2, 2, 3 };
     private readonly float[] speedArray = { 0.5f, 0.5f, 1f, 0.5f };
@@ -37,7 +39,7 @@ public class EnemyTank : Tank
         directionChangeInteval = Random.Range(2, 5);
     }
 
-    public IEnumerator Born(int type, int position)
+    public IEnumerator Born(int type, int position, bool prize)
     {
         Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
         Vector2 spawnPoint = enemySpawnPoint[position];
@@ -61,7 +63,9 @@ public class EnemyTank : Tank
 
         gameObject.SetActive(true);
         Type = type;
+        hasPrize = prize;
         animator.SetInteger("type", type + 1);
+        animator.SetBool("prize", prize);
         transform.position = spawnPoint;
         speed = 0;
         isInvincible = true;
@@ -159,7 +163,7 @@ public class EnemyTank : Tank
         }
 
         Vector2[] directChoice = { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
-        moveDirection = directChoice[Choose(directChance)];
+        moveDirection = directChoice[RandomElement.Choose(directChance)];
 
         if (moveDirection == Vector2.up)
             rigidbody2d.rotation = 0f;
@@ -179,31 +183,6 @@ public class EnemyTank : Tank
 
     }
 
-    private int Choose(float[] probs)
-    {
-
-        float total = 0;
-
-        foreach (float elem in probs)
-        {
-            total += elem;
-        }
-
-        float randomPoint = Random.value * total;
-
-        for (int i = 0; i < probs.Length; i++)
-        {
-            if (randomPoint < probs[i])
-            {
-                return i;
-            }
-            else
-            {
-                randomPoint -= probs[i];
-            }
-        }
-        return probs.Length - 1;
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -212,6 +191,11 @@ public class EnemyTank : Tank
             Shell shell = collision.GetComponent<Shell>();
             if (shell.shooter > 0)
             {
+                if (hasPrize)
+                {
+                    GameObject prizeInstance = ObjectPool.GetInstance().GetObject("Prize");
+                    Prize prize = prizeInstance.GetComponent<Prize>();
+                }
                 Health--;
                 // If the current health is at or below zero and it has not yet been registered, call OnDeath.
                 if (Health <= 0 && !m_Dead)
@@ -222,7 +206,7 @@ public class EnemyTank : Tank
         }
     }
 
-    protected IEnumerator OnDeath(int shooter)
+    public IEnumerator OnDeath(int shooter)
     {
         // Set the flag so that this function is only called once.
         m_Dead = true;

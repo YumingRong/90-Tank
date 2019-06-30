@@ -128,7 +128,6 @@ public partial class OurTank : Tank
         {
             print("Enter collision");
             fixTime = 0.5f;
-            isFixed = true;
         }
     }
 
@@ -137,7 +136,6 @@ public partial class OurTank : Tank
         if (collision.collider.name == "EnemyTank")
         {
             print("Exit collision");
-            isFixed = false;
         }
     }
 
