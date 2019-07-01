@@ -11,7 +11,7 @@ public partial class OurTank : Tank
     private string m_FireButton;                // The input axis that is used for launching shells.
     private Animator shieldAnimator;
     private bool isFixed;   //when tank collides other tank, it cannot move
-    private Vector2 position0;      //when tank collides other tank, it restores to the original position
+    private Vector3 position0;      //when tank collides other tank, it restores to the original position
     public int level;
 
     public void Born()
@@ -30,14 +30,15 @@ public partial class OurTank : Tank
         level = 1;
         isFixed = false;
         gameObject.SetActive(true);
-        StartCoroutine(SetInvicible(2f));
-        shieldAnimator.SetTrigger("reset");
+        StartCoroutine(SetInvicible(3f));
     }
 
     public IEnumerator SetInvicible(float time)
     {
+        shieldAnimator.SetBool("invincible", true); ;
         isInvincible = true;
         yield return new WaitForSeconds(time);
+        shieldAnimator.SetBool("invincible", false);
         isInvincible = false;
     }
 

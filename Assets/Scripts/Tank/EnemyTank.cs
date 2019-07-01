@@ -32,17 +32,16 @@ public class EnemyTank : Tank
     // Start is called before the first frame update
     void Start()
     {
-        m_PlayerNumber = -1;
         moveDirection = Vector2.down;
         m_ChargeTime = 1.8f;
         directionChangeTimer = 0;
         directionChangeInteval = Random.Range(2, 5);
     }
 
-    public IEnumerator Born(int type, int position, bool prize)
+    public IEnumerator Born(int type, int number, bool prize)
     {
         Vector2[] enemySpawnPoint = { new Vector2(-3f, 3f), new Vector2(0f, 3f), new Vector2(3f, 3f) };
-        Vector2 spawnPoint = enemySpawnPoint[position];
+        Vector2 spawnPoint = enemySpawnPoint[number%3];
         gameObject.SetActive(false);
 
         bool collide;
@@ -63,6 +62,7 @@ public class EnemyTank : Tank
 
         gameObject.SetActive(true);
         Type = type;
+        m_PlayerNumber = -number;
         hasPrize = prize;
         animator.SetInteger("type", type + 1);
         animator.SetBool("prize", prize);
@@ -176,7 +176,7 @@ public class EnemyTank : Tank
         Vector2 position = rigidbody2d.position;
         position.x = Mathf.RoundToInt(position.x / smallestGrid) * smallestGrid;
         position.y = Mathf.RoundToInt(position.y / smallestGrid) * smallestGrid;
-        rigidbody2d.position = position;
+        rigidbody2d.MovePosition(position);
 
         directionChangeTimer = 0;
 
@@ -192,6 +192,7 @@ public class EnemyTank : Tank
             {
                 if (hasPrize)
                 {
+                    hasPrize = false;
                     GameObject prizeInstance = ObjectPool.GetInstance().GetObject("Prize");
                     Prize prize = prizeInstance.GetComponent<Prize>();
                 }
@@ -209,8 +210,10 @@ public class EnemyTank : Tank
     {
         // Set the flag so that this function is only called once.
         m_Dead = true;
+        print("enemy tank " + m_PlayerNumber +" before explode");
         yield return new WaitForSeconds(7f / 10f);
 
+        print("enemy tank " + m_PlayerNumber + " after explode");
         gameManager.kill[shooter-1, type]++;
         BattleManager.GetInstance().liveEnemy--;
         ObjectPool.GetInstance().RecycleObj(gameObject);

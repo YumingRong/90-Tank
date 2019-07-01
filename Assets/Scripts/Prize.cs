@@ -9,7 +9,7 @@ public class Prize : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        type = (Type)Random.Range(0, 6);
+        type = Type.helmet; // (Type)Random.Range(0, 6);
         gameObject.GetComponent<SpriteRenderer>().sprite = sprites[(int)type];
         gameObject.transform.position = new Vector2(Random.Range(-12, 12)* 0.25f, Random.Range(-12, 12) * 0.25f);
     }
@@ -22,19 +22,25 @@ public class Prize : MonoBehaviour
             if (type == Type.bomb)
             {
                 EnemyTank[] tanks = FindObjectsOfType<EnemyTank>();
-                for (int i = 0; i < tanks.Length; i++)
-                {
-                    tanks[i].Health = 0;
-                    StartCoroutine(tanks[i].OnDeath(myTank.m_PlayerNumber));
-                }
+                print("Enemy tank number:" + tanks.Length);
+                tanks[0].Health = 0;
+                StartCoroutine(tanks[0].OnDeath(myTank.m_PlayerNumber));
+                //foreach (EnemyTank tank in tanks)
+                //{
+                //    if (!tank.m_Dead)
+                //    {
+                //        tank.Health = 0;
+                //        StartCoroutine(tank.OnDeath(myTank.m_PlayerNumber));
+                //    }
+                //}
             }
             else if(type == Type.life)
             {
-                GameManager.GetInstance().playerLife[myTank.m_PlayerNumber]++;
+                GameManager.GetInstance().playerLife[myTank.m_PlayerNumber - 1]++;
             }
             else if(type == Type.helmet)
             {
-                myTank.SetInvicible(5f);
+                StartCoroutine(myTank.SetInvicible(5f));
             }
             else if(type == Type.star)
             {

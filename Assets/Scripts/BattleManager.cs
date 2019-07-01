@@ -75,7 +75,7 @@ public class BattleManager : MonoBehaviour
             //print("Tank No " + enemyBorn + " type " + enemyQueue[enemyBorn] + " born at " + enemyBorn % 3);
             GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
             EnemyTank tank = tankInstance.GetComponent<EnemyTank>();
-            StartCoroutine(tank.Born(enemyQueue[enemyBorn], enemyBorn % 3, prizeQueue[enemyBorn]));
+            StartCoroutine(tank.Born(enemyQueue[enemyBorn], enemyBorn, prizeQueue[enemyBorn]));
             liveEnemy++;
             enemyBorn++;
         }
