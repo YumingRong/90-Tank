@@ -12,7 +12,20 @@ public partial class OurTank : Tank
     private Animator shieldAnimator;
     private bool isFixed;   //when tank collides other tank, it cannot move
     private Vector3 position0;      //when tank collides other tank, it restores to the original position
-    public int level;
+    public int m_level
+    {
+        set
+        {
+            //float[] chargeTimes = { };
+            //m_ChargeTime = chargeTimes[value];
+            level = value;        
+        }
+        get
+        {
+            return level;
+        }
+    }
+    private int level;
 
     public void Born()
     {
@@ -31,6 +44,11 @@ public partial class OurTank : Tank
         isFixed = false;
         gameObject.SetActive(true);
         StartCoroutine(SetInvicible(3f));
+    }
+
+    public void OnInvinciblePrize()
+    {
+        StartCoroutine(SetInvicible(4f));
     }
 
     public IEnumerator SetInvicible(float time)

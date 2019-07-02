@@ -78,8 +78,10 @@ public class EnemyTank : Tank
     // Update is called once per frame
     void Update()
     {
+        if (m_Dead)
+            return;
         m_CurrentChargeTime += Time.deltaTime;
-        if (m_CurrentChargeTime >= m_ChargeTime && !m_Dead)
+        if (m_CurrentChargeTime >= m_ChargeTime)
         {
             Fire();
             m_CurrentChargeTime = 0f;
@@ -206,15 +208,17 @@ public class EnemyTank : Tank
         }
     }
 
-    public IEnumerator OnDeath(int shooter)
+    public void Die(int player)       //coroutine cannot be invoked by other class
+    {
+        StartCoroutine(OnDeath(player));
+    }
+
+    private IEnumerator OnDeath(int shooter)
     {
         // Set the flag so that this function is only called once.
         m_Dead = true;
-        print("enemy tank " + m_PlayerNumber +" before explode");
-        yield return new WaitForSeconds(7f / 10f);
-
-        print("enemy tank " + m_PlayerNumber + " after explode");
-        gameManager.kill[shooter-1, type]++;
+        yield return new WaitForSeconds(0.7f);
+        gameManager.kill[shooter - 1, type]++;
         BattleManager.GetInstance().liveEnemy--;
         ObjectPool.GetInstance().RecycleObj(gameObject);
         BattleManager.GetInstance().SpawnEnemyTank();
