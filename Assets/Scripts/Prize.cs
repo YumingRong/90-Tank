@@ -43,6 +43,14 @@ public class Prize : MonoBehaviour
             {
                 myTank.m_level++;
             }
+            else if (type == Type.timer)
+            {
+                EnemyTank.bulletTime = 5f;
+            }
+            else if (type == Type.shovel)
+            {
+
+            }
             ObjectPool.GetInstance().RecycleObj(gameObject);
         }
     }

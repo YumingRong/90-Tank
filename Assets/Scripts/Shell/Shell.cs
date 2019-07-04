@@ -19,13 +19,6 @@ public class Shell : MonoBehaviour
         animator.keepAnimatorControllerStateOnDisable = true;
     }
 
-    private void Update()
-    {
-        //if (transform.position.magnitude > 7f)
-        //    ObjectPool.GetInstance().RecycleObj(gameObject);
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         //print("Shell hit " + other.name);

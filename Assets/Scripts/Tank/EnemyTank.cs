@@ -7,6 +7,7 @@ using Assets.Scripts;
 public class EnemyTank : Tank
 {
     public Transform frontLeft, frontRight;
+    [HideInInspector] public static float bulletTime;
     private float directionChangeInteval;
     private float directionChangeTimer;
     private bool hasPrize;
@@ -34,6 +35,7 @@ public class EnemyTank : Tank
     {
         moveDirection = Vector2.down;
         m_ChargeTime = 1.8f;
+        bulletTime = 0;
         directionChangeTimer = 0;
         directionChangeInteval = Random.Range(2, 5);
     }
@@ -79,6 +81,9 @@ public class EnemyTank : Tank
     void Update()
     {
         if (m_Dead)
+            return;
+        bulletTime -= Time.deltaTime;
+        if (bulletTime > 0)
             return;
         m_CurrentChargeTime += Time.deltaTime;
         if (m_CurrentChargeTime >= m_ChargeTime)

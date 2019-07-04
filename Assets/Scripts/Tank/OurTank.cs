@@ -16,8 +16,8 @@ public partial class OurTank : Tank
     {
         set
         {
-            //float[] chargeTimes = { };
-            //m_ChargeTime = chargeTimes[value];
+            float[] chargeTimes = {10f, 1.4f, 1.2f, 1f, 0.8f};
+            m_ChargeTime = chargeTimes[value];
             level = value;        
         }
         get
@@ -64,7 +64,6 @@ public partial class OurTank : Tank
     void Start()
     {
         moveDirection = Vector2.up;
-        m_ChargeTime = 1.0f;
         shieldAnimator = shield.GetComponent<Animator>();
     }
 
@@ -83,8 +82,7 @@ public partial class OurTank : Tank
                 Fire();
                 RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
                 distance = hit.distance;
-                m_ChargeTime = Mathf.Lerp(0.4f, 1.3f, distance / 7);
-                m_CurrentChargeTime = m_ChargeTime;
+                m_CurrentChargeTime = Mathf.Lerp(0.4f, m_ChargeTime, distance / 7);
             }
         }
         m_CurrentChargeTime -= Time.deltaTime;
