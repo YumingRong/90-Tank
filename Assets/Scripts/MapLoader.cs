@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.IO;
 using UnityEngine.Tilemaps;
+using System.Collections;
 
 public class MapLoader : MonoBehaviour
 {
@@ -74,4 +75,30 @@ public class MapLoader : MonoBehaviour
         }
         print("Map loaded");
     }
+
+    Vector3Int[] fence = { new Vector3Int(-13, -2, 0), new Vector3Int(-13, 1, 0), new Vector3Int(-12, -2, 0), new Vector3Int(-12, 1, 0),
+                    new Vector3Int(-11,-2, 0), new Vector3Int(-11, -1, 0), new Vector3Int(-11, 0, 0), new Vector3Int(-11,1, 0)};
+
+    public void OnPrizeShovel()
+    {
+        foreach (Vector3Int v in fence)
+            map.SetTile(v, steelTile);
+        Invoke("SwitchFence", 5f);
+        foreach (Vector3Int v in fence)
+            map.SetTile(v, brickTile);
+    }
+
+    private IEnumerator SwitchFence()
+    {
+        for (int i = 0; i <3; i++)
+        {
+            foreach (Vector3Int v in fence)
+                map.SetTile(v, steelTile);
+            yield return new WaitForSeconds(0.5f);
+            foreach (Vector3Int v in fence)
+                map.SetTile(v, brickTile);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
 }

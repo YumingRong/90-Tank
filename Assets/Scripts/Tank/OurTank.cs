@@ -5,7 +5,7 @@ using UnityEngine;
 public partial class OurTank : Tank
 {
     public GameObject shield;
-
+    private float invincibleTime; 
     private string m_VerticalAxisName;
     private string m_HorizontalAxisName;
     private string m_FireButton;                // The input axis that is used for launching shells.
@@ -17,8 +17,12 @@ public partial class OurTank : Tank
         set
         {
             float[] chargeTimes = {10f, 1.4f, 1.2f, 1f, 0.8f};
+            int[] healths = { 0, 1, 1, 1, 2 };
             m_ChargeTime = chargeTimes[value];
-            level = value;        
+            level = value;
+            Health = healths[value];
+            animator.SetInteger("level", value);
+            animator.SetInteger("health", Health);
         }
         get
         {
@@ -39,25 +43,11 @@ public partial class OurTank : Tank
         Vector2[] ourSpawnPoint = { new Vector2(-1f, -3f), new Vector2(1f, -3f) };
         transform.position = ourSpawnPoint[m_PlayerNumber - 1];
         m_Dead = false;
-        Health = 1;
         level = 1;
         isFixed = false;
         gameObject.SetActive(true);
-        StartCoroutine(SetInvicible(3f));
-    }
-
-    public void OnInvinciblePrize()
-    {
-        StartCoroutine(SetInvicible(4f));
-    }
-
-    public IEnumerator SetInvicible(float time)
-    {
-        shieldAnimator.SetBool("invincible", true); ;
-        isInvincible = true;
-        yield return new WaitForSeconds(time);
-        shieldAnimator.SetBool("invincible", false);
-        isInvincible = false;
+        invincibleTime = 3f;
+        shieldAnimator.SetBool("invincible", true); 
     }
 
     // Start is called before the first frame update
@@ -74,6 +64,16 @@ public partial class OurTank : Tank
         if (m_Dead)
             return;
         float distance;
+
+        if (invincibleTime > 0)
+        {
+            invincibleTime -= Time.deltaTime;
+            if (invincibleTime<=0)
+            {
+                shieldAnimator.SetBool("invincible", false);
+                isInvincible = false;
+            }
+        }
 
         if (Input.GetButtonDown(m_FireButton))
         {
@@ -169,12 +169,16 @@ public partial class OurTank : Tank
             Shell shell = collision.GetComponent<Shell>();
             if (shell.shooter < 0)
             {
-                Health--;
+                if (level == 4)
+                    level = 1;
+                else
+                    Health--;
                 // If the current health is at or below zero and it has not yet been registered, call OnDeath.
                 if (Health <= 0 && !m_Dead)
                 {
                     StartCoroutine(OnDeath());
                 }
+
             }
         }
     }
@@ -187,6 +191,12 @@ public partial class OurTank : Tank
 
         gameObject.SetActive(false);
         BattleManager.GetInstance().OurTankDie(m_PlayerNumber);
+    }
+
+    public void OnInvinciblePrize()
+    {
+        invincibleTime = 5f;
+        shieldAnimator.SetBool("invincible", true);
     }
 
 }
