@@ -82,8 +82,7 @@ public class EnemyTank : Tank
     {
         if (m_Dead)
             return;
-        bulletTime -= Time.deltaTime;
-        if (bulletTime > 0)
+        if (BattleManager.GetInstance().bulletTime > 0)
             return;
         m_CurrentChargeTime += Time.deltaTime;
         if (m_CurrentChargeTime >= m_ChargeTime)

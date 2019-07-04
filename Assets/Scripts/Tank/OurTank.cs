@@ -12,24 +12,24 @@ public partial class OurTank : Tank
     private Animator shieldAnimator;
     private bool isFixed;   //when tank collides other tank, it cannot move
     private Vector3 position0;      //when tank collides other tank, it restores to the original position
-    public int m_level
+    public int level
     {
         set
         {
-            float[] chargeTimes = {10f, 1.4f, 1.2f, 1f, 0.8f};
+            float[] chargeTimes = {10f, 1.5f, 1.3f, 1.1f, 1f};
             int[] healths = { 0, 1, 1, 1, 2 };
             m_ChargeTime = chargeTimes[value];
-            level = value;
+            m_level = value;
             Health = healths[value];
             animator.SetInteger("level", value);
             animator.SetInteger("health", Health);
         }
         get
         {
-            return level;
+            return m_level;
         }
     }
-    private int level;
+    private int m_level;
 
     public void Born()
     {
@@ -83,6 +83,7 @@ public partial class OurTank : Tank
                 RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
                 distance = hit.distance;
                 m_CurrentChargeTime = Mathf.Lerp(0.4f, m_ChargeTime, distance / 7);
+                Debug.Log("Charge time: " + m_CurrentChargeTime);
             }
         }
         m_CurrentChargeTime -= Time.deltaTime;
@@ -148,8 +149,8 @@ public partial class OurTank : Tank
         if (collision.collider.name == "EnemyTank")
         {
             print("Enter collision");
-            print("position1 " + transform.position);
-            print("position0 " + position0);
+            //print("position1 " + transform.position);
+            //print("position0 " + position0);
             rigidbody2d.position = position0;
         }
     }

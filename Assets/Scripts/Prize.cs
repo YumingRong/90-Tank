@@ -10,11 +10,15 @@ public class Prize : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        type = (Type)Random.Range(0, 6);
-        gameObject.GetComponent<SpriteRenderer>().sprite = sprites[(int)type];
-        gameObject.transform.position = new Vector2(Random.Range(-12, 12)* 0.25f, Random.Range(-12, 12) * 0.25f);
     }
 
+    private void OnEnable()
+    {
+        type = (Type)Random.Range(0, 6);
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprites[(int)type];
+        gameObject.transform.position = new Vector2(Random.Range(-13, 13) * 0.25f, Random.Range(-11, 11) * 0.25f);
+
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.name == "player1" || collision.name == "player2")
@@ -42,11 +46,11 @@ public class Prize : MonoBehaviour
             }
             else if(type == Type.star)
             {
-                myTank.m_level++;
+                myTank.level++;
             }
             else if (type == Type.timer)
             {
-                EnemyTank.bulletTime = 5f;
+                BattleManager.GetInstance().bulletTime = 5f;
             }
             else if (type == Type.shovel)
             {

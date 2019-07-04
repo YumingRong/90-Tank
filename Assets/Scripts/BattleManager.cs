@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class BattleManager : MonoBehaviour
 {
     [HideInInspector] public int liveEnemy;
+    [HideInInspector] public float bulletTime;
     OurTank[] ourTank = new OurTank[2];
     Image gameoverImage;
     const int totalEnemy = 20;
@@ -54,6 +55,11 @@ public class BattleManager : MonoBehaviour
         }
         System.Array.Clear(gm.kill, 0, gm.kill.Length);
 
+    }
+
+    private void Update()
+    {
+        bulletTime -= Time.deltaTime;
     }
 
     public IEnumerator GameOver()
