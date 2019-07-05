@@ -50,7 +50,7 @@ public class Prize : MonoBehaviour
             }
             else if (type == Type.timer)
             {
-                BattleManager.GetInstance().bulletTime = 5f;
+                BattleManager.GetInstance().bulletTime = 6f;
             }
             else if (type == Type.shovel)
             {

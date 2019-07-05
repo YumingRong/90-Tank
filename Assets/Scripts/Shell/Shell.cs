@@ -25,8 +25,9 @@ public class Shell : MonoBehaviour
         if (other.name == "EnemyTank" || other.name == "player1" || other.name == "player2")
         {
             Tank targetTank = other.GetComponent<Tank>();
-            if (targetTank != null && targetTank.m_PlayerNumber == shooter)
+            if (shooter * targetTank.m_PlayerNumber > 0)
                 return;
+
         }
         else if (other.name == "Tilemap")
         {

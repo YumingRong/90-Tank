@@ -7,6 +7,7 @@ using Assets.Scripts;
 public class EnemyTank : Tank
 {
     public Transform frontLeft, frontRight;
+    private Tilemap map;
     [HideInInspector] public static float bulletTime;
     private float directionChangeInteval;
     private float directionChangeTimer;
@@ -37,7 +38,8 @@ public class EnemyTank : Tank
         m_ChargeTime = 1.8f;
         bulletTime = 0;
         directionChangeTimer = 0;
-        directionChangeInteval = Random.Range(2, 5);
+        directionChangeInteval = 2;
+        map = GameObject.Find("Tilemap").GetComponent<Tilemap>();
     }
 
     public IEnumerator Born(int type, int number, bool prize)
@@ -105,20 +107,20 @@ public class EnemyTank : Tank
     {
         if (collision.collider.name == "Tilemap")
         {
-            Tilemap map = collision.collider.GetComponent<Tilemap>();
-            TileBase tile = map.GetTile(Vector3Int.FloorToInt(frontLeft.position / smallestGrid));
-            if (tile.name == "steelwall" || tile.name == "river")
+            TileBase tileLeft = map.GetTile(Vector3Int.FloorToInt(frontLeft.position / smallestGrid));
+            TileBase tileRight = map.GetTile(Vector3Int.FloorToInt(frontRight.position / smallestGrid));
+            if (tileLeft.name == "steelwall" || tileLeft.name == "river" || tileRight.name == "steelwall" || tileRight.name == "river")
             {
+                print("collide steel");
                 SelectDirection(true);
             }
-            else
+            //when half brick,it'd be better to change direction
+            else if (tileLeft.name == "brickwall" && tileRight.name == "empty" || tileLeft.name == "empty" && tileRight.name == "brickwall")
             {
-                tile = map.GetTile(Vector3Int.FloorToInt(frontRight.position / smallestGrid));
-                if (tile.name == "steelwall" || tile.name == "river")
-                {
-                    SelectDirection(true);
-                }
+                print("collide half brick");
+                SelectDirection(false);
             }
+
         }
         if (collision.collider.name == "EnemyTank")
             SelectDirection(true);
