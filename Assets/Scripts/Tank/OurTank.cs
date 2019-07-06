@@ -10,16 +10,17 @@ public partial class OurTank : Tank
     private string m_HorizontalAxisName;
     private string m_FireButton;                // The input axis that is used for launching shells.
     private Animator shieldAnimator;
-    private bool isFixed;   //when tank collides other tank, it cannot move
     private Vector3 position0;      //when tank collides other tank, it restores to the original position
     public int level
     {
         set
         {
+            if (value > 4)
+                value = 4;
             float[] chargeTimes = {10f, 1.5f, 1.3f, 1.1f, 1f};
             int[] healths = { 0, 1, 1, 1, 2 };
-            m_ChargeTime = chargeTimes[value];
             m_level = value;
+            m_ChargeTime = chargeTimes[value];
             Health = healths[value];
             animator.SetInteger("level", value);
             animator.SetInteger("health", Health);
@@ -33,18 +34,10 @@ public partial class OurTank : Tank
 
     public void Born()
     {
-        if (gameObject.name == "player1")
-            m_PlayerNumber = 1;
-        else
-            m_PlayerNumber = 2;
-        m_VerticalAxisName = "Vertical" + m_PlayerNumber;
-        m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
-        m_FireButton = "Fire" + m_PlayerNumber;
         Vector2[] ourSpawnPoint = { new Vector2(-1f, -3f), new Vector2(1f, -3f) };
         transform.position = ourSpawnPoint[m_PlayerNumber - 1];
         m_Dead = false;
-        level = 1;
-        isFixed = false;
+        moveDirection = Vector2.up;
         gameObject.SetActive(true);
         invincibleTime = 3f;
         shieldAnimator.SetBool("invincible", true); 
@@ -53,7 +46,13 @@ public partial class OurTank : Tank
     // Start is called before the first frame update
     void Start()
     {
-        moveDirection = Vector2.up;
+        if (gameObject.name == "player1")
+            m_PlayerNumber = 1;
+        else
+            m_PlayerNumber = 2;
+        m_VerticalAxisName = "Vertical" + m_PlayerNumber;
+        m_HorizontalAxisName = "Horizontal" + m_PlayerNumber;
+        m_FireButton = "Fire" + m_PlayerNumber;
         shieldAnimator = shield.GetComponent<Animator>();
     }
 
@@ -135,12 +134,9 @@ public partial class OurTank : Tank
             }
             animator.speed = (moveDirection * speed).magnitude;
 
-            if (!isFixed)
-            {
-                position0 = position;
-                position += moveDirection * speed * Time.deltaTime;
-                rigidbody2d.MovePosition(position);
-            }
+            position0 = position;
+            position += moveDirection * speed * Time.deltaTime;
+            rigidbody2d.MovePosition(position);
         }
     }
 
@@ -151,7 +147,14 @@ public partial class OurTank : Tank
             print("Enter collision");
             //print("position1 " + transform.position);
             //print("position0 " + position0);
-            rigidbody2d.position = position0;
+            Vector2 line = collision.collider.transform.position - transform.position;
+            line.Normalize();
+            float dotproduct = Vector2.Dot(moveDirection, line);
+            print("Tank " + m_PlayerNumber + " collides. Dot product " + dotproduct + " Move direction " + moveDirection);
+            if (dotproduct > speed * 0.5)     //the knocker should change its direction
+                rigidbody2d.position = position0;
+            else  //the knocked should keep its velocity
+                rigidbody2d.velocity = moveDirection * speed;
         }
     }
 
@@ -160,6 +163,14 @@ public partial class OurTank : Tank
         if (collision.collider.name == "EnemyTank")
         {
             print("Exit collision");
+            Vector2 line = collision.collider.transform.position - transform.position;
+            line.Normalize();
+            float dotproduct = Vector2.Dot(moveDirection, line);
+            print("Tank " + m_PlayerNumber + " collides. Dot product " + dotproduct + " Move direction " + moveDirection);
+            if (dotproduct > speed * 0.5)     //the knocker should change its direction
+                rigidbody2d.position = position0;
+            else  //the knocked should keep its velocity
+                rigidbody2d.velocity = moveDirection * speed;
         }
     }
 
@@ -196,7 +207,7 @@ public partial class OurTank : Tank
 
     public void OnInvinciblePrize()
     {
-        invincibleTime = 5f;
+        invincibleTime = 6f;
         shieldAnimator.SetBool("invincible", true);
     }
 

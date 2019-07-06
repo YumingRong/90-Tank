@@ -74,7 +74,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerNumber: -1
   speed: 0.5
-  score: 0
   isInvincible: 0
   m_Dead: 0
   m_Shell: {fileID: -7887317867719388199, guid: 532f277dd524e164184b5e88feb9c0d2,
@@ -94,10 +93,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTank
       objectReference: {fileID: 0}
-    - target: {fileID: 6579656205218685154, guid: 28922b00ef462ee4598bd3e50fb0120f,
+    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.24
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3259469533601874974, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
@@ -128,7 +137,7 @@ PrefabInstance:
     - target: {fileID: 3259469533601874960, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
       propertyPath: m_Size.y
-      value: 0.45
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4391182341396181592, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
@@ -140,20 +149,10 @@ PrefabInstance:
       propertyPath: m_PlayerNumber
       value: -1
       objectReference: {fileID: 0}
-    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
+    - target: {fileID: 6579656205218685154, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4153126812848008260, guid: 28922b00ef462ee4598bd3e50fb0120f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      propertyPath: m_LocalPosition.y
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: 3259469533601874961, guid: 28922b00ef462ee4598bd3e50fb0120f,
         type: 3}

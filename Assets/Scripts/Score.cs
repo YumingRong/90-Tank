@@ -11,6 +11,10 @@ public class Score : MonoBehaviour
     void Start()
     {
         gm = GameManager.GetInstance();
+    }
+
+    private void OnEnable()
+    {
         ShowScore();
     }
 
@@ -79,7 +83,8 @@ public class Score : MonoBehaviour
                 if(gm.player == 2)
                     gm.playerLife[1] = 3;
             }
-            SceneManager.LoadScene("BattleScene");
+            gameObject.SetActive(false);
         }
     }
+
 }

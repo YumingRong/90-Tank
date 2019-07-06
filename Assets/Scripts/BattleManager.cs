@@ -9,13 +9,14 @@ public class BattleManager : MonoBehaviour
 {
     [HideInInspector] public int liveEnemy;
     [HideInInspector] public float bulletTime;
+    public GameObject ScorePanel;
     OurTank[] ourTank = new OurTank[2];
     Image gameoverImage;
-    const int totalEnemy = 20;
-    int[] enemyTanks = { 5, 5, 5, 5 };
+    const int totalEnemy = 4;
+    int[] enemyTanks = { 1, 1, 1, 1 };
     int[] enemyQueue = new int[totalEnemy];
 
-    int prizePerBattle = 20;
+    int prizePerBattle = 4;
     bool[] prizeQueue = new bool[totalEnemy];
     int enemyBorn = 0;
     GameManager gm;
@@ -39,6 +40,7 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ScorePanel.SetActive(false);
         ourTank[0] = GameObject.Find("player1").GetComponent<OurTank>();
         ourTank[1] = GameObject.Find("player2").GetComponent<OurTank>();
         gameoverImage = GameObject.Find("ImageGameOver").GetComponent<Image>();
@@ -70,13 +72,13 @@ public class BattleManager : MonoBehaviour
         ourTank[1].m_Dead = true;
         gm.battleResult = GameManager.BattleResult.LOSE;
         yield return new WaitForSeconds(1.5f);
-        SceneManager.LoadScene("ScoreScene");
+        ScorePanel.SetActive(true);
 
     }
 
     public void SpawnEnemyTank()
     {
-        while (liveEnemy < 4 && enemyBorn < totalEnemy)
+        while (liveEnemy < 1 && enemyBorn < totalEnemy)
         {
             //print("Tank No " + enemyBorn + " type " + enemyQueue[enemyBorn] + " born at " + enemyBorn % 3);
             GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
@@ -89,7 +91,7 @@ public class BattleManager : MonoBehaviour
         if (liveEnemy == 0 && enemyBorn == totalEnemy)
         {
             gm.battleResult = GameManager.BattleResult.WIN;
-            SceneManager.LoadScene("ScoreScene");
+            ScorePanel.SetActive(true);
         }
     }
 
@@ -122,6 +124,7 @@ public class BattleManager : MonoBehaviour
         else if (gm.playerLife[player - 1] > 0)
         {
             ourTank[player - 1].Born();
+            ourTank[player - 1].level = 1;
         }
     }
 

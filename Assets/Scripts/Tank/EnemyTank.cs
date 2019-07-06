@@ -89,18 +89,27 @@ public class EnemyTank : Tank
         m_CurrentChargeTime += Time.deltaTime;
         if (m_CurrentChargeTime >= m_ChargeTime)
         {
-            Fire();
+            //Fire();
             m_CurrentChargeTime = 0f;
         }
         rigidbody2d.position += moveDirection * speed * Time.deltaTime;
         //print("Delta position " + speed * Time.deltaTime);
         directionChangeTimer += Time.deltaTime;
-        float gridsize = smallestGrid * 2;
-        if (directionChangeTimer > directionChangeInteval && (transform.position.x % gridsize)< smallestGrid /4 && (transform.position.y % gridsize) < smallestGrid/4) 
+        if (directionChangeTimer > directionChangeInteval)
         {
-            SelectDirection(false);
-            directionChangeInteval = Random.Range(0.5f, 2f);
+            print("Time to change direction");
+            if (AtGrid(transform.position, smallestGrid))
+            {
+                print("select direction");
+                SelectDirection(false);
+                directionChangeInteval = Random.Range(0.5f, 2f);
+            }
         }
+    }
+
+    private bool AtGrid(Vector2 v, float grid)
+    {
+        return (v.x % grid < grid * 0.15 || v.x % grid > grid * 0.85) && (v.y % grid < grid * 0.15 || v.y % grid > grid * 0.85);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -111,7 +120,6 @@ public class EnemyTank : Tank
             TileBase tileRight = map.GetTile(Vector3Int.FloorToInt(frontRight.position / smallestGrid));
             if (tileLeft.name == "steelwall" || tileLeft.name == "river" || tileRight.name == "steelwall" || tileRight.name == "river")
             {
-                print("collide steel");
                 SelectDirection(true);
             }
             //when half brick,it'd be better to change direction
@@ -120,10 +128,25 @@ public class EnemyTank : Tank
                 print("collide half brick");
                 SelectDirection(false);
             }
-
         }
+
         if (collision.collider.name == "EnemyTank")
-            SelectDirection(true);
+        {
+            Vector2 line = collision.collider.transform.position - transform.position;
+            line.Normalize();
+            float dotproduct = Vector2.Dot(moveDirection, line);
+            print("Tank " + m_PlayerNumber + " collides. Dot product " + dotproduct + " Move direction "+ moveDirection);
+            if (dotproduct > speed * 0.5)     //the knocker should change its direction
+            {
+                SelectDirection(true);
+                print("change direction");
+            }
+            else  //the knocked should keep its velocity
+            {
+                print("keep direction");
+                rigidbody2d.velocity = moveDirection * speed;
+            }
+        }
     }
 
 
@@ -142,23 +165,24 @@ public class EnemyTank : Tank
         {
             directChance[2] = 0.15f;
             directChance[3] = 0.3f;
-            if (transform.position.x <= -3f)
+            if (transform.position.x < -2.75f)
                 directChance[2] = 0f;
         }
         else if (transform.position.x > 0)
         {
             directChance[2] = 0.3f;
             directChance[3] = 0.15f;
-            if (transform.position.x >= -3f)
+            if (transform.position.x > -2.75f)
                 directChance[3] = 0f;
         }
-        if (transform.position.y <= -3f)
+        if (transform.position.y < -2.75f)
             directChance[1] = 0;
-        else if (transform.position.y >= 3f)
+        else if (transform.position.y > 2.75f)
             directChance[0] = 0;
 
         if (mustChange)
         {
+            print("must change direction");
             if (moveDirection == Vector2.up)
                 directChance[0] = 0f;
             else if (moveDirection == Vector2.down)
