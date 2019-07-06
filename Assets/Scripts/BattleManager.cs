@@ -9,16 +9,15 @@ public class BattleManager : MonoBehaviour
 {
     [HideInInspector] public int liveEnemy;
     [HideInInspector] public float bulletTime;
-    public GameObject ScorePanel;
     OurTank[] ourTank = new OurTank[2];
     Image gameoverImage;
-    const int totalEnemy = 4;
-    int[] enemyTanks = { 1, 1, 1, 1 };
+    const int totalEnemy = 20;
+    int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[totalEnemy];
 
-    int prizePerBattle = 4;
+    int prizePerBattle = 3;
     bool[] prizeQueue = new bool[totalEnemy];
-    int enemyBorn = 0;
+    int enemyBorn;
     GameManager gm;
     private static BattleManager instance;
 
@@ -35,19 +34,20 @@ public class BattleManager : MonoBehaviour
     {
         gm = GameManager.GetInstance();
         ObjectPool.GetInstance().Clear();
+        ourTank[0] = GameObject.Find("player1").GetComponent<OurTank>();
+        ourTank[1] = GameObject.Find("player2").GetComponent<OurTank>();
+        gameoverImage = GameObject.Find("ImageGameOver").GetComponent<Image>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        ScorePanel.SetActive(false);
-        ourTank[0] = GameObject.Find("player1").GetComponent<OurTank>();
-        ourTank[1] = GameObject.Find("player2").GetComponent<OurTank>();
-        gameoverImage = GameObject.Find("ImageGameOver").GetComponent<Image>();
+        print("New battle");
         gameoverImage.enabled = false;
+        enemyBorn = 0;
         FormEnemyQueue();
         SpawnEnemyTank();
-        for (int i= 0; i<2;i++)
+        for (int i = 0; i < 2; i++)
         {
             if (gm.playerLife[i] > 0)
                 ourTank[i].Born();
@@ -56,7 +56,6 @@ public class BattleManager : MonoBehaviour
 
         }
         System.Array.Clear(gm.kill, 0, gm.kill.Length);
-
     }
 
     private void Update()
@@ -72,13 +71,12 @@ public class BattleManager : MonoBehaviour
         ourTank[1].m_Dead = true;
         gm.battleResult = GameManager.BattleResult.LOSE;
         yield return new WaitForSeconds(1.5f);
-        ScorePanel.SetActive(true);
-
+        SceneManager.LoadScene("ScoreScene");
     }
 
     public void SpawnEnemyTank()
     {
-        while (liveEnemy < 1 && enemyBorn < totalEnemy)
+        while (liveEnemy < 4 && enemyBorn < totalEnemy)
         {
             //print("Tank No " + enemyBorn + " type " + enemyQueue[enemyBorn] + " born at " + enemyBorn % 3);
             GameObject tankInstance = ObjectPool.GetInstance().GetObject("EnemyTank");
@@ -91,7 +89,9 @@ public class BattleManager : MonoBehaviour
         if (liveEnemy == 0 && enemyBorn == totalEnemy)
         {
             gm.battleResult = GameManager.BattleResult.WIN;
-            ScorePanel.SetActive(true);
+            gm.playerLevel[0] = ourTank[0].level;
+            gm.playerLevel[1] = ourTank[1].level;
+            SceneManager.LoadScene("ScoreScene");
         }
     }
 

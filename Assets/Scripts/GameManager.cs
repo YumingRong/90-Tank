@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public int stage;
     [HideInInspector] public int[,] kill = new int[2, 4];
     [HideInInspector] public int[] playerLife = { 3, 3 };
+    [HideInInspector] public int[] playerLevel = { 1, 1 };
     public enum BattleResult { WIN, LOSE};
     [HideInInspector] public BattleResult battleResult;
 

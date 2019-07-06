@@ -11,16 +11,17 @@ public partial class OurTank : Tank
     private string m_FireButton;                // The input axis that is used for launching shells.
     private Animator shieldAnimator;
     private Vector3 position0;      //when tank collides other tank, it restores to the original position
+    private float chargeRate;
     public int level
     {
         set
         {
             if (value > 4)
                 value = 4;
-            float[] chargeTimes = {10f, 1.5f, 1.3f, 1.1f, 1f};
+            float[] chargeRates = {1f, 0.9f, 0.8f, 0.7f, 0.6f};
             int[] healths = { 0, 1, 1, 1, 2 };
             m_level = value;
-            m_ChargeTime = chargeTimes[value];
+            chargeRate = chargeRates[value];
             Health = healths[value];
             animator.SetInteger("level", value);
             animator.SetInteger("health", Health);
@@ -39,6 +40,7 @@ public partial class OurTank : Tank
         m_Dead = false;
         moveDirection = Vector2.up;
         gameObject.SetActive(true);
+        level = gameManager.playerLevel[m_PlayerNumber - 1];
         invincibleTime = 3f;
         shieldAnimator.SetBool("invincible", true); 
     }
@@ -81,7 +83,7 @@ public partial class OurTank : Tank
                 Fire();
                 RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
                 distance = hit.distance;
-                m_CurrentChargeTime = Mathf.Lerp(0.4f, m_ChargeTime, distance / 7);
+                m_CurrentChargeTime = Mathf.Lerp(0.75f, 1.5f, distance / 7) * chargeRate;
                 //Debug.Log("Charge time: " + m_CurrentChargeTime);
             }
         }

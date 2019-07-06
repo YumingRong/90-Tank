@@ -11,15 +11,12 @@ public class Score : MonoBehaviour
     void Start()
     {
         gm = GameManager.GetInstance();
-    }
-
-    private void OnEnable()
-    {
         ShowScore();
     }
 
     public void ShowScore()
     {
+        print("show score");
         int[,] kill;
         kill = GameManager.GetInstance().kill;
         int[] scoreArray = { 100, 200, 300, 400 }; // score of 4 types of enemy tank
@@ -76,6 +73,7 @@ public class Score : MonoBehaviour
             if (gm.battleResult == GameManager.BattleResult.WIN)
             {
                 gm.NextStage();
+
             }
             else
             {
@@ -83,7 +81,8 @@ public class Score : MonoBehaviour
                 if(gm.player == 2)
                     gm.playerLife[1] = 3;
             }
-            gameObject.SetActive(false);
+            print("Load new battle");
+            SceneManager.LoadScene("BattleScene");
         }
     }
 

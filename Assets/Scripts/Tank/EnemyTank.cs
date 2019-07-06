@@ -35,7 +35,7 @@ public class EnemyTank : Tank
     void Start()
     {
         moveDirection = Vector2.down;
-        m_ChargeTime = 1.8f;
+        m_ChargeTime = 1.7f;
         bulletTime = 0;
         directionChangeTimer = 0;
         directionChangeInteval = 2;
@@ -97,10 +97,8 @@ public class EnemyTank : Tank
         directionChangeTimer += Time.deltaTime;
         if (directionChangeTimer > directionChangeInteval)
         {
-            print("Time to change direction");
             if (AtGrid(transform.position, smallestGrid))
             {
-                print("select direction");
                 SelectDirection(false);
                 directionChangeInteval = Random.Range(0.5f, 2f);
             }
