@@ -22,12 +22,12 @@ public class Shell : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         //print("Shell hit " + other.name);
+        bool explode = false;
         if (other.name == "EnemyTank" || other.name == "player1" || other.name == "player2")
         {
             Tank targetTank = other.GetComponent<Tank>();
-            if (shooter * targetTank.m_PlayerNumber > 0)
-                return;
-
+            if (shooter * targetTank.m_PlayerNumber < 0)
+                explode = true;
         }
         else if (other.name == "Tilemap")
         {
@@ -42,18 +42,24 @@ public class Shell : MonoBehaviour
                 if (tile.name == "brickwall")
                 {
                     map.SetTile(roundPosition, emptyTile);
+                    explode = true;
                 }
-
+                else if (tile.name == "steelwall")
+                    explode = true;
                 roundPosition = Vector3Int.FloorToInt(new Vector3(TopRight.position.x / cellSize.x, TopRight.position.y / cellSize.y, 0));
                 tile = map.GetTile(roundPosition);
 
                 if (tile.name == "brickwall")
                 {
                     map.SetTile(roundPosition, emptyTile);
+                    explode = true;
                 }
+                else if (tile.name == "steelwall")
+                    explode = true;
             }
         }
-        StartCoroutine(Explode());
+        if (explode)
+            StartCoroutine(Explode());
 
     }
 

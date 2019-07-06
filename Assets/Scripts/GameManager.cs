@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public enum BattleResult { WIN, LOSE};
     [HideInInspector] public BattleResult battleResult;
 
-    int MaxStage = 3;
+    int MaxStage = 4;
     private static GameManager instance;
 
     public static GameManager GetInstance()
