@@ -10,6 +10,7 @@ public class Shell : MonoBehaviour
     public Tile emptyTile;
     public Transform TopLeft;
     public Transform TopRight;
+    public int damage;
 
     Animator animator;
 
@@ -45,7 +46,11 @@ public class Shell : MonoBehaviour
                     explode = true;
                 }
                 else if (tile.name == "steelwall")
+                {
+                    if (damage == 2)
+                        map.SetTile(roundPosition, emptyTile);
                     explode = true;
+                }
                 roundPosition = Vector3Int.FloorToInt(new Vector3(TopRight.position.x / cellSize.x, TopRight.position.y / cellSize.y, 0));
                 tile = map.GetTile(roundPosition);
 
@@ -55,7 +60,11 @@ public class Shell : MonoBehaviour
                     explode = true;
                 }
                 else if (tile.name == "steelwall")
+                {
+                    if (damage == 2)
+                        map.SetTile(roundPosition, emptyTile);
                     explode = true;
+                }
             }
         }
         if (explode)

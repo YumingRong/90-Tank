@@ -89,7 +89,7 @@ public class EnemyTank : Tank
         m_CurrentChargeTime += Time.deltaTime;
         if (m_CurrentChargeTime >= m_ChargeTime)
         {
-            //Fire();
+            //Fire(1);
             m_CurrentChargeTime = 0f;
         }
         rigidbody2d.position += moveDirection * speed * Time.deltaTime;
@@ -162,13 +162,13 @@ public class EnemyTank : Tank
         else if (transform.position.x < 0)
         {
             directChance[2] = 0.15f;
-            directChance[3] = 0.3f;
+            directChance[3] = 0.25f;
             if (transform.position.x < -2.75f)
                 directChance[2] = 0f;
         }
         else if (transform.position.x > 0)
         {
-            directChance[2] = 0.3f;
+            directChance[2] = 0.25f;
             directChance[3] = 0.15f;
             if (transform.position.x > -2.75f)
                 directChance[3] = 0f;
@@ -226,13 +226,20 @@ public class EnemyTank : Tank
                     GameObject prizeInstance = ObjectPool.GetInstance().GetObject("Prize");
                     Prize prize = prizeInstance.GetComponent<Prize>();
                 }
-                Health--;
+                Health -= shell.damage;
                 // If the current health is at or below zero and it has not yet been registered, call OnDeath.
                 if (Health <= 0 && !m_Dead)
                 {
                     StartCoroutine(OnDeath(shell.shooter));
                 }
             }
+        }
+        else
+        {
+            Vector2 position = rigidbody2d.position;
+            position.x = Mathf.RoundToInt(position.x / smallestGrid) * smallestGrid;
+            position.y = Mathf.RoundToInt(position.y / smallestGrid) * smallestGrid;
+            rigidbody2d.MovePosition(position);
         }
     }
 

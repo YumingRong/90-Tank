@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        playerLevel[0] = playerLevel[1] = 1;
         SceneManager.LoadScene("StartupScene");
+        print("player level " + playerLevel[0] + " " + playerLevel[1]);
     }
 
     public void NextStage()

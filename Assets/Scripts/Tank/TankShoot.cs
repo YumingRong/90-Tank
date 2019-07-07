@@ -10,7 +10,7 @@ public partial class Tank : MonoBehaviour
     protected int m_ShootDamage = 1;
     protected float m_CurrentChargeTime = 0;
 
-    protected void Fire()
+    protected void Fire(int damage)
     {
         GameObject shellInstance = ObjectPool.GetInstance().GetObject("Shell");
         shellInstance.transform.position = fireTransform.position;
@@ -18,6 +18,7 @@ public partial class Tank : MonoBehaviour
         Shell shell = shellInstance.GetComponent<Shell>();
         shell.GetComponent<Rigidbody2D>().velocity = m_ShellSpeed * moveDirection;
         shell.shooter = m_PlayerNumber;
+        shell.damage = damage;
 
     }
 }

@@ -20,6 +20,7 @@ public class Score : MonoBehaviour
         int[,] kill;
         kill = GameManager.GetInstance().kill;
         int[] scoreArray = { 100, 200, 300, 400 }; // score of 4 types of enemy tank
+        int[] playerScore = { 0, 0 };
 
         Text Stage = GameObject.Find("Stage").GetComponent<Text>();
         Stage.text = gm.stage.ToString();
@@ -42,7 +43,8 @@ public class Score : MonoBehaviour
         Text P1T = GameObject.Find("P1T").GetComponent<Text>();
         P1T.text = (kill[0, 0] + kill[0, 1] + kill[0, 2] + kill[0, 3]).ToString();
         Text P1S = GameObject.Find("P1S").GetComponent<Text>();
-        P1S.text = (kill[0, 0] * scoreArray[0] + kill[0, 1] * scoreArray[1] + kill[0, 2] * scoreArray[2] + kill[0, 3] * scoreArray[3]).ToString() + " PTS";
+        playerScore[0] = kill[0, 0] * scoreArray[0] + kill[0, 1] * scoreArray[1] + kill[0, 2] * scoreArray[2] + kill[0, 3] * scoreArray[3];
+        P1S.text = playerScore[0].ToString() + " PTS";
         Text P2T1 = GameObject.Find("P2T1").GetComponent<Text>();
         P2T1.text = kill[1, 0].ToString();
         Text P2S1 = GameObject.Find("P2S1").GetComponent<Text>();
@@ -62,7 +64,37 @@ public class Score : MonoBehaviour
         Text P2T = GameObject.Find("P2T").GetComponent<Text>();
         P2T.text = (kill[1, 0] + kill[1, 1] + kill[1, 2] + kill[1, 3]).ToString();
         Text P2S = GameObject.Find("P2S").GetComponent<Text>();
-        P2S.text = (kill[1, 0] * scoreArray[0] + kill[1, 1] * scoreArray[1] + kill[1, 2] * scoreArray[2] + kill[1, 3] * scoreArray[3]).ToString() + " PTS";
+        playerScore[1] = kill[1, 0] * scoreArray[0] + kill[1, 1] * scoreArray[1] + kill[1, 2] * scoreArray[2] + kill[1, 3] * scoreArray[3];
+        P2S.text = playerScore[1].ToString() + " PTS";
+        Text bonusTitle = GameObject.Find("BonusTitle").GetComponent<Text>();
+        Text bonus = GameObject.Find("bonus").GetComponent<Text>();
+        if (gm.player == 2)
+        {
+            if (playerScore[0] > playerScore[1])
+            {
+                bonusTitle.enabled = true;
+                bonus.enabled = true;
+                bonusTitle.transform.Translate(new Vector3(-333, -277));
+                bonus.transform.Translate(new Vector3(-321, -320));
+            }
+            else if(playerScore[0] < playerScore[1])
+            {
+                bonusTitle.enabled = true;
+                bonus.enabled = true;
+                bonusTitle.transform.Translate(new Vector3(246, -277));
+                bonus.transform.Translate(new Vector3(258, -320));
+            }
+            else
+            {
+                bonusTitle.enabled = false;
+                bonus.enabled = false;
+            }
+        }
+        else
+        {
+            bonusTitle.enabled = false;
+            bonus.enabled = false;
+        }
     }
 
     // Update is called once per frame

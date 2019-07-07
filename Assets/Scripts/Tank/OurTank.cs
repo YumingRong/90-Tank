@@ -12,13 +12,14 @@ public partial class OurTank : Tank
     private Animator shieldAnimator;
     private Vector3 position0;      //when tank collides other tank, it restores to the original position
     private float chargeRate;
+
     public int level
     {
         set
         {
             if (value > 4)
                 value = 4;
-            float[] chargeRates = {1f, 0.9f, 0.8f, 0.7f, 0.6f};
+            float[] chargeRates = { 1f, 0.9f, 0.8f, 0.7f, 0.6f };
             int[] healths = { 0, 1, 1, 1, 2 };
             m_level = value;
             chargeRate = chargeRates[value];
@@ -35,6 +36,7 @@ public partial class OurTank : Tank
 
     public void Born()
     {
+        print("Born in our tank");
         Vector2[] ourSpawnPoint = { new Vector2(-1f, -3f), new Vector2(1f, -3f) };
         transform.position = ourSpawnPoint[m_PlayerNumber - 1];
         m_Dead = false;
@@ -80,7 +82,9 @@ public partial class OurTank : Tank
         {
             if (m_CurrentChargeTime <= 0)
             {
-                Fire();
+                print("Level " + level);
+
+                Fire(level < 4 ? 1 : 2);
                 RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
                 distance = hit.distance;
                 m_CurrentChargeTime = Mathf.Lerp(0.75f, 1.5f, distance / 7) * chargeRate;
