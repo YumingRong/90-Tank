@@ -4,12 +4,12 @@ public partial class Tank : MonoBehaviour
 {
     [HideInInspector] public int m_PlayerNumber;
     [HideInInspector] public float speed = 0.5f;
-    [HideInInspector] public bool isInvincible;
 
     protected Vector2 moveDirection;
     protected Rigidbody2D rigidbody2d;
     protected Animator animator;
     protected float smallestGrid = 0.25f;
+    protected float invincibleTime;
 
     public int Health               // The amount of health each tank
     {

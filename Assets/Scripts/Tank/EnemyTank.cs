@@ -72,9 +72,8 @@ public class EnemyTank : Tank
         animator.SetBool("prize", prize);
         transform.position = spawnPoint;
         speed = 0;
-        isInvincible = true;
+        invincibleTime = 1f;
         yield return new WaitForSeconds(1f);
-        isInvincible = false;
         speed = speedArray[type];
     }
 
@@ -84,6 +83,7 @@ public class EnemyTank : Tank
     {
         if (m_Dead)
             return;
+        invincibleTime -= Time.deltaTime;
         if (BattleManager.GetInstance().bulletTime > 0)
             return;
         m_CurrentChargeTime += Time.deltaTime;
@@ -222,7 +222,7 @@ public class EnemyTank : Tank
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Shell" && !isInvincible)
+        if (collision.name == "Shell" && invincibleTime <= 0)
         {
             Shell shell = collision.GetComponent<Shell>();
             if (shell.shooter > 0)

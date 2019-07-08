@@ -67,6 +67,12 @@ public class Shell : MonoBehaviour
                 }
             }
         }
+        else if(other.name == "Shell")
+        {
+            Shell shell = other.GetComponent<Shell>();
+            if (shell.shooter * shooter < 0)
+                explode = true;
+        }
         if (explode)
             StartCoroutine(Explode());
 

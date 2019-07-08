@@ -5,7 +5,6 @@ using UnityEngine;
 public partial class OurTank : Tank
 {
     public GameObject shield;
-    private float invincibleTime; 
     private string m_VerticalAxisName;
     private string m_HorizontalAxisName;
     private string m_FireButton;                // The input axis that is used for launching shells.
@@ -75,7 +74,6 @@ public partial class OurTank : Tank
             if (invincibleTime<=0)
             {
                 shieldAnimator.SetBool("invincible", false);
-                isInvincible = false;
             }
         }
 
