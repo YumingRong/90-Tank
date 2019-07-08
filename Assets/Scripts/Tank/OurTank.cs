@@ -43,6 +43,7 @@ public partial class OurTank : Tank
         moveDirection = Vector2.up;
         gameObject.SetActive(true);
         level = gameManager.playerLevel[m_PlayerNumber - 1];
+        speed = 0.7f;
         invincibleTime = 3f;
         shieldAnimator.SetBool("invincible", true); 
     }
@@ -93,6 +94,12 @@ public partial class OurTank : Tank
         }
         m_CurrentChargeTime -= Time.deltaTime;
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (m_Dead)
+            return;
         // Store the player's input and make sure the audio for the engine is playing.
         float vertical = Input.GetAxisRaw(m_VerticalAxisName);
         float horizontal = Input.GetAxis(m_HorizontalAxisName);
@@ -144,45 +151,46 @@ public partial class OurTank : Tank
             position += moveDirection * speed * Time.deltaTime;
             rigidbody2d.MovePosition(position);
         }
+
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.name == "EnemyTank")
-        {
-            print("Enter collision");
-            //print("position1 " + transform.position);
-            //print("position0 " + position0);
-            Vector2 line = collision.collider.transform.position - transform.position;
-            line.Normalize();
-            float dotproduct = Vector2.Dot(moveDirection, line);
-            print("Tank " + m_PlayerNumber + " collides. Dot product " + dotproduct + " Move direction " + moveDirection);
-            if (dotproduct > speed * 0.5)     //the knocker should change its direction
-                rigidbody2d.position = position0;
-            else  //the knocked should keep its velocity
-                rigidbody2d.velocity = moveDirection * speed;
-        }
+        //if (collision.collider.name == "EnemyTank")
+        //{
+        //    print("Enter collision");
+        //    //print("position1 " + transform.position);
+        //    //print("position0 " + position0);
+        //    Vector2 line = collision.collider.transform.position - transform.position;
+        //    line.Normalize();
+        //    float dotproduct = Vector2.Dot(moveDirection, line);
+        //    print("Tank " + m_PlayerNumber + " collides. Dot product " + dotproduct + " Move direction " + moveDirection);
+        //    if (dotproduct > speed * 0.5)     //the knocker should change its direction
+        //        rigidbody2d.position = position0;
+        //    else  //the knocked should keep its velocity
+        //        rigidbody2d.velocity = moveDirection * speed;
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.name == "EnemyTank")
         {
-            print("Exit collision");
-            Vector2 line = collision.collider.transform.position - transform.position;
-            line.Normalize();
-            float dotproduct = Vector2.Dot(moveDirection, line);
-            print("Tank " + m_PlayerNumber + " collides. Dot product " + dotproduct + " Move direction " + moveDirection);
-            if (dotproduct > speed * 0.5)     //the knocker should change its direction
-                rigidbody2d.position = position0;
-            else  //the knocked should keep its velocity
-                rigidbody2d.velocity = moveDirection * speed;
+            //print("Exit collision");
+            //Vector2 line = collision.collider.transform.position - transform.position;
+            //line.Normalize();
+            //float dotproduct = Vector2.Dot(moveDirection, line);
+            //print("Tank " + m_PlayerNumber + " collides. Dot product " + dotproduct + " Move direction " + moveDirection);
+            //if (dotproduct > speed * 0.5)     //the knocker should change its direction
+            //    rigidbody2d.position = position0;
+            rigidbody2d.velocity = new Vector2(0,0);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Shell" && !isInvincible)
+        if (collision.name == "Shell" && invincibleTime <= 0)
         {
             Shell shell = collision.GetComponent<Shell>();
             if (shell.shooter < 0)

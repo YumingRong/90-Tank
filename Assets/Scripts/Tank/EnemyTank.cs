@@ -89,9 +89,15 @@ public class EnemyTank : Tank
         m_CurrentChargeTime += Time.deltaTime;
         if (m_CurrentChargeTime >= m_ChargeTime)
         {
-            //Fire(1);
+            Fire(1);
             m_CurrentChargeTime = 0f;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (m_Dead)
+            return;
         rigidbody2d.position += moveDirection * speed * Time.deltaTime;
         //print("Delta position " + speed * Time.deltaTime);
         directionChangeTimer += Time.deltaTime;
@@ -103,6 +109,7 @@ public class EnemyTank : Tank
                 directionChangeInteval = Random.Range(0.5f, 2f);
             }
         }
+
     }
 
     private bool AtGrid(Vector2 v, float grid)
@@ -241,6 +248,11 @@ public class EnemyTank : Tank
             position.y = Mathf.RoundToInt(position.y / smallestGrid) * smallestGrid;
             rigidbody2d.MovePosition(position);
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        rigidbody2d.velocity = new Vector2(0, 0);
     }
 
     public void Die(int player)       //coroutine cannot be invoked by other class
