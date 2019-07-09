@@ -15,7 +15,7 @@ public class BattleManager : MonoBehaviour
     int[] enemyTanks = { 5, 5, 5, 5 };
     int[] enemyQueue = new int[totalEnemy];
 
-    int prizePerBattle = 3;
+    int prizePerBattle = 10;
     bool[] prizeQueue = new bool[totalEnemy];
     int enemyBorn;
     GameManager gm;

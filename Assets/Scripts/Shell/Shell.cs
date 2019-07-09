@@ -24,50 +24,47 @@ public class Shell : MonoBehaviour
     {
         //print("Shell hit " + other.name);
         bool explode = false;
-        if (other.name == "EnemyTank" || other.name == "player1" || other.name == "player2")
+        if (other.name == "Tilemap")
+        {
+            Tilemap map = other.GetComponent<Tilemap>();
+            Grid grid = map.GetComponentInParent<Grid>();
+            Vector3 cellSize = grid.cellSize;
+            Vector3Int roundPosition = Vector3Int.FloorToInt(new Vector3(TopLeft.position.x / cellSize.x, TopLeft.position.y / cellSize.y, 0));
+            TileBase tile = map.GetTile(roundPosition);
+
+            if (tile.name == "brickwall")
+            {
+                map.SetTile(roundPosition, emptyTile);
+                explode = true;
+            }
+            else if (tile.name == "steelwall")
+            {
+                if (damage == 2)
+                    map.SetTile(roundPosition, emptyTile);
+                explode = true;
+            }
+            roundPosition = Vector3Int.FloorToInt(new Vector3(TopRight.position.x / cellSize.x, TopRight.position.y / cellSize.y, 0));
+            tile = map.GetTile(roundPosition);
+
+            if (tile.name == "brickwall")
+            {
+                map.SetTile(roundPosition, emptyTile);
+                explode = true;
+            }
+            else if (tile.name == "steelwall")
+            {
+                if (damage == 2)
+                    map.SetTile(roundPosition, emptyTile);
+                explode = true;
+            }
+        }
+        else if (other.name == "EnemyTank" || other.name == "player1" || other.name == "player2")
         {
             Tank targetTank = other.GetComponent<Tank>();
             if (shooter * targetTank.m_PlayerNumber < 0)
                 explode = true;
         }
-        else if (other.name == "Tilemap")
-        {
-            Tilemap map = other.GetComponent<Tilemap>();
-            if (map != null)
-            {
-                Grid grid = map.GetComponentInParent<Grid>();
-                Vector3 cellSize = grid.cellSize;
-                Vector3Int roundPosition = Vector3Int.FloorToInt(new Vector3(TopLeft.position.x / cellSize.x, TopLeft.position.y / cellSize.y, 0));
-                TileBase tile = map.GetTile(roundPosition);
-
-                if (tile.name == "brickwall")
-                {
-                    map.SetTile(roundPosition, emptyTile);
-                    explode = true;
-                }
-                else if (tile.name == "steelwall")
-                {
-                    if (damage == 2)
-                        map.SetTile(roundPosition, emptyTile);
-                    explode = true;
-                }
-                roundPosition = Vector3Int.FloorToInt(new Vector3(TopRight.position.x / cellSize.x, TopRight.position.y / cellSize.y, 0));
-                tile = map.GetTile(roundPosition);
-
-                if (tile.name == "brickwall")
-                {
-                    map.SetTile(roundPosition, emptyTile);
-                    explode = true;
-                }
-                else if (tile.name == "steelwall")
-                {
-                    if (damage == 2)
-                        map.SetTile(roundPosition, emptyTile);
-                    explode = true;
-                }
-            }
-        }
-        else if(other.name == "Shell")
+        else if (other.name == "Shell")
         {
             Shell shell = other.GetComponent<Shell>();
             if (shell.shooter * shooter < 0)

@@ -86,7 +86,7 @@ public partial class OurTank : Tank
                 Fire(level < 4 ? 1 : 2);
                 RaycastHit2D hit = Physics2D.Raycast(fireTransform.position, moveDirection, 7f, LayerMask.GetMask("Tank"));
                 distance = hit.distance;
-                m_CurrentChargeTime = Mathf.Lerp(0.75f, 1.5f, distance / 7) * chargeRate;
+                m_CurrentChargeTime = Mathf.Lerp(0.9f, 1.5f, distance / 7) * chargeRate;
                 //Debug.Log("Charge time: " + m_CurrentChargeTime);
             }
         }
