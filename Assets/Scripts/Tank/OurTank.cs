@@ -146,7 +146,7 @@ public partial class OurTank : Tank
             animator.speed = (moveDirection * speed).magnitude;
 
             position0 = position;
-            position += moveDirection * speed * Time.deltaTime;
+            position += moveDirection * speed * Time.fixedDeltaTime;
             rigidbody2d.MovePosition(position);
         }
 

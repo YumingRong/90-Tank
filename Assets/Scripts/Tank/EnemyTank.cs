@@ -89,7 +89,7 @@ public class EnemyTank : Tank
         m_CurrentChargeTime += Time.deltaTime;
         if (m_CurrentChargeTime >= m_ChargeTime)
         {
-            //Fire(1);
+            Fire(1);
             m_CurrentChargeTime = 0f;
         }
     }
@@ -98,8 +98,8 @@ public class EnemyTank : Tank
     {
         if (m_Dead)
             return;
-        rigidbody2d.position += moveDirection * speed * Time.deltaTime;
-        //print("Delta position " + speed * Time.deltaTime);
+        rigidbody2d.position += moveDirection * speed * Time.fixedDeltaTime;
+        //print("Delta position " + speed * Time.fixedDeltaTime);
         directionChangeTimer += Time.deltaTime;
         if (directionChangeTimer > directionChangeInteval)
         {
@@ -159,7 +159,7 @@ public class EnemyTank : Tank
     {
         float[] directChance = { 0.1f, 0.45f, 0.2f, 0.2f };
 
-        if (Mathf.Approximately(transform.position.x, 0))
+        if (System.Math.Abs(transform.position.x) < Mathf.Epsilon)
         {
             directChance[0] = 0.1f;
             directChance[1] = 0.45f;
